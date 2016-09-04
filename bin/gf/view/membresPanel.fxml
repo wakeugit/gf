@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.MainAppGF">
+   <right>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="180.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showMemberDetailsDialog" prefHeight="25.0" prefWidth="72.0" text="Nouveau" />
+            <Button fx:id="modifMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Modifier" GridPane.rowIndex="1" />
+            <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Supprimer" GridPane.rowIndex="2" />
+            <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Imprimer" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </right>
+   <center>
+      <TableView prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="photo" minWidth="0.0" prefWidth="95.0" text="Photo" />
+          <TableColumn fx:id="nomMembre" prefWidth="151.0" text="Nom du membre" />
+            <TableColumn fx:id="prenomMembre" prefWidth="148.0" text="Prenom du membre" />
+            <TableColumn fx:id="telephone" maxWidth="127.0" minWidth="105.0" prefWidth="109.0" text="Telephone" />
+            <TableColumn fx:id="Adresse" minWidth="0.0" prefWidth="105.0" text="Adresse" />
+            <TableColumn fx:id="cni" prefWidth="104.0" text="N° de CNI" />
+        </columns>
+         <opaqueInsets>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <top>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="830.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Gestion des membres">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="13.0" prefWidth="830.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+         </children>
+         <opaqueInsets>
+            <Insets left="20.0" />
+         </opaqueInsets>
+      </VBox>
+   </top>
+</BorderPane>
