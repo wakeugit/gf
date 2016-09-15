@@ -5,6 +5,7 @@ import gf.model.MembreFx;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -40,7 +41,7 @@ public class MainAppGF extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("MainWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("mainWindow.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -55,8 +56,182 @@ public class MainAppGF extends Application {
     /**
      * Shows the members overview inside the root layout.
      */
+    @FXML
+    private void showAidesWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("aidesWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
 
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Aides");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
 
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void showAnneesWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("anneesWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Années");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void showEpargneWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("epargneWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Epargnes");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void showTontineWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("tontineWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Tontines");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    
+    @FXML
+    private void showSanctionWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("sanctionWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Sanctions");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void showUtilisateurWindow() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("utilisateurWindow.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Utilisateurs");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(this.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    
     public void actionOnClickMembre() {
         try {
             // Load member pane.

@@ -15,19 +15,19 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Fichier">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Option">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" onAction="#showAidesWindow" text="Aides" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAnneesWindow" text="Années" />
+                        <MenuItem mnemonicParsing="false" onAction="#showEpargneWindow" text="Epargnes" />
+                        <MenuItem mnemonicParsing="false" onAction="#showSanctionWindow" text="Sanctions" />
+                        <MenuItem mnemonicParsing="false" onAction="#showTontineWindow" text="Tontines" />
+                        <MenuItem mnemonicParsing="false" onAction="#showUtilisateurWindow" text="Utilisateurs" />
                   </items>
                 </Menu>
               </menus>

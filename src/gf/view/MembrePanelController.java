@@ -132,9 +132,9 @@ private void actionOnclickModifier() {
         // Nothing selected.
         Alert alert = new Alert(AlertType.WARNING);
         alert.initOwner(mainAppGF.getPrimaryStage());
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Person Selected");
-        alert.setContentText("Please select a person in the table.");
+        alert.setTitle("Aucune ligne selectionée");
+        alert.setHeaderText("Aucune ligne selectionée");
+        alert.setContentText("Svp selectionnez un élement dans la liste.");
 
         alert.showAndWait();
     }
