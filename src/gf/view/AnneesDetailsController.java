@@ -1,4 +1,4 @@
-package gf.view.controller;
+package gf.view;
 
 import gf.model.Annee;
 import gf.util.DateUtil;

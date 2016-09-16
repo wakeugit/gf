@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.MembrePanelController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0"
+            prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.MembrePanelController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -51,7 +53,7 @@
    <top>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="830.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des membres">
+             <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des membres">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

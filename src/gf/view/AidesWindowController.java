@@ -1,9 +1,8 @@
-package gf.view.controller;
+package gf.view;
 
 import java.io.IOException;
 
-import gf.model.Utilisateur;
-import gf.view.MainAppGF;
+import gf.model.Aide;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,64 +16,50 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class UtilisateurWindowController {
+public class AidesWindowController {
 
-    private ObservableList<Utilisateur> listeUtilisateurs = FXCollections.observableArrayList();
+    private ObservableList<Aide> listeAides = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Utilisateur> utilisateurTable;
+    private TableView<Aide> aideTable;
     @FXML
-    private TableColumn<Utilisateur, String> nomUtilisateur;
-    @FXML
-    private TableColumn<Utilisateur, Integer> niveau;
-    @FXML
-    private TableColumn<Utilisateur, String> nom;
-    @FXML
-    private TableColumn<Utilisateur, String> prenom;
-    @FXML
-    private TableColumn<Utilisateur, String> poste;
+    private TableColumn<Aide, String> motif;
 
-    public UtilisateurWindowController() {
-        listeUtilisateurs.add(new Utilisateur("toto", 1, "Tagne", "Paul", "admin"));
-        listeUtilisateurs.add(new Utilisateur("papa", 2, "Magne", "Marie", "Commissaire"));
-        listeUtilisateurs.add(new Utilisateur("maman", 3, "Pagne", "Lari", "SG"));
-        listeUtilisateurs.add(new Utilisateur("fou", 4, "Nagne", "Lyonnel", "President"));
+    public AidesWindowController() {
+        listeAides.add(new Aide("Mort"));
+        listeAides.add(new Aide("Naissance"));
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
 
-        nomUtilisateur.setCellValueFactory(cellData -> cellData.getValue().getNomUtilisateurProperty());
-        niveau.setCellValueFactory(cellData -> cellData.getValue().getNiveauProperty().asObject());
-        nom.setCellValueFactory(cellData -> cellData.getValue().getNomProperty());
-        prenom.setCellValueFactory(cellData -> cellData.getValue().getPrenomProperty());
-        poste.setCellValueFactory(cellData -> cellData.getValue().getPosteProperty());
+        motif.setCellValueFactory(cellData -> cellData.getValue().getMotifProperty());
 
-        utilisateurTable.setItems(listeUtilisateurs);
+        aideTable.setItems(listeAides);
 
     }
 
     @FXML
-    private void showUtilisateurDetails() {
+    private void showAidesDetails() {
 
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/utilisateurDetails.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/aideDetails.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouveau utilisateur");
+            dialogStage.setTitle("Nouvelle Aide");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            UtilisateurDetailsController controller = loader.getController();
+            AideDetailsController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setUtilisateurWindowCOntroller(this);
+            controller.setAideWindowController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -90,32 +75,32 @@ public class UtilisateurWindowController {
     }
 
     @FXML
-    private void showUtilisateurDetailsModifier() {
+    private void showAidesDetailsModifier() {
 
-        int selectedIndex = utilisateurTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = aideTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Utilisateur Utilisateur = utilisateurTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeUtilisateurs.indexOf(Utilisateur);
+            Aide aide = aideTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAides.indexOf(aide);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/utilisateurDetails.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/aideDetails.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Tontine");
+                dialogStage.setTitle("Modifier Aide");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
 
-                UtilisateurDetailsController controller = loader.getController();
+                AideDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setUtilisateur(Utilisateur);
+                controller.setAide(aide);
                 controller.setKeyInArray(keyInArrayList);
-                controller.setUtilisateurWindowCOntroller(this);
+                controller.setAideWindowController(this);
 
                 // Show the dialog and wait until the user closes it
 
@@ -141,12 +126,12 @@ public class UtilisateurWindowController {
     }
 
 
-    public ObservableList<Utilisateur> getListeUtilisateurs() {
-        return listeUtilisateurs;
+    public ObservableList<Aide> getListeAides() {
+        return listeAides;
     }
 
-    public void setListeUtilisateurs(ObservableList<Utilisateur> listeUtilisateurs) {
-        this.listeUtilisateurs = listeUtilisateurs;
+    public void setListeAides(ObservableList<Aide> listeAides) {
+        this.listeAides = listeAides;
     }
 
 

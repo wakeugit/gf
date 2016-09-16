@@ -1,10 +1,9 @@
-package gf.view.controller;
+package gf.view;
 
 import java.io.IOException;
 
 import gf.model.Membre;
 import gf.model.MembreFx;
-import gf.view.MainAppGF;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,7 +64,7 @@ private void showMemberDetailsDialog() {
     try {
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/membreDetails.fxml"));
+        loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
         BorderPane page = (BorderPane) loader.load();
 
         // Create the dialog Stage.
@@ -102,7 +101,7 @@ private void actionOnclickModifier() {
       try {
           // Load the fxml file and create a new stage for the popup dialog.
           FXMLLoader loader = new FXMLLoader();
-          loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/membreDetails.fxml"));
+          loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
           BorderPane page = (BorderPane) loader.load();
 
           // Create the dialog Stage.

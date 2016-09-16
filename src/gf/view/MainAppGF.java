@@ -1,7 +1,6 @@
 package gf.view;
 
 import gf.model.MembreFx;
-import gf.view.controller.MembrePanelController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

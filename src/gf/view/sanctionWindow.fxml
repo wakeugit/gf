@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
             prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.controller.SanctionWindowController">
+            fx:controller="gf.view.SanctionWindowController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -46,7 +46,7 @@
    <top>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="460.0" BorderPane.alignment="CENTER">
          <children>
-             <Label styleClass="label-header" stylesheets="@../theme.css" text="Gestion des sanctions">
+             <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des sanctions">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

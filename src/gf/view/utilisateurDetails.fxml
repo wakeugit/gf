@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0"
             prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.controller.UtilisateurDetailsController">
+            fx:controller="gf.view.UtilisateurDetailsController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="297.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>

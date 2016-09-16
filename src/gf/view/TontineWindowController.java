@@ -1,10 +1,9 @@
-package gf.view.controller;
+package gf.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
 import gf.model.Cotisation;
-import gf.view.MainAppGF;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -62,7 +61,7 @@ public class TontineWindowController {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/tontineDetails.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/tontineDetails.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -100,7 +99,7 @@ public class TontineWindowController {
             try {
     	            // Load the fxml file and create a new stage for the popup dialog.
     	            FXMLLoader loader = new FXMLLoader();
-                 loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/tontineDetails.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/tontineDetails.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
     	            // Create the dialog Stage.

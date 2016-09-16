@@ -1,10 +1,8 @@
-package gf.view.controller;
+package gf.view;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-import gf.model.Cotisation;
-import gf.view.MainAppGF;
+import gf.model.Utilisateur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,64 +16,64 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class EpargneWindowController {
+public class UtilisateurWindowController {
 
-    private ObservableList<Cotisation> listeEpargne = FXCollections.observableArrayList();
+    private ObservableList<Utilisateur> listeUtilisateurs = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Cotisation> epargneTable;
+    private TableView<Utilisateur> utilisateurTable;
     @FXML
-    private TableColumn<Cotisation, String> nomCotisation;
+    private TableColumn<Utilisateur, String> nomUtilisateur;
     @FXML
-    private TableColumn<Cotisation, String> type;
+    private TableColumn<Utilisateur, Integer> niveau;
     @FXML
-    private TableColumn<Cotisation, LocalDate> dateDebut;
+    private TableColumn<Utilisateur, String> nom;
     @FXML
-    private TableColumn<Cotisation, LocalDate> dateFin;
+    private TableColumn<Utilisateur, String> prenom;
     @FXML
-    private TableColumn<Cotisation, String> annee;
+    private TableColumn<Utilisateur, String> poste;
 
-    public EpargneWindowController() {
-        listeEpargne.add(new Cotisation("Epargne 2015", "Epargne", "01.01.2015", "13.12.2015", "2015"));
-        listeEpargne.add(new Cotisation("Epargne 2016", "Epargne", "01.01.2016", "12.12.2016", "2016"));
-        listeEpargne.add(new Cotisation("Epargne 2014", "Epargne", "01.01.2014", "12.12.2014", "2014"));
-        listeEpargne.add(new Cotisation("Epargne 2013", "Epargne", "01.01.2013", "14.12.2013", "2013"));
+    public UtilisateurWindowController() {
+        listeUtilisateurs.add(new Utilisateur("toto", 1, "Tagne", "Paul", "admin"));
+        listeUtilisateurs.add(new Utilisateur("papa", 2, "Magne", "Marie", "Commissaire"));
+        listeUtilisateurs.add(new Utilisateur("maman", 3, "Pagne", "Lari", "SG"));
+        listeUtilisateurs.add(new Utilisateur("fou", 4, "Nagne", "Lyonnel", "President"));
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
 
-        nomCotisation.setCellValueFactory(cellData -> cellData.getValue().getnomCotisationProperty());
-        type.setCellValueFactory(cellData -> cellData.getValue().getType());
-        dateDebut.setCellValueFactory(cellData -> cellData.getValue().getDateDebut());
-        dateFin.setCellValueFactory(cellData -> cellData.getValue().getDateFin());
-        annee.setCellValueFactory(cellData -> cellData.getValue().getAnnee());
+        nomUtilisateur.setCellValueFactory(cellData -> cellData.getValue().getNomUtilisateurProperty());
+        niveau.setCellValueFactory(cellData -> cellData.getValue().getNiveauProperty().asObject());
+        nom.setCellValueFactory(cellData -> cellData.getValue().getNomProperty());
+        prenom.setCellValueFactory(cellData -> cellData.getValue().getPrenomProperty());
+        poste.setCellValueFactory(cellData -> cellData.getValue().getPosteProperty());
 
-        epargneTable.setItems(listeEpargne);
+        utilisateurTable.setItems(listeUtilisateurs);
 
     }
 
     @FXML
-    private void showCotisationDetails() {
+    private void showUtilisateurDetails() {
 
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/epargneDetails.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/utilisateurDetails.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Epargne");
+            dialogStage.setTitle("Nouveau utilisateur");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            EpargneDetailsController controller = loader.getController();
+            UtilisateurDetailsController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setEpargneWindowCOntroller(this);
+            controller.setUtilisateurWindowCOntroller(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -91,32 +89,32 @@ public class EpargneWindowController {
     }
 
     @FXML
-    private void showCotisationDetailsModifier() {
+    private void showUtilisateurDetailsModifier() {
 
-        int selectedIndex = epargneTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = utilisateurTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Cotisation cotisation = epargneTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeEpargne.indexOf(cotisation);
+            Utilisateur Utilisateur = utilisateurTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeUtilisateurs.indexOf(Utilisateur);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/epargneDetails.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/utilisateurDetails.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Epargne");
+                dialogStage.setTitle("Modifier Tontine");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
 
-                EpargneDetailsController controller = loader.getController();
+                UtilisateurDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setEpargne(cotisation);
+                controller.setUtilisateur(Utilisateur);
                 controller.setKeyInArray(keyInArrayList);
-                controller.setEpargneWindowCOntroller(this);
+                controller.setUtilisateurWindowCOntroller(this);
 
                 // Show the dialog and wait until the user closes it
 
@@ -142,12 +140,12 @@ public class EpargneWindowController {
     }
 
 
-    public ObservableList<Cotisation> getListeCotisations() {
-        return listeEpargne;
+    public ObservableList<Utilisateur> getListeUtilisateurs() {
+        return listeUtilisateurs;
     }
 
-    public void setListeCotisations(ObservableList<Cotisation> listeCotisations) {
-        this.listeEpargne = listeCotisations;
+    public void setListeUtilisateurs(ObservableList<Utilisateur> listeUtilisateurs) {
+        this.listeUtilisateurs = listeUtilisateurs;
     }
 
 

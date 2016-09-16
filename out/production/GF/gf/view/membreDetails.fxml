@@ -8,7 +8,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.MembreDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0"
+            prefWidth="600.0" styleClass="background" stylesheets="@theme.css"
+            xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.MembreDetailsController">
    <center>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -45,7 +48,7 @@
             <Insets right="20.0" top="10.0" />
          </BorderPane.margin>
          <image>
-            <Image url="@../../../ressource/personne.png" />
+             <Image url="@../../../ressource/personne.png"/>
          </image>
       </ImageView>
    </right>
@@ -68,7 +71,8 @@
       </GridPane>
    </bottom>
    <top>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="580.0" stylesheets="@theme.css" BorderPane.alignment="CENTER">
+       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0"
+             prefWidth="580.0" stylesheets="@theme.css" BorderPane.alignment="CENTER">
          <children>
             <Label styleClass="label-header" text="Details Membre">
                <font>

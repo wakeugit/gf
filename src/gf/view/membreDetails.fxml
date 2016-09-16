@@ -8,30 +8,50 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0"
-            prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.controller.AideDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0"
+            prefWidth="600.0" styleClass="background" stylesheets="@theme.css"
+            xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.MembreDetailsController">
    <center>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" BorderPane.alignment="CENTER_LEFT">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="139.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="261.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <BorderPane.margin>
             <Insets bottom="40.0" left="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Label text="Motif" />
-            <TextField fx:id="motif" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" />
+            <Label text="Nom du membre" />
+            <Label text="Prenom du membre" GridPane.rowIndex="1" />
+            <Label text="Telephone" GridPane.rowIndex="2" />
+            <Label text="Adresse" GridPane.rowIndex="3" />
+            <Label text="N° de CNI" GridPane.rowIndex="4" />
+            <TextField fx:id="nomMembre" prefHeight="25.0" prefWidth="366.0" GridPane.columnIndex="1" />
+            <TextField fx:id="prenomMembre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="telephone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="adresse" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="cni" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
-         <padding>
-            <Insets top="5.0" />
-         </padding>
       </GridPane>
    </center>
+   <right>
+      <ImageView fx:id="photoMembre" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER">
+         <BorderPane.margin>
+            <Insets right="20.0" top="10.0" />
+         </BorderPane.margin>
+         <image>
+             <Image url="@../../../ressource/personne.png"/>
+         </image>
+      </ImageView>
+   </right>
    <bottom>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" BorderPane.alignment="CENTER_RIGHT">
         <columnConstraints>
@@ -51,9 +71,10 @@
       </GridPane>
    </bottom>
    <top>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0"
+             prefWidth="580.0" stylesheets="@theme.css" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" text="Details Aide">
+            <Label styleClass="label-header" text="Details Membre">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

@@ -1,34 +1,33 @@
-package gf.view.controller;
+package gf.view;
 
-import java.io.IOException;
-
-import gf.model.Aide;
-import gf.view.MainAppGF;
+import gf.model.Sanction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AidesWindowController {
+import java.io.IOException;
 
-    private ObservableList<Aide> listeAides = FXCollections.observableArrayList();
+public class SanctionWindowController {
+
+    private ObservableList<Sanction> listeSanctions = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Aide> aideTable;
+    private TableView<Sanction> sanctionTable;
     @FXML
-    private TableColumn<Aide, String> motif;
+    private TableColumn<Sanction, String> motif;
 
-    public AidesWindowController() {
-        listeAides.add(new Aide("Mort"));
-        listeAides.add(new Aide("Naissance"));
+    public SanctionWindowController() {
+        listeSanctions.add(new Sanction("Absence"));
+        listeSanctions.add(new Sanction("Retard"));
     }
 
     @FXML
@@ -37,30 +36,30 @@ public class AidesWindowController {
 
         motif.setCellValueFactory(cellData -> cellData.getValue().getMotifProperty());
 
-        aideTable.setItems(listeAides);
+        sanctionTable.setItems(listeSanctions);
 
     }
 
     @FXML
-    private void showAidesDetails() {
+    private void showSanctionsDetails() {
 
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/aideDetails.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/sanctionDetails.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Aide");
+            dialogStage.setTitle("Nouvelle sanction");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            AideDetailsController controller = loader.getController();
+            SanctionDetailsController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setAideWindowController(this);
+            controller.setSanctionWindowController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -76,32 +75,32 @@ public class AidesWindowController {
     }
 
     @FXML
-    private void showAidesDetailsModifier() {
+    private void showSanctionsDetailsModifier() {
 
-        int selectedIndex = aideTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = sanctionTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Aide aide = aideTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeAides.indexOf(aide);
+            Sanction Sanction = sanctionTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeSanctions.indexOf(Sanction);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/aideDetails.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/sanctionDetails.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Aide");
+                dialogStage.setTitle("Modifier sanction");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
 
-                AideDetailsController controller = loader.getController();
+                SanctionDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setAide(aide);
+                controller.setSanction(Sanction);
                 controller.setKeyInArray(keyInArrayList);
-                controller.setAideWindowController(this);
+                controller.setSanctionWindowController(this);
 
                 // Show the dialog and wait until the user closes it
 
@@ -127,12 +126,12 @@ public class AidesWindowController {
     }
 
 
-    public ObservableList<Aide> getListeAides() {
-        return listeAides;
+    public ObservableList<Sanction> getListeSanctions() {
+        return listeSanctions;
     }
 
-    public void setListeAides(ObservableList<Aide> listeAides) {
-        this.listeAides = listeAides;
+    public void setListeSanctions(ObservableList<Sanction> listeSanctions) {
+        this.listeSanctions = listeSanctions;
     }
 
 
