@@ -1,4 +1,4 @@
-package gf.view;
+package gf.view.controller;
 
 import gf.model.Aide;
 import javafx.fxml.FXML;
@@ -13,8 +13,8 @@ public class AideDetailsController {
 	private TextField motif;
 	@FXML
 	private Button valider;
-	
-	private AidesWindowCOntroller aideWindowController;
+
+	private AidesWindowController aideWindowController;
 	private Stage dialogStage;
     private Aide aide;
     private int keyInArray=0;
@@ -80,11 +80,11 @@ public class AideDetailsController {
 	        }
 	    }
 
-	public AidesWindowCOntroller getAideWindowController() {
+	public AidesWindowController getAideWindowController() {
 		return aideWindowController;
 	}
 
-	public void setAideWindowController(AidesWindowCOntroller aideWindowController) {
+	public void setAideWindowController(AidesWindowController aideWindowController) {
 		this.aideWindowController = aideWindowController;
 	}
 

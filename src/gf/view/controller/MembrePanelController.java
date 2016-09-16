@@ -1,9 +1,10 @@
-package gf.view;
+package gf.view.controller;
 
 import java.io.IOException;
 
 import gf.model.Membre;
 import gf.model.MembreFx;
+import gf.view.MainAppGF;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -64,7 +65,7 @@ private void showMemberDetailsDialog() {
     try {
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
+        loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/membreDetails.fxml"));
         BorderPane page = (BorderPane) loader.load();
 
         // Create the dialog Stage.
@@ -101,7 +102,7 @@ private void actionOnclickModifier() {
       try {
           // Load the fxml file and create a new stage for the popup dialog.
           FXMLLoader loader = new FXMLLoader();
-          loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
+          loader.setLocation(MainAppGF.class.getResource("/gf/view/fxml/membreDetails.fxml"));
           BorderPane page = (BorderPane) loader.load();
 
           // Create the dialog Stage.
@@ -132,9 +133,9 @@ private void actionOnclickModifier() {
         // Nothing selected.
         Alert alert = new Alert(AlertType.WARNING);
         alert.initOwner(mainAppGF.getPrimaryStage());
-        alert.setTitle("Aucune ligne selectionée");
-        alert.setHeaderText("Aucune ligne selectionée");
-        alert.setContentText("Svp selectionnez un élement dans la liste.");
+        alert.setTitle("Aucune ligne selectionï¿½e");
+        alert.setHeaderText("Aucune ligne selectionï¿½e");
+        alert.setContentText("Svp selectionnez un ï¿½lement dans la liste.");
 
         alert.showAndWait();
     }

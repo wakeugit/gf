@@ -1,4 +1,4 @@
-package gf.view;
+package gf.view.controller;
 
 
 import gf.model.Cotisation;
@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class TontineDetailsController {
+public class EpargneDetailsController {
 	@FXML
 	private TextField nomCotisation;
 	@FXML
@@ -24,11 +24,11 @@ public class TontineDetailsController {
 	private TextField anneeTxt;
 	@FXML
 	private Button valider;
-	
 
-	private TontineWindowCOntroller tontineWindowController;
+
+	private EpargneWindowController epargneWindowController;
 	private Stage dialogStage;
-	private Cotisation tontine;
+	private Cotisation epargne;
 	private int keyInArray=0;
 
 	@FXML
@@ -36,7 +36,7 @@ public class TontineDetailsController {
 
 	}
 
-	public TontineDetailsController() {
+	public EpargneDetailsController() {
 
 	}
 
@@ -49,12 +49,12 @@ public class TontineDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			tontine = new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
+			epargne = new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
 					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 			if (valider.getText().equals("Valider")) {
-				tontineWindowController.getListeCotisations().add(tontine);
+				epargneWindowController.getListeCotisations().add(epargne);
 			} else {
-				tontineWindowController.getListeCotisations().set(keyInArray, tontine);
+				epargneWindowController.getListeCotisations().set(keyInArray, epargne);
 			}
 			dialogStage.close();
 		}
@@ -104,26 +104,26 @@ public class TontineDetailsController {
 		}
 	}
 
-	public TontineWindowCOntroller getTontineWindowController() {
-		return tontineWindowController;
+	public EpargneWindowController getEpargneWindowController() {
+		return epargneWindowController;
 	}
 
-	public void setTontineWindowCOntroller(
-			TontineWindowCOntroller tontineWindowController) {
-		this.tontineWindowController = tontineWindowController;
+	public void setEpargneWindowCOntroller(
+			EpargneWindowController epargneWindowController) {
+		this.epargneWindowController = epargneWindowController;
 	}
 
-	public Cotisation getTontine() {
-		return tontine;
+	public Cotisation getEpargne() {
+		return epargne;
 	}
 
-	public void setTontine(Cotisation tontine) {
-		this.tontine = tontine;
+	public void setEpargne(Cotisation epargne) {
+		this.epargne = epargne;
 		valider.setText("Modifier");
-		nomCotisation.setText(tontine.getnomCotisation());
-		dateDebut.setValue(tontine.getDateDebut().getValue());
-		dateFin.setValue(tontine.getDateFin().getValue());
-		anneeTxt.setText(tontine.getAnnee().get());
+		nomCotisation.setText(epargne.getnomCotisation());
+		dateDebut.setValue(epargne.getDateDebut().getValue());
+		dateFin.setValue(epargne.getDateFin().getValue());
+		anneeTxt.setText(epargne.getAnnee().get());
 	}
 
 	public int getKeyInArray() {

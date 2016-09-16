@@ -1,16 +1,12 @@
 package gf.view;
 
-import gf.model.Membre;
 import gf.model.MembreFx;
+import gf.view.controller.MembrePanelController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -95,7 +91,7 @@ public class MainAppGF extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Années");
+            dialogStage.setTitle("Annï¿½es");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);

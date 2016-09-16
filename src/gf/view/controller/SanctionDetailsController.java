@@ -1,4 +1,4 @@
-package gf.view;
+package gf.view.controller;
 
 import gf.model.Sanction;
 import javafx.fxml.FXML;
@@ -13,8 +13,8 @@ public class SanctionDetailsController {
 	private TextField motif;
 	@FXML
 	private Button valider;
-	
-	private SanctionWindowCOntroller sanctionWindowController;
+
+	private SanctionWindowController sanctionWindowController;
 	private Stage dialogStage;
     private Sanction sanction;
     private int keyInArray=0;
@@ -80,12 +80,12 @@ public class SanctionDetailsController {
 	        }
 	    }
 
-	public SanctionWindowCOntroller getSanctionWindowController() {
+	public SanctionWindowController getSanctionWindowController() {
 		return sanctionWindowController;
 	}
 
-	public void setSanctionWindowController(SanctionWindowCOntroller SanctionWindowController) {
-		this.sanctionWindowController = SanctionWindowController;
+	public void setSanctionWindowController(SanctionWindowController sanctionWindowController) {
+		this.sanctionWindowController = sanctionWindowController;
 	}
 
 	public Sanction getSanction() {

@@ -1,12 +1,10 @@
-package gf.view;
+package gf.view.controller;
 
 
 import gf.model.Utilisateur;
-import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -24,9 +22,9 @@ public class UtilisateurDetailsController {
 	private TextField poste;
 	@FXML
 	private Button valider;
-	
 
-	private UtilisateurWindowCOntroller utilisateurWindowController;
+
+	private UtilisateurWindowController utilisateurWindowController;
 	private Stage dialogStage;
 	private Utilisateur utilisateur;
 	private int keyInArray=0;
@@ -103,12 +101,12 @@ public class UtilisateurDetailsController {
 		}
 	}
 
-	public UtilisateurWindowCOntroller getUtilisateurWindowController() {
+	public UtilisateurWindowController getUtilisateurWindowController() {
 		return utilisateurWindowController;
 	}
 
 	public void setUtilisateurWindowCOntroller(
-			UtilisateurWindowCOntroller utilisateurWindowController) {
+			UtilisateurWindowController utilisateurWindowController) {
 		this.utilisateurWindowController = utilisateurWindowController;
 	}
 

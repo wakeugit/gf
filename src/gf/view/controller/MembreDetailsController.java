@@ -1,4 +1,4 @@
-package gf.view;
+package gf.view.controller;
 
 
 

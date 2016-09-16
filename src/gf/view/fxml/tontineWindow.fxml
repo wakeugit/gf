@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.AnneesWindowCOntroller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0"
+            prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.controller.TontineWindowController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -19,21 +21,23 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <BorderPane.margin>
-            <Insets bottom="120.0" left="20.0" top="20.0" />
+            <Insets bottom="200.0" left="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="nouveauAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAnneeDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
-            <Button fx:id="modifierAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAnneeDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
+            <Button fx:id="nouveau" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+            <Button fx:id="modifie" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
             <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </right>
    <center>
-      <TableView fx:id="anneeTable" prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+      <TableView fx:id="tontineTable" maxHeight="-Infinity" prefHeight="315.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="annee" prefWidth="123.0" text="Année" />
-            <TableColumn fx:id="dateDebut" prefWidth="106.0" text="Date début" />
-            <TableColumn fx:id="dateFin" prefWidth="125.0" text="Date fin" />
+            <TableColumn fx:id="nomCotisation" prefWidth="150.0" text="Nom cotisation" />
+            <TableColumn fx:id="type" prefWidth="103.0" text="type" />
+            <TableColumn fx:id="dateDebut" prefWidth="115.0" text="Date début" />
+            <TableColumn fx:id="dateFin" prefWidth="110.0" text="Date fin" />
+            <TableColumn fx:id="annee" prefWidth="107.0" text="Année" />
         </columns>
          <opaqueInsets>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -44,9 +48,9 @@
       </TableView>
    </center>
    <top>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="460.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des années">
+             <Label styleClass="label-header" stylesheets="@../theme.css" text="Gestion des tontines">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

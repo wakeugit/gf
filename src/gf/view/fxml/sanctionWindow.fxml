@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.AidesWindowCOntroller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
+            prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.controller.SanctionWindowController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,14 +24,14 @@
             <Insets bottom="120.0" left="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="nouveauAide" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAidesDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
-            <Button fx:id="modifierAide" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAidesDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-            <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
+            <Button fx:id="nouveau" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showSanctionsDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+            <Button fx:id="modifier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showSanctionsDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
+            <Button fx:id="supprimer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </right>
    <center>
-      <TableView fx:id="aideTable" prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+      <TableView fx:id="sanctionTable" prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
             <TableColumn fx:id="motif" prefWidth="355.0" text="Motif" />
         </columns>
@@ -44,7 +46,7 @@
    <top>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="460.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des aides">
+             <Label styleClass="label-header" stylesheets="@../theme.css" text="Gestion des sanctions">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

@@ -1,4 +1,4 @@
-package gf.view;
+package gf.view.controller;
 
 import gf.model.Annee;
 import gf.util.DateUtil;
@@ -20,7 +20,7 @@ public class AnneesDetailsController {
 	@FXML
 	private Button valider;
 
-	private AnneesWindowCOntroller anneeWindowController;
+	private AnneesWindowController anneeWindowController;
 	private Stage dialogStage;
 	private Annee annee;
 	private int keyInArray=0;
@@ -95,12 +95,12 @@ public class AnneesDetailsController {
 		}
 	}
 
-	public AnneesWindowCOntroller getAnneeWindowController() {
+	public AnneesWindowController getAnneeWindowController() {
 		return anneeWindowController;
 	}
 
 	public void setAnneesWindowCOntroller(
-			AnneesWindowCOntroller anneeWindowController) {
+			AnneesWindowController anneeWindowController) {
 		this.anneeWindowController = anneeWindowController;
 	}
 
