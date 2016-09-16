@@ -1,7 +1,6 @@
 package gf.view;
 
-import java.io.IOException;
-
+import gf.backend.BackEndService;
 import gf.model.Membre;
 import gf.model.MembreFx;
 import javafx.collections.FXCollections;
@@ -10,16 +9,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MembrePanelController {
 
-	private MainAppGF mainAppGF ;
+    private final BackEndService service;
+    private MainAppGF mainAppGF ;
 
 	private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
     
@@ -40,9 +46,28 @@ public class MembrePanelController {
     
     
     public MembrePanelController() {
-    	listeMembres.add(new MembreFx(new Membre("Wakeu", "Wilfried", 0172327632, 1323244353, "Essen", "N/A")));
-        listeMembres.add(new MembreFx(new Membre("Ali", "Ben", 3565765, 1323244353, "Nord", "N/A")));
-        listeMembres.add(new MembreFx(new Membre("Dzotang", "Lyonnel", 0172327632, 1323244353, "Douala", "N/A")));
+        service = BackEndService.retrofit.create(BackEndService.class);
+
+        Call<List<Membre>> listCall = service.getMembres();
+        listCall.enqueue(new Callback<List<Membre>>() {
+            @Override
+            public void onResponse(Call<List<Membre>> call, Response<List<Membre>> response) {
+                if (response.body() != null) {
+                    List<Membre> membres = response.body();
+                    for (Membre membre : membres) {
+                        listeMembres.add(new MembreFx(membre));
+                    }
+                } else {
+                    listeMembres.add(new MembreFx(new Membre("Ali", "Ben", 3565765, 1323244353, "Nord", "N/A")));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Membre>> call, Throwable throwable) {
+
+            }
+        });
 	}
 
 @FXML
