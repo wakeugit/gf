@@ -1,9 +1,6 @@
 package gf.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 /**
  * Model class for a Person.
@@ -18,6 +15,7 @@ public class MembreFx {
 	private final SimpleIntegerProperty telephone;
 	private final SimpleStringProperty adresse;
 	private final SimpleIntegerProperty cni;
+	private final SimpleLongProperty id;
 
 	/**
 	 * Default constructor.
@@ -29,8 +27,6 @@ public class MembreFx {
 	/**
 	 * Constructor with some initial data.
 	 * 
-	 * @param photo
-	 * @param nom
 	 */
 	public MembreFx(Membre membre) {
 		this.photo = new SimpleStringProperty(membre.getPhoto());
@@ -39,6 +35,7 @@ public class MembreFx {
 		this.telephone = new SimpleIntegerProperty(membre.getTelephone());
 		this.adresse = new SimpleStringProperty(membre.getAdresse());
 		this.cni = new SimpleIntegerProperty(membre.getCni());
+		this.id = new SimpleLongProperty(membre.getId());
 
 	}
 
@@ -112,5 +109,17 @@ public class MembreFx {
 
 	public void setCni(int cni) {
 		this.cni.set(cni);
+	}
+
+	public LongProperty idProperty() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id.set(id);
+	}
+
+	public long getId() {
+		return id.get();
 	}
 }

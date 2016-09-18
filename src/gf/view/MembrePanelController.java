@@ -1,6 +1,7 @@
 package gf.view;
 
-import gf.backend.BackEndService;
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Membre;
 import gf.model.MembreFx;
 import javafx.collections.FXCollections;
@@ -15,20 +16,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MembrePanelController {
 
-    private final BackEndService service;
-    private MainAppGF mainAppGF ;
+    private MainAppGF mainAppGF;
 
-	private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
-    
+    private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
+
     @FXML
     private TableView<MembreFx> membreTable;
     @FXML
@@ -43,160 +39,149 @@ public class MembrePanelController {
     private TableColumn<MembreFx, String> adresseCol;
     @FXML
     private TableColumn<MembreFx, Integer> cniCol;
-    
-    
+
+
     public MembrePanelController() {
-        service = BackEndService.retrofit.create(BackEndService.class);
 
-        Call<List<Membre>> listCall = service.getMembres();
-        listCall.enqueue(new Callback<List<Membre>>() {
-            @Override
-            public void onResponse(Call<List<Membre>> call, Response<List<Membre>> response) {
-                if (response.body() != null) {
-                    List<Membre> membres = response.body();
-                    for (Membre membre : membres) {
-                        listeMembres.add(new MembreFx(membre));
-                    }
-                } else {
-                    listeMembres.add(new MembreFx(new Membre("Ali", "Ben", 3565765, 1323244353, "Nord", "N/A")));
-
-                }
+        Response<Membre[]> response = BackendInterface.getMembres();
+        if (response.getBody() != null) {
+            for (Membre membre : response.getBody()) {
+                listeMembres.add(new MembreFx(membre));
             }
+        } else {
+            //Todo Display error message
+        }
+    }
 
-            @Override
-            public void onFailure(Call<List<Membre>> call, Throwable throwable) {
 
-            }
-        });
-	}
+    @FXML
+    private void initialize() {
+        // Initialize the person table with the two columns.
 
-@FXML
-  private void initialize() {
-      // Initialize the person table with the two columns.
+        photoCol.setCellValueFactory(cellData -> cellData.getValue().photoProperty());
+        nomCol.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+        prenomCol.setCellValueFactory(cellData -> cellData.getValue().prenomProperty());
+        telephoneCol.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty().asObject());
+        adresseCol.setCellValueFactory(cellData -> cellData.getValue().adresseProperty());
+        cniCol.setCellValueFactory(cellData -> cellData.getValue().cniProperty().asObject());
 
-  	photoCol.setCellValueFactory(cellData -> cellData.getValue().photoProperty());
-  	nomCol.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
-  	prenomCol.setCellValueFactory(cellData -> cellData.getValue().prenomProperty());
-  	telephoneCol.setCellValueFactory(cellData -> cellData.getValue().telephoneProperty().asObject());
-  	adresseCol.setCellValueFactory(cellData -> cellData.getValue().adresseProperty());
-  	cniCol.setCellValueFactory(cellData -> cellData.getValue().cniProperty().asObject());
-  	
-  	 membreTable.setItems(listeMembres);
-      
-  }
-@FXML
-private void showMemberDetailsDialog() {
-    try {
-        // Load the fxml file and create a new stage for the popup dialog.
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
-        BorderPane page = (BorderPane) loader.load();
-
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Nouveau Membre");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(mainAppGF.getPrimaryStage());
-        Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
-
-        // Set the Member into the controller.
-         MembreDetailsController controller = loader.getController();
-         controller.setDialogStage(dialogStage);
-         controller.setMembrePanelController(this);
-
-        // Show the dialog and wait until the user closes it
-
-        dialogStage.showAndWait();
-
-        // return controller.isOkClicked();
-
-    } catch (IOException e) {
-        e.printStackTrace();
+        membreTable.setItems(listeMembres);
 
     }
-}
 
-@FXML
-private void actionOnclickModifier() {
-	
-    int selectedIndex = membreTable.getSelectionModel().getSelectedIndex();
-    if (selectedIndex >= 0) {
-    	MembreFx mbreFx = membreTable.getItems().get(selectedIndex);
-      try {
-          // Load the fxml file and create a new stage for the popup dialog.
-          FXMLLoader loader = new FXMLLoader();
-          loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
-          BorderPane page = (BorderPane) loader.load();
+    @FXML
+    private void showMemberDetailsDialog() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
+            BorderPane page = (BorderPane) loader.load();
 
-          // Create the dialog Stage.
-          Stage dialogStage = new Stage();
-          dialogStage.setTitle("Modifier Membre");
-          dialogStage.initModality(Modality.WINDOW_MODAL);
-          dialogStage.initOwner(mainAppGF.getPrimaryStage());
-          Scene scene = new Scene(page);
-          dialogStage.setScene(scene);
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Nouveau Membre");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainAppGF.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
 
-          // Set the Member into the controller.
-           MembreDetailsController controller = loader.getController();
-           controller.setDialogStage(dialogStage);
-           controller.setMembre(mbreFx);
-           controller.setMembrePanelController(this);
+            // Set the Member into the controller.
+            MembreDetailsController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setMembrePanelController(this);
 
-          // Show the dialog and wait until the user closes it
+            // Show the dialog and wait until the user closes it
 
-          dialogStage.showAndWait();
+            dialogStage.showAndWait();
 
-          // return controller.isOkClicked();
+            // return controller.isOkClicked();
 
-      } catch (IOException e) {
-          e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
 
-      }
-    } else {
-        // Nothing selected.
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.initOwner(mainAppGF.getPrimaryStage());
-        alert.setTitle("Aucune ligne selection�e");
-        alert.setHeaderText("Aucune ligne selection�e");
-        alert.setContentText("Svp selectionnez un �lement dans la liste.");
-
-        alert.showAndWait();
+        }
     }
-}
+
+    @FXML
+    private void actionOnclickModifier() {
+
+        int selectedIndex = membreTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            MembreFx mbreFx = membreTable.getItems().get(selectedIndex);
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/membreDetails.fxml"));
+                BorderPane page = (BorderPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Modifier Membre");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                MembreDetailsController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setMembre(mbreFx);
+                controller.setMembrePanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Aucune ligne selection�e");
+            alert.setHeaderText("Aucune ligne selection�e");
+            alert.setContentText("Svp selectionnez un �lement dans la liste.");
+
+            alert.showAndWait();
+        }
+    }
 
 
-  @FXML
-  private void actionOnclickSupprimer() {
-  	
-      int selectedIndex = membreTable.getSelectionModel().getSelectedIndex();
-      if (selectedIndex >= 0) {
-      	membreTable.getItems().remove(selectedIndex);
-      } else {
-          // Nothing selected.
-          Alert alert = new Alert(AlertType.WARNING);
-          alert.initOwner(mainAppGF.getPrimaryStage());
-          alert.setTitle("No Selection");
-          alert.setHeaderText("No Person Selected");
-          alert.setContentText("Please select a person in the table.");
+    @FXML
+    private void actionOnclickSupprimer() {
 
-          alert.showAndWait();
-      }
-  }
+        int selectedIndex = membreTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            membreTable.getItems().remove(selectedIndex);
+            BackendInterface.deleteMembre(membreTable.getItems().get(selectedIndex).getId());
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
 
- 
- 
-  public MainAppGF getMainAppGF() {
-		return mainAppGF;
-	}
+            alert.showAndWait();
+        }
+    }
 
-	public void setMainAppGF(MainAppGF mainAppGF) {
-		this.mainAppGF = mainAppGF;
-	}
-  
-  public ObservableList<MembreFx> getListMembre() {
-      return listeMembres;
-  }
 
-  
+    public MainAppGF getMainAppGF() {
+        return mainAppGF;
+    }
+
+    public void setMainAppGF(MainAppGF mainAppGF) {
+        this.mainAppGF = mainAppGF;
+    }
+
+    public ObservableList<MembreFx> getListMembre() {
+        return listeMembres;
+    }
+
+
 }
