@@ -23,6 +23,16 @@ public class Membre {
 		this.photo=photo;
 	}
 
+	public Membre(long id, String nom, String prenom, int telephone, int cni, String adresse, String photo){
+		this.id=id;
+		this.nom=nom;
+		this.prenom=prenom;
+		this.telephone=telephone;
+		this.cni=cni;
+		this.adresse=adresse;
+		this.photo=photo;
+	}
+	
 	public Membre(MembreFx membreFx) {
 		nom = (membreFx.getNom());
 		prenom = (membreFx.getPrenom());
@@ -33,4 +43,5 @@ public class Membre {
 		id = membreFx.getId();
 	}
 
+	
 }

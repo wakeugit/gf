@@ -2,6 +2,7 @@ package gf.view;
 
 
 import gf.model.Cotisation;
+import gf.model.CotisationFx;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,7 +29,7 @@ public class TontineDetailsController {
 
 	private TontineWindowController tontineWindowController;
 	private Stage dialogStage;
-	private Cotisation tontine;
+	private CotisationFx tontine;
 	private int keyInArray=0;
 
 	@FXML
@@ -49,8 +50,8 @@ public class TontineDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			tontine = new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
+			tontine = new CotisationFx(new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText()));
 			if (valider.getText().equals("Valider")) {
 				tontineWindowController.getListeCotisations().add(tontine);
 			} else {
@@ -85,7 +86,7 @@ public class TontineDetailsController {
 //			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
 //		}
 		if (anneeTxt.getText() == null || anneeTxt.getText().length() == 0) {
-			errorMessage += "Annee invalide!\n";
+			errorMessage += "AnneeFx invalide!\n";
 		}
 
 		if (errorMessage.length() == 0) {
@@ -113,17 +114,17 @@ public class TontineDetailsController {
 		this.tontineWindowController = tontineWindowController;
 	}
 
-	public Cotisation getTontine() {
+	public CotisationFx getTontine() {
 		return tontine;
 	}
 
-	public void setTontine(Cotisation tontine) {
+	public void setTontine(CotisationFx tontine) {
 		this.tontine = tontine;
 		valider.setText("Modifier");
 		nomCotisation.setText(tontine.getnomCotisation());
-		dateDebut.setValue(tontine.getDateDebut().getValue());
-		dateFin.setValue(tontine.getDateFin().getValue());
-		anneeTxt.setText(tontine.getAnnee().get());
+		dateDebut.setValue(tontine.getDateDebutProperty().getValue());
+		dateFin.setValue(tontine.getDateFinProperty().getValue());
+		anneeTxt.setText(tontine.getAnneeProperty().get());
 	}
 
 	public int getKeyInArray() {

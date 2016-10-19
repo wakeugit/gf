@@ -1,63 +1,46 @@
 package gf.model;
 
-import gf.util.DateUtil;
 
-import java.time.LocalDate;
+import lombok.Data;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+@Data
 
 public class Cotisation {
 	
-	private final SimpleStringProperty nomCotisation;
-	private final SimpleStringProperty type;
-	private final ObjectProperty<LocalDate> dateDebut;
-	private final ObjectProperty<LocalDate> dateFin;
-	private final SimpleStringProperty annee;
-	
-	
-	public Cotisation(){
-		this(null, null, null, null, null);
-	}
+	private String nomCotisation="";
+	private String type="";
+	private String annee="";
+	private String dateDebut;
+	private String dateFin;
+	private long id = -1;
+
+		
 	public Cotisation(String nomCotisation, String type, String dateDebut, String dateFin, String annee){
-		this.nomCotisation= new SimpleStringProperty(nomCotisation);
-		this.type= new SimpleStringProperty(type);
-		this.dateDebut = new SimpleObjectProperty<LocalDate>(DateUtil.parse(dateDebut));
-		this.dateFin = new SimpleObjectProperty<LocalDate>(DateUtil.parse(dateFin));
-		this.annee= new SimpleStringProperty(annee);
+		this.nomCotisation = nomCotisation;
+		this.type = type;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.annee=annee;
 	}
 	
-	public String getnomCotisation() {
-		return nomCotisation.get();
+	public Cotisation(long id, String nomCotisation, String type, String dateDebut, String dateFin, String annee){
+		this.nomCotisation = nomCotisation;
+		this.type = type;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.annee=annee;
+		this.id=id;
 	}
+
 	
-	public SimpleStringProperty getnomCotisationProperty() {
-		return nomCotisation;
-	}
 	
-	public void setnomCotisation(String nomCotisation) {
-		this.nomCotisation.set(nomCotisation);
-	}
-	
-	public ObjectProperty<LocalDate> getDateDebut() {
-		return dateDebut;
-	}
-	
-	public ObjectProperty<LocalDate> getDateFin() {
-		return dateFin;
-	}
-	
-	public SimpleStringProperty getNomCotisation() {
-		return nomCotisation;
-	}
-	
-	public SimpleStringProperty getType() {
-		return type;
-	}
-	
-	public SimpleStringProperty getAnnee() {
-		return annee;
+	public Cotisation(CotisationFx cotisationFx) {
+		this.nomCotisation = cotisationFx.getnomCotisation();
+		this.type = cotisationFx.getType();
+		this.dateDebut = cotisationFx.getDateDebut();
+		this.dateFin = cotisationFx.getDateFin();
+		this.annee = cotisationFx.getAnnee();
+		this.id = cotisationFx.getId();
 	}
 	
 	

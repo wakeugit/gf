@@ -29,6 +29,7 @@ public class MembreFx {
 	 * 
 	 */
 	public MembreFx(Membre membre) {
+		
 		this.photo = new SimpleStringProperty(membre.getPhoto());
 		this.nom = new SimpleStringProperty(membre.getNom());
 		this.prenom = new SimpleStringProperty(membre.getPrenom());

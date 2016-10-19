@@ -3,6 +3,7 @@ package gf.view;
 import java.io.IOException;
 
 import gf.model.Utilisateur;
+import gf.model.UtilisateurFx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,26 +19,26 @@ import javafx.stage.Stage;
 
 public class UtilisateurWindowController {
 
-    private ObservableList<Utilisateur> listeUtilisateurs = FXCollections.observableArrayList();
+    private ObservableList<UtilisateurFx> listeUtilisateurs = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Utilisateur> utilisateurTable;
+    private TableView<UtilisateurFx> utilisateurTable;
     @FXML
-    private TableColumn<Utilisateur, String> nomUtilisateur;
+    private TableColumn<UtilisateurFx, String> nomUtilisateur;
     @FXML
-    private TableColumn<Utilisateur, Integer> niveau;
+    private TableColumn<UtilisateurFx, Integer> niveau;
     @FXML
-    private TableColumn<Utilisateur, String> nom;
+    private TableColumn<UtilisateurFx, String> nom;
     @FXML
-    private TableColumn<Utilisateur, String> prenom;
+    private TableColumn<UtilisateurFx, String> prenom;
     @FXML
-    private TableColumn<Utilisateur, String> poste;
+    private TableColumn<UtilisateurFx, String> poste;
 
     public UtilisateurWindowController() {
-        listeUtilisateurs.add(new Utilisateur("toto", 1, "Tagne", "Paul", "admin"));
-        listeUtilisateurs.add(new Utilisateur("papa", 2, "Magne", "Marie", "Commissaire"));
-        listeUtilisateurs.add(new Utilisateur("maman", 3, "Pagne", "Lari", "SG"));
-        listeUtilisateurs.add(new Utilisateur("fou", 4, "Nagne", "Lyonnel", "President"));
+        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("toto", 1, "Tagne", "Paul", "admin")));
+        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("papa", 2, "Magne", "Marie", "Commissaire")));
+        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("maman", 3, "Pagne", "Lari", "SG")));
+        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("fou", 4, "Nagne", "Lyonnel", "President")));
     }
 
     @FXML
@@ -94,8 +95,8 @@ public class UtilisateurWindowController {
         int selectedIndex = utilisateurTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Utilisateur Utilisateur = utilisateurTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeUtilisateurs.indexOf(Utilisateur);
+            UtilisateurFx UtilisateurFx = utilisateurTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeUtilisateurs.indexOf(UtilisateurFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -112,7 +113,7 @@ public class UtilisateurWindowController {
 
                 UtilisateurDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setUtilisateur(Utilisateur);
+                controller.setUtilisateur(UtilisateurFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setUtilisateurWindowCOntroller(this);
 
@@ -140,11 +141,11 @@ public class UtilisateurWindowController {
     }
 
 
-    public ObservableList<Utilisateur> getListeUtilisateurs() {
+    public ObservableList<UtilisateurFx> getListeUtilisateurs() {
         return listeUtilisateurs;
     }
 
-    public void setListeUtilisateurs(ObservableList<Utilisateur> listeUtilisateurs) {
+    public void setListeUtilisateurs(ObservableList<UtilisateurFx> listeUtilisateurs) {
         this.listeUtilisateurs = listeUtilisateurs;
     }
 

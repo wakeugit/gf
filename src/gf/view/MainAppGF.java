@@ -90,7 +90,7 @@ public class MainAppGF extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Ann�es");
+            dialogStage.setTitle("Annees");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
@@ -231,11 +231,11 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MembrePanelController.class.getResource("membresPanel.fxml"));
-            BorderPane membres = (BorderPane) loader.load();
+            loader.setLocation(MainAppGF.class.getResource("membresPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
             MembrePanelController controller = loader.getController();
             controller.setMainAppGF(this);
-            rootLayout.setCenter(membres);
+            rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -245,17 +245,114 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MembrePanelController.class.getResource("inscriptionsPanel.fxml"));
-            BorderPane membres = (BorderPane) loader.load();
-//            MembrePanelController controller = loader.getController();
-//            controller.setMainAppGF(this);
-            rootLayout.setCenter(membres);
+            loader.setLocation(MainAppGF.class.getResource("inscriptionsPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+            InscriptionsPanelController controller = loader.getController();
+            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void actionOnClickEpargne() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("epargnePanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void actionOnClickTontine() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("tontinesPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
    
+    public void actionOnClickPretsEtRemb() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("pretsEtRembPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void actionOnClickAides() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("aidesPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void actionOnClickSanctions() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("sanctionsPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void actionOnClickProfilMembre() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("profilMembrePanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void actionOnClickCaisse() {
+        try {
+            // Load member pane.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("caissesPanel.fxml"));
+            BorderPane panel = (BorderPane) loader.load();
+//            MembrePanelController controller = loader.getController();
+//            controller.setMainAppGF(this);
+            rootLayout.setCenter(panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public Stage getPrimaryStage() {
         return primaryStage;
     }

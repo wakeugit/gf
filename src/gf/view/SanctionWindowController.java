@@ -1,6 +1,7 @@
 package gf.view;
 
 import gf.model.Sanction;
+import gf.model.SanctionFx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,16 +19,16 @@ import java.io.IOException;
 
 public class SanctionWindowController {
 
-    private ObservableList<Sanction> listeSanctions = FXCollections.observableArrayList();
+    private ObservableList<SanctionFx> listeSanctions = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Sanction> sanctionTable;
+    private TableView<SanctionFx> sanctionTable;
     @FXML
-    private TableColumn<Sanction, String> motif;
+    private TableColumn<SanctionFx, String> motif;
 
     public SanctionWindowController() {
-        listeSanctions.add(new Sanction("Absence"));
-        listeSanctions.add(new Sanction("Retard"));
+        listeSanctions.add(new SanctionFx(new Sanction("Absence")));
+        listeSanctions.add(new SanctionFx(new Sanction("Retard")));
     }
 
     @FXML
@@ -80,8 +81,8 @@ public class SanctionWindowController {
         int selectedIndex = sanctionTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Sanction Sanction = sanctionTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeSanctions.indexOf(Sanction);
+            SanctionFx SanctionFx = sanctionTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeSanctions.indexOf(SanctionFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -98,7 +99,7 @@ public class SanctionWindowController {
 
                 SanctionDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setSanction(Sanction);
+                controller.setSanction(SanctionFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setSanctionWindowController(this);
 
@@ -126,11 +127,11 @@ public class SanctionWindowController {
     }
 
 
-    public ObservableList<Sanction> getListeSanctions() {
+    public ObservableList<SanctionFx> getListeSanctions() {
         return listeSanctions;
     }
 
-    public void setListeSanctions(ObservableList<Sanction> listeSanctions) {
+    public void setListeSanctions(ObservableList<SanctionFx> listeSanctions) {
         this.listeSanctions = listeSanctions;
     }
 
