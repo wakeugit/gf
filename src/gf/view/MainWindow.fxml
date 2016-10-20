@@ -9,10 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-            prefWidth="1024.0" styleClass="background" stylesheets="@theme.css"
-            xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.MainAppGF">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" styleClass="background" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.MainAppGF">
    <top>
       <VBox prefHeight="63.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <children>
@@ -69,13 +66,13 @@
          <children>
             <Button fx:id="membresButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#actionOnClickMembre" prefHeight="35.0" prefWidth="110.0" text="Membres" />
             <Button fx:id="inscriptionsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickInscription" prefHeight="35.0" prefWidth="110.0" text="Inscriptions" GridPane.rowIndex="1" />
-            <Button fx:id="tontinesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Tontines" GridPane.rowIndex="2" />
-            <Button fx:id="pretsRembButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" text="Prêts et remboursements" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="4" />
-            <Button fx:id="epargnesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Epargnes" GridPane.rowIndex="3" />
-            <Button fx:id="aidesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Aides" GridPane.rowIndex="5" />
-            <Button fx:id="sanctionsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Sanctions" GridPane.rowIndex="6" />
-            <Button fx:id="ProfilButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Profil membre" GridPane.rowIndex="7" />
-            <Button fx:id="caisseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Caisses" GridPane.rowIndex="8" />
+            <Button fx:id="tontinesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickTontine" prefHeight="35.0" prefWidth="110.0" text="Tontines" GridPane.rowIndex="2" />
+            <Button fx:id="pretsRembButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickPretsEtRemb" prefHeight="50.0" prefWidth="110.0" text="Prêts et remboursements" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.rowIndex="4" />
+            <Button fx:id="epargnesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickEpargne" prefHeight="35.0" prefWidth="110.0" text="Epargnes" GridPane.rowIndex="3" />
+            <Button fx:id="aidesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickAides" prefHeight="35.0" prefWidth="110.0" text="Aides" GridPane.rowIndex="5" />
+            <Button fx:id="sanctionsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickSanctions" prefHeight="35.0" prefWidth="110.0" text="Sanctions" GridPane.rowIndex="6" />
+            <Button fx:id="ProfilButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickProfilMembre" prefHeight="35.0" prefWidth="110.0" text="Profil membre" GridPane.rowIndex="7" />
+            <Button fx:id="caisseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickCaisse" prefHeight="35.0" prefWidth="110.0" text="Caisses" GridPane.rowIndex="8" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="20.0" top="20.0" />

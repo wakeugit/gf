@@ -1,6 +1,7 @@
 package gf.view;
 
 import gf.model.Aide;
+import gf.model.AideFx;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class AideDetailsController {
 
 	private AidesWindowController aideWindowController;
 	private Stage dialogStage;
-    private Aide aide;
+    private AideFx aideFx;
     private int keyInArray=0;
     private boolean validerClicked = false;
     
@@ -39,13 +40,13 @@ public class AideDetailsController {
 	@FXML
 	private void actionOnClickValider(){
 		  if (isInputValid()) {
-		aide = new Aide(motif.getText());
+		aideFx = new AideFx(new Aide(motif.getText()));
 		
 		
 		if (valider.getText().equals("Valider")) {
-			aideWindowController.getListeAides().add(aide); 
+			aideWindowController.getListeAides().add(aideFx); 
 		} else {
-			aideWindowController.getListeAides().set(keyInArray, aide);
+			aideWindowController.getListeAides().set(keyInArray, aideFx);
 		}
 		 validerClicked = true;
       dialogStage.close();
@@ -88,14 +89,14 @@ public class AideDetailsController {
 		this.aideWindowController = aideWindowController;
 	}
 
-	public Aide getAide() {
-		return aide;
+	public AideFx getAide() {
+		return aideFx;
 	}
 
-	public void setAide(Aide aide) {
-		this.aide = aide;
+	public void setAide(AideFx aideFx) {
+		this.aideFx = aideFx;
 		valider.setText("Modifier");
-		motif.setText(aide.getMotif());
+		motif.setText(aideFx.getMotif());
 	}
 
 	public int getKeyInArray() {

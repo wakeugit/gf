@@ -2,6 +2,7 @@ package gf.view;
 
 
 import gf.model.Cotisation;
+import gf.model.CotisationFx;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,7 +29,7 @@ public class EpargneDetailsController {
 
 	private EpargneWindowController epargneWindowController;
 	private Stage dialogStage;
-	private Cotisation epargne;
+	private CotisationFx epargne;
 	private int keyInArray=0;
 
 	@FXML
@@ -49,8 +50,8 @@ public class EpargneDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			epargne = new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
+			epargne = new CotisationFx(new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText()));
 			if (valider.getText().equals("Valider")) {
 				epargneWindowController.getListeCotisations().add(epargne);
 			} else {
@@ -85,7 +86,7 @@ public class EpargneDetailsController {
 //			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
 //		}
 		if (anneeTxt.getText() == null || anneeTxt.getText().length() == 0) {
-			errorMessage += "Annee invalide!\n";
+			errorMessage += "AnneeFx invalide!\n";
 		}
 
 		if (errorMessage.length() == 0) {
@@ -113,17 +114,17 @@ public class EpargneDetailsController {
 		this.epargneWindowController = epargneWindowController;
 	}
 
-	public Cotisation getEpargne() {
+	public CotisationFx getEpargne() {
 		return epargne;
 	}
 
-	public void setEpargne(Cotisation epargne) {
+	public void setEpargne(CotisationFx epargne) {
 		this.epargne = epargne;
 		valider.setText("Modifier");
 		nomCotisation.setText(epargne.getnomCotisation());
-		dateDebut.setValue(epargne.getDateDebut().getValue());
-		dateFin.setValue(epargne.getDateFin().getValue());
-		anneeTxt.setText(epargne.getAnnee().get());
+		dateDebut.setValue(epargne.getDateDebutProperty().getValue());
+		dateFin.setValue(epargne.getDateFinProperty().getValue());
+		anneeTxt.setText(epargne.getAnneeProperty().get());
 	}
 
 	public int getKeyInArray() {

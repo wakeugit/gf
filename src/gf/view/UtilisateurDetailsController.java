@@ -2,6 +2,7 @@ package gf.view;
 
 
 import gf.model.Utilisateur;
+import gf.model.UtilisateurFx;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -26,7 +27,7 @@ public class UtilisateurDetailsController {
 
 	private UtilisateurWindowController utilisateurWindowController;
 	private Stage dialogStage;
-	private Utilisateur utilisateur;
+	private UtilisateurFx utilisateurFx;
 	private int keyInArray=0;
 
 	@FXML
@@ -47,11 +48,11 @@ public class UtilisateurDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			utilisateur = new Utilisateur(nomUtilisateur.getText(), Integer.parseInt(niveau.getText()),nom.getText(),prenom.getText(), poste.getText());
+			utilisateurFx = new UtilisateurFx(new Utilisateur(nomUtilisateur.getText(), Integer.parseInt(niveau.getText()),nom.getText(),prenom.getText(), poste.getText()));
 			if (valider.getText().equals("Valider")) {
-				utilisateurWindowController.getListeUtilisateurs().add(utilisateur);
+				utilisateurWindowController.getListeUtilisateurs().add(utilisateurFx);
 			} else {
-				utilisateurWindowController.getListeUtilisateurs().set(keyInArray, utilisateur);
+				utilisateurWindowController.getListeUtilisateurs().set(keyInArray, utilisateurFx);
 			}
 			dialogStage.close();
 		}
@@ -70,10 +71,10 @@ public class UtilisateurDetailsController {
 		String errorMessage = "";
 
 		if (nomUtilisateur.getText() == null || nomUtilisateur.getText().length() == 0) {
-			errorMessage += "Nom utilisateur invalide!\n";
+			errorMessage += "Nom utilisateurFx invalide!\n";
 		}
 		if (niveau.getText() == null || niveau.getText().length() == 0) {
-			errorMessage += "type Utilisateur invalide!\n";
+			errorMessage += "type UtilisateurFx invalide!\n";
 		}
 		if (nom.getText() == null || nom.getText().length() == 0) {
 			errorMessage += "nom invalide!\n";
@@ -110,18 +111,18 @@ public class UtilisateurDetailsController {
 		this.utilisateurWindowController = utilisateurWindowController;
 	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	public UtilisateurFx getUtilisateur() {
+		return utilisateurFx;
 	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setUtilisateur(UtilisateurFx utilisateurFx) {
+		this.utilisateurFx = utilisateurFx;
 		valider.setText("Modifier");
-		nomUtilisateur.setText(utilisateur.getNomUtilisateur());
-		niveau.setText(""+utilisateur.getNiveau());
-		nom.setText(utilisateur.getNom());
-		prenom.setText(utilisateur.getPrenom());
-		poste.setText(utilisateur.getPoste());
+		nomUtilisateur.setText(utilisateurFx.getNomUtilisateur());
+		niveau.setText(""+utilisateurFx.getNiveau());
+		nom.setText(utilisateurFx.getNom());
+		prenom.setText(utilisateurFx.getPrenom());
+		poste.setText(utilisateurFx.getPoste());
 	}
 
 	public int getKeyInArray() {

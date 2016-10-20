@@ -1,6 +1,7 @@
 package gf.view;
 
 import gf.model.Annee;
+import gf.model.AnneeFx;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,7 +23,7 @@ public class AnneesDetailsController {
 
 	private AnneesWindowController anneeWindowController;
 	private Stage dialogStage;
-	private Annee annee;
+	private AnneeFx anneeFx;
 	private int keyInArray=0;
 	private boolean validerClicked = false;
 
@@ -47,12 +48,12 @@ public class AnneesDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			annee = new Annee(anneeTxt.getText(), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()));
+			anneeFx = new AnneeFx(new Annee(anneeTxt.getText(), DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue())));
 			if (valider.getText().equals("Valider")) {
-				anneeWindowController.getListeAnnees().add(annee);
+				anneeWindowController.getListeAnnees().add(anneeFx);
 			} else {
-				anneeWindowController.getListeAnnees().set(keyInArray, annee);
+				anneeWindowController.getListeAnnees().set(keyInArray, anneeFx);
 			}
 			validerClicked = true;
 			dialogStage.close();
@@ -70,7 +71,7 @@ public class AnneesDetailsController {
 		String errorMessage = "";
 
 		if (anneeTxt.getText() == null || anneeTxt.getText().length() == 0) {
-			errorMessage += "Annee invalide!\n";
+			errorMessage += "AnneeFx invalide!\n";
 		}
 		if (dateDebut.getValue() == null) {
 			errorMessage += "Date debut invalide : dd.mm.yyyy !\n";
@@ -104,16 +105,16 @@ public class AnneesDetailsController {
 		this.anneeWindowController = anneeWindowController;
 	}
 
-	public Annee getAnnee() {
-		return annee;
+	public AnneeFx getAnnee() {
+		return anneeFx;
 	}
 
-	public void setAnnee(Annee annee) {
-		this.annee = annee;
+	public void setAnnee(AnneeFx anneeFx) {
+		this.anneeFx = anneeFx;
 		valider.setText("Modifier");
-		anneeTxt.setText(annee.getAnnee());
-		dateDebut.setValue(annee.getDateDebut().getValue());
-		dateFin.setValue(annee.getDateFin().getValue());
+		anneeTxt.setText(anneeFx.getAnnee());
+		dateDebut.setValue(anneeFx.getDateDebutProperty().getValue());
+		dateFin.setValue(anneeFx.getDateFinProperty().getValue());
 	}
 
 	public int getKeyInArray() {

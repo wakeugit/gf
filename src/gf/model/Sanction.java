@@ -1,27 +1,30 @@
 package gf.model;
 
-import javafx.beans.property.SimpleStringProperty;
+import lombok.Data;
+
+@Data
 
 public class Sanction {
-	private final SimpleStringProperty motif;
-	
-	public Sanction(){
-		this(null);
-	}
+
+	private String motif="";
+	private long id = -1;
+
+		
 	public Sanction(String motif){
-		this.motif= new SimpleStringProperty(motif);
+		this.motif=motif;
+	}
+
+	public Sanction(long id, String motif){
+		this.id=id;
+		this.motif=motif;
 	}
 	
-	public String getMotif() {
-		return motif.get();
+	public Sanction(SanctionFx sanctionFx) {
+		motif = sanctionFx.getMotif();
+		id = sanctionFx.getId();
 	}
 	
-	public SimpleStringProperty getMotifProperty() {
-		return motif;
-	}
 	
-	public void setMotif(String motif) {
-		this.motif.set(motif);
-	}
+
 	
 }

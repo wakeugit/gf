@@ -3,6 +3,7 @@ package gf.view;
 import java.io.IOException;
 
 import gf.model.Aide;
+import gf.model.AideFx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,16 +19,16 @@ import javafx.stage.Stage;
 
 public class AidesWindowController {
 
-    private ObservableList<Aide> listeAides = FXCollections.observableArrayList();
+    private ObservableList<AideFx> listeAides = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Aide> aideTable;
+    private TableView<AideFx> aideTable;
     @FXML
-    private TableColumn<Aide, String> motif;
+    private TableColumn<AideFx, String> motif;
 
     public AidesWindowController() {
-        listeAides.add(new Aide("Mort"));
-        listeAides.add(new Aide("Naissance"));
+        listeAides.add(new AideFx(new Aide("Mort")));
+        listeAides.add(new AideFx(new Aide("Naissance")));
     }
 
     @FXML
@@ -51,7 +52,7 @@ public class AidesWindowController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Aide");
+            dialogStage.setTitle("Nouvelle AideFx");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
@@ -80,8 +81,8 @@ public class AidesWindowController {
         int selectedIndex = aideTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Aide aide = aideTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeAides.indexOf(aide);
+            AideFx aideFx = aideTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAides.indexOf(aideFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -90,7 +91,7 @@ public class AidesWindowController {
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Aide");
+                dialogStage.setTitle("Modifier AideFx");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
@@ -98,7 +99,7 @@ public class AidesWindowController {
 
                 AideDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setAide(aide);
+                controller.setAide(aideFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setAideWindowController(this);
 
@@ -115,22 +116,20 @@ public class AidesWindowController {
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());
-            alert.setTitle("Aucune ligne selectionï¿½e");
-            alert.setHeaderText("Aucune ligne selectionï¿½e");
-            alert.setContentText("Svp selectionnez un ï¿½lement dans la liste.");
-
+            alert.setTitle("Aucune ligne selectionnée");
+            alert.setHeaderText("Aucune ligne selectionnée");
+            alert.setContentText("Svp selectionnez un élement dans la liste.");
             alert.showAndWait();
         }
 
-
     }
 
 
-    public ObservableList<Aide> getListeAides() {
+    public ObservableList<AideFx> getListeAides() {
         return listeAides;
     }
 
-    public void setListeAides(ObservableList<Aide> listeAides) {
+    public void setListeAides(ObservableList<AideFx> listeAides) {
         this.listeAides = listeAides;
     }
 

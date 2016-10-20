@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import gf.model.Annee;
+import gf.model.AnneeFx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,34 +20,32 @@ import javafx.stage.Stage;
 
 public class AnneesWindowController {
 
-    private ObservableList<Annee> listeAnnees = FXCollections.observableArrayList();
+    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<Annee> anneeTable;
+    private TableView<AnneeFx> anneeTable;
     @FXML
-    private TableColumn<Annee, String> annee;
+    private TableColumn<AnneeFx, String> anneeFx;
     @FXML
-    private TableColumn<Annee, LocalDate> dateDebut;
+    private TableColumn<AnneeFx, LocalDate> dateDebut;
     @FXML
-    private TableColumn<Annee, LocalDate> dateFin;
+    private TableColumn<AnneeFx, LocalDate> dateFin;
 
     public AnneesWindowController() {
-        listeAnnees.add(new Annee("2015", "01.01.2015", "13.12.2015"));
-        listeAnnees.add(new Annee("2016", "01.01.2016", "12.12.2016"));
-        listeAnnees.add(new Annee("2014", "01.01.2014", "12.12.2014"));
-        listeAnnees.add(new Annee("2013", "01.01.2013", "14.12.2013"));
+        listeAnnees.add(new AnneeFx(new Annee("2015", "01.01.2015", "13.12.2015")));
+        listeAnnees.add(new AnneeFx(new Annee("2016", "01.01.2016", "12.12.2016")));
+        listeAnnees.add(new AnneeFx(new Annee("2014", "01.01.2014", "12.12.2014")));
+        listeAnnees.add(new AnneeFx(new Annee("2013", "01.01.2013", "14.12.2013")));
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-
-        annee.setCellValueFactory(cellData -> cellData.getValue().getAnneeProperty());
-        dateDebut.setCellValueFactory(cellData -> cellData.getValue().getDateDebut());
-        dateFin.setCellValueFactory(cellData -> cellData.getValue().getDateFin());
+        anneeFx.setCellValueFactory(cellData -> cellData.getValue().getAnneeProperty());
+        dateDebut.setCellValueFactory(cellData -> cellData.getValue().getDateDebutProperty());
+        dateFin.setCellValueFactory(cellData -> cellData.getValue().getDateFinProperty());
 
         anneeTable.setItems(listeAnnees);
-
     }
 
     @FXML
@@ -60,7 +59,7 @@ public class AnneesWindowController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Ann�e");
+            dialogStage.setTitle("Nouvelle Annee");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
@@ -89,8 +88,8 @@ public class AnneesWindowController {
         int selectedIndex = anneeTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            Annee annee = anneeTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeAnnees.indexOf(annee);
+            AnneeFx anneeFx = anneeTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAnnees.indexOf(anneeFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -107,7 +106,7 @@ public class AnneesWindowController {
 
                 AnneesDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setAnnee(annee);
+                controller.setAnnee(anneeFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setAnneesWindowCOntroller(this);
 
@@ -135,11 +134,11 @@ public class AnneesWindowController {
     }
 
 
-    public ObservableList<Annee> getListeAnnees() {
+    public ObservableList<AnneeFx> getListeAnnees() {
         return listeAnnees;
     }
 
-    public void setListeAnnees(ObservableList<Annee> listeAnnees) {
+    public void setListeAnnees(ObservableList<AnneeFx> listeAnnees) {
         this.listeAnnees = listeAnnees;
     }
 
