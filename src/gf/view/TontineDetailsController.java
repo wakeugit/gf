@@ -3,6 +3,7 @@ package gf.view;
 
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
+import gf.model.Type;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -50,7 +51,7 @@ public class TontineDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			tontine = new CotisationFx(new Cotisation(nomCotisation.getText(), type.getText(), DateUtil.format(dateDebut
+			tontine = new CotisationFx(new Cotisation(nomCotisation.getText(), Type.valueOf(type.getText()), DateUtil.format(dateDebut
 					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText()));
 			if (valider.getText().equals("Valider")) {
 				tontineWindowController.getListeCotisations().add(tontine);

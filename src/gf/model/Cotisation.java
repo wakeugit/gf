@@ -8,22 +8,22 @@ import lombok.Data;
 public class Cotisation {
 	
 	private String nomCotisation="";
-	private String type="";
+	private Type type;
 	private String annee="";
 	private String dateDebut;
 	private String dateFin;
 	private long id = -1;
 
-		
-	public Cotisation(String nomCotisation, String type, String dateDebut, String dateFin, String annee){
+
+	public Cotisation(String nomCotisation, Type type, String dateDebut, String dateFin, String annee) {
 		this.nomCotisation = nomCotisation;
 		this.type = type;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.annee=annee;
 	}
-	
-	public Cotisation(long id, String nomCotisation, String type, String dateDebut, String dateFin, String annee){
+
+	public Cotisation(long id, String nomCotisation, Type type, String dateDebut, String dateFin, String annee) {
 		this.nomCotisation = nomCotisation;
 		this.type = type;
 		this.dateDebut = dateDebut;
@@ -36,7 +36,7 @@ public class Cotisation {
 	
 	public Cotisation(CotisationFx cotisationFx) {
 		this.nomCotisation = cotisationFx.getnomCotisation();
-		this.type = cotisationFx.getType();
+		this.type = Type.valueOf(cotisationFx.getType().toUpperCase());
 		this.dateDebut = cotisationFx.getDateDebut();
 		this.dateFin = cotisationFx.getDateFin();
 		this.annee = cotisationFx.getAnnee();

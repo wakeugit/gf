@@ -1,30 +1,12 @@
 package gf.view;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
-import gf.backend.BackendInterface;
-import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
-import gf.model.Cotisation;
-import gf.model.CotisationFx;
-import gf.model.InscriptionCotisation;
-import gf.model.InscriptionCotisationFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
+import gf.model.*;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -166,11 +148,11 @@ public class InscriptionCotisationController {
     	membrePanelController = new MembrePanelController();
     	
     	listeMembres=membrePanelController.getListMembre();
-    	
-    	 listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2015", "Tontine", "01.01.2015", "13.12.2015", "2015")));
-    	 listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2016", "Tontine", "01.01.2016", "12.12.2016", "2016")));
-    	 listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2014", "Tontine", "01.01.2014", "12.12.2014", "2014")));
-    	 listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2013", "Tontine", "01.01.2013", "14.12.2013", "2013")));
+
+        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2015", Type.TONTINE, "01.01.2015", "13.12.2015", "2015")));
+        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2016", Type.TONTINE, "01.01.2016", "12.12.2016", "2016")));
+        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2014", Type.TONTINE, "01.01.2014", "12.12.2014", "2014")));
+        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2013", Type.TONTINE, "01.01.2013", "14.12.2013", "2013")));
         
     }
 

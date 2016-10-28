@@ -1,22 +1,23 @@
 package gf.view;
 
-import java.io.IOException;
-import java.time.LocalDate;
-
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
+import gf.model.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class EpargneWindowController {
 
@@ -36,10 +37,10 @@ public class EpargneWindowController {
     private TableColumn<CotisationFx, String> annee;
 
     public EpargneWindowController() {
-        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2015", "Epargne", "01.01.2015", "13.12.2015", "2015")));
-        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2016", "Epargne", "01.01.2016", "12.12.2016", "2016")));
-        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2014", "Epargne", "01.01.2014", "12.12.2014", "2014")));
-        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2013", "Epargne", "01.01.2013", "14.12.2013", "2013")));
+        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2015", Type.EPARGNE, "01.01.2015", "13.12.2015", "2015")));
+        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2016", Type.EPARGNE, "01.01.2016", "12.12.2016", "2016")));
+        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2014", Type.EPARGNE, "01.01.2014", "12.12.2014", "2014")));
+        listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2013", Type.EPARGNE, "01.01.2013", "14.12.2013", "2013")));
     }
 
     @FXML

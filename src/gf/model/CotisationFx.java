@@ -1,13 +1,12 @@
 package gf.model;
 
 import gf.util.DateUtil;
-
-import java.time.LocalDate;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.time.LocalDate;
 
 public class CotisationFx {
 	
@@ -24,7 +23,7 @@ public class CotisationFx {
 	}
 	public CotisationFx(Cotisation cotisation){
 		this.nomCotisation= new SimpleStringProperty(cotisation.getNomCotisation());
-		this.type= new SimpleStringProperty(cotisation.getType());
+		this.type = new SimpleStringProperty(cotisation.getType().name());
 		this.dateDebut = new SimpleObjectProperty<LocalDate>(DateUtil.parse(cotisation.getDateDebut()));
 		this.dateFin = new SimpleObjectProperty<LocalDate>(DateUtil.parse(cotisation.getDateFin()));
 		this.annee= new SimpleStringProperty(cotisation.getAnnee());
