@@ -1,14 +1,16 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Annee;
 import gf.model.AnneeFx;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AnneesDetailsController {
@@ -48,12 +50,27 @@ public class AnneesDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			anneeFx = new AnneeFx(new Annee(anneeTxt.getText(), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue())));
+			Annee annee = new Annee(anneeTxt.getText(), DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue()));
+
 			if (valider.getText().equals("Valider")) {
-				anneeWindowController.getListeAnnees().add(anneeFx);
+				Response<Annee> response = BackendInterface.createAnnee(annee);
+				if (response.getBody() != null) {
+					anneeWindowController.getListeAnnees().add(new AnneeFx(response.getBody()));
+				} else {
+					// Todo Display error message
+				}
+
 			} else {
-				anneeWindowController.getListeAnnees().set(keyInArray, anneeFx);
+				if (anneeFx.getId() != -1) {
+					annee.setId(anneeFx.getId());
+					Response<Annee> response = BackendInterface.updateAnnee(annee);
+					if (response.getBody() != null) {
+						anneeWindowController.getListeAnnees().set(keyInArray, new AnneeFx(response.getBody()));
+					} else {
+						// Todo Display error message
+					}
+				}
 			}
 			validerClicked = true;
 			dialogStage.close();

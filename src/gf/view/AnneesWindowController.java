@@ -1,8 +1,7 @@
 package gf.view;
 
-import java.io.IOException;
-import java.time.LocalDate;
-
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Annee;
 import gf.model.AnneeFx;
 import javafx.collections.FXCollections;
@@ -11,12 +10,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class AnneesWindowController {
 
@@ -32,10 +34,16 @@ public class AnneesWindowController {
     private TableColumn<AnneeFx, LocalDate> dateFin;
 
     public AnneesWindowController() {
-        listeAnnees.add(new AnneeFx(new Annee("2015", "01.01.2015", "13.12.2015")));
-        listeAnnees.add(new AnneeFx(new Annee("2016", "01.01.2016", "12.12.2016")));
-        listeAnnees.add(new AnneeFx(new Annee("2014", "01.01.2014", "12.12.2014")));
-        listeAnnees.add(new AnneeFx(new Annee("2013", "01.01.2013", "14.12.2013")));
+
+        Response<Annee[]> response = BackendInterface.getAnnees();
+        if (response.getBody() != null) {
+            for (Annee annee : response.getBody()) {
+                listeAnnees.add(new AnneeFx(annee));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Annee");
+        }
     }
 
     @FXML

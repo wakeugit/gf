@@ -6,6 +6,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import gf.model.Annee;
 import gf.model.Membre;
 
 public class BackendInterface {
@@ -115,6 +116,89 @@ public class BackendInterface {
             }
         } catch (UnirestException e) {
             response.getExceptions().add(e);
+            e.printStackTrace();
+        }
+    }
+
+    public static Response<Annee[]> getAnnees() {
+        initRequest();
+        Response<Annee[]> response = new Response<>();
+        try {
+            HttpResponse<Annee[]> bookResponse = Unirest.get(APP_URL + "/annee/").asObject(Annee[].class);
+            if (bookResponse.getStatus() == 200) {
+                response.setBody(bookResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Annee> createAnnee(Annee annee) {
+        initRequest();
+        Response<Annee> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/annee/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(annee)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Annee created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Annee.class);
+
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+
+    public static Response<Annee> updateAnnee(Annee annee) {
+        initRequest();
+        Response<Annee> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/annee/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(annee)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Annee created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Annee.class);
+
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static void deleteAnnee(long anneeId) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/annee/" + anneeId)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
             e.printStackTrace();
         }
     }

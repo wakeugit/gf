@@ -7,20 +7,22 @@ import lombok.Data;
 
 public class Annee {
 
-	private String annee="";
+	private String nom = "";
 	private String dateDebut;
 	private String dateFin;
 	private long id = -1;
 
-		
-	public Annee(String annee, String dateDebut, String dateFin){
-		this.annee=annee;
+	private Annee() {
+	}
+
+	public Annee(String nom, String dateDebut, String dateFin) {
+		this.nom = nom;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 	}
-	
-	public Annee(long id,String annee, String dateDebut, String dateFin){
-		this.annee=annee;
+
+	public Annee(long id, String nom, String dateDebut, String dateFin) {
+		this.nom = nom;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.id=id;
@@ -29,7 +31,7 @@ public class Annee {
 	
 	
 	public Annee(AnneeFx anneeFx) {
-		annee = anneeFx.getAnnee();
+		nom = anneeFx.getAnnee();
 		this.dateDebut = anneeFx.getDateDebut();
 		this.dateFin = anneeFx.getDateFin();
 		id = anneeFx.getId();

@@ -1,13 +1,12 @@
 package gf.model;
 
 import gf.util.DateUtil;
-
-import java.time.LocalDate;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.time.LocalDate;
 
 public class AnneeFx {
 	
@@ -21,7 +20,7 @@ public class AnneeFx {
 	}
 	
 	public AnneeFx(Annee annee){
-		this.annee= new SimpleStringProperty(annee.getAnnee());
+		this.annee = new SimpleStringProperty(annee.getNom());
 		this.dateDebut = new SimpleObjectProperty<LocalDate>(DateUtil.parse(annee.getDateDebut()));
 		this.dateFin = new SimpleObjectProperty<LocalDate>(DateUtil.parse(annee.getDateFin()));
 		this.id = new SimpleLongProperty(annee.getId());

@@ -448,7 +448,7 @@ public class HttpRequest {
          * parameters.
          * </p>
          *
-         * @param source      the array to convert
+         * @param source      the array to convertToWrapper
          * @param srcOffset   the index where conversion begins
          * @param numSigBytes the number of significant bytes in your array
          * @param destination the array to hold the conversion
@@ -511,7 +511,7 @@ public class HttpRequest {
         /**
          * Encodes a byte array into Base64 notation.
          *
-         * @param source The data to convert
+         * @param source The data to convertToWrapper
          * @return The Base64-encoded data as a String
          * @throws NullPointerException     if source array is null
          * @throws IllegalArgumentException if source array, offset, or length are invalid
@@ -524,9 +524,9 @@ public class HttpRequest {
         /**
          * Encodes a byte array into Base64 notation.
          *
-         * @param source The data to convert
+         * @param source The data to convertToWrapper
          * @param off    Offset in array where conversion should begin
-         * @param len    Length of data to convert
+         * @param len    Length of data to convertToWrapper
          * @return The Base64-encoded data as a String
          * @throws NullPointerException     if source array is null
          * @throws IllegalArgumentException if source array, offset, or length are invalid
@@ -546,9 +546,9 @@ public class HttpRequest {
          * array instead of instantiating a String. This is more efficient if you're
          * working with I/O streams and have large data sets to encode.
          *
-         * @param source The data to convert
+         * @param source The data to convertToWrapper
          * @param off    Offset in array where conversion should begin
-         * @param len    Length of data to convert
+         * @param len    Length of data to convertToWrapper
          * @return The Base64-encoded data as a String if there is an error
          * @throws NullPointerException     if source array is null
          * @throws IllegalArgumentException if source array, offset, or length are invalid

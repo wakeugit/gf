@@ -78,7 +78,7 @@
                               <Insets left="200.0" right="250.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une annee :" />
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une nom :"/>
                               <MenuButton fx:id="anneeIns" mnemonicParsing="false" text="2015" GridPane.columnIndex="1">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -150,7 +150,7 @@
                               <Insets left="200.0" right="250.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une annee :" />
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une nom :"/>
                               <MenuButton fx:id="anneeIns1" mnemonicParsing="false" text="2015" GridPane.columnIndex="1">
                                  <items>
                                     <MenuItem mnemonicParsing="false" text="Action 1" />
