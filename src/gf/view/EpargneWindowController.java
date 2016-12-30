@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
 import gf.model.Type;
@@ -41,6 +43,16 @@ public class EpargneWindowController {
         listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2016", Type.EPARGNE, "01.01.2016", "12.12.2016", "2016")));
         listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2014", Type.EPARGNE, "01.01.2014", "12.12.2014", "2014")));
         listeEpargne.add(new CotisationFx(new Cotisation("Epargne 2013", Type.EPARGNE, "01.01.2013", "14.12.2013", "2013")));
+
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.EPARGNE);
+        if (response.getBody() != null) {
+            for (Cotisation cotisation : response.getBody()) {
+                listeEpargne.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Epargne");
+        }
     }
 
     @FXML

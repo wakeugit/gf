@@ -1,8 +1,8 @@
 package gf.view;
 
-import gf.model.Cotisation;
-import gf.model.CotisationFx;
-import gf.model.Type;
+import gf.backend.BackendInterface;
+import gf.backend.Response;
+import gf.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,6 +41,16 @@ public class TontineWindowController {
         listeTontine.add(new CotisationFx(new Cotisation("Tontine 2016", Type.TONTINE, "01.01.2016", "12.12.2016", "2016")));
         listeTontine.add(new CotisationFx(new Cotisation("Tontine 2014", Type.TONTINE, "01.01.2014", "12.12.2014", "2014")));
         listeTontine.add(new CotisationFx(new Cotisation("Tontine 2013", Type.TONTINE, "01.01.2013", "14.12.2013", "2013")));
+
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.TONTINE);
+        if (response.getBody() != null) {
+            for (Cotisation cotisation : response.getBody()) {
+                listeTontine.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Tontine");
+        }
     }
 
     @FXML

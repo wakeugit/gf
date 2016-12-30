@@ -1,6 +1,8 @@
 package gf.view;
 
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
 import gf.model.Type;
@@ -51,12 +53,33 @@ public class EpargneDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			epargne = new CotisationFx(new Cotisation(nomCotisation.getText(), Type.valueOf(type.getText()), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText()));
+
+			Cotisation cotisation = new Cotisation(nomCotisation.getText(), Type.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
+
+			Response<Cotisation> response;
+
 			if (valider.getText().equals("Valider")) {
-				epargneWindowController.getListeCotisations().add(epargne);
+
+				response = BackendInterface.createCotisation(cotisation);
+				if (response.getBody() != null) {
+					epargneWindowController.getListeCotisations().add(new CotisationFx(response.getBody()));
+
+				} else {
+					// Todo Display error message
+				}
 			} else {
-				epargneWindowController.getListeCotisations().set(keyInArray, epargne);
+				if (epargne.getId() != -1) {
+					cotisation.setId(epargne.getId());
+					response = BackendInterface.updateCotisation(cotisation);
+					if (response.getBody() != null) {
+						epargneWindowController.getListeCotisations().set(keyInArray, new CotisationFx(response.getBody()));
+
+					} else {
+						// Todo Display error message
+					}
+				}
+
 			}
 			dialogStage.close();
 		}
