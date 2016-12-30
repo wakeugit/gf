@@ -22,25 +22,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class InscriptionsPanelController {
+public class TontinePanelController {
 
     private MainAppGF mainAppGF;
 
-    private ObservableList<InscriptionAnnuelleFx> listeInscritsAnnuel = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     
-    @FXML
-    private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, Long> idCol;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> nomCol;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> prenomCol;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, LocalDate> dateInscriptionCol;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> montantCol;
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
     @FXML
@@ -57,7 +44,7 @@ public class InscriptionsPanelController {
     private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
 
-    public InscriptionsPanelController() {
+    public TontinePanelController() {
 
      /*   Response<Membre[]> response = BackendInterface.getMembres();
         if (response.getBody() != null) {
@@ -74,13 +61,6 @@ public class InscriptionsPanelController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-
-    	idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
-        dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
-        
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
@@ -89,31 +69,30 @@ public class InscriptionsPanelController {
         numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
      
         inscritsCotisationTable.setItems(listeInscritsCotisation);
-        inscritsAnnuelTable.setItems(listeInscritsAnnuel);
 
     }
 
+
     @FXML
-    private void actionOnclickNouvelleInscptionAnnuelle() {
+    private void actionOnclickNouvelleCotisation() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
-        	
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
             BorderPane page = (BorderPane) loader.load();
-            
+
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
+            dialogStage.setTitle("Effectuer Cotisation");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            InscriptionAnnuelleController controller = loader.getController();
+            EffectuerCotisationController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setInscriptionsPanelController(this);
+            controller.setTontinePanelController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -128,111 +107,7 @@ public class InscriptionsPanelController {
     }
 
     @FXML
-    private void actionOnclickModifierInscptionAnnuelle() {
-
-        int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-        	InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
-            try {
-                // Load the fxml file and create a new stage for the popup dialog.
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
-                BorderPane page = (BorderPane) loader.load();
-
-                // Create the dialog Stage.
-                Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Inscription");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
-                dialogStage.initOwner(mainAppGF.getPrimaryStage());
-                Scene scene = new Scene(page);
-                dialogStage.setScene(scene);
-
-                // Set the Member into the controller.
-                InscriptionAnnuelleController controller = loader.getController();
-                controller.setDialogStage(dialogStage);
-                controller.setInscriptionAnnuelle(mbreInscritFx);
-                controller.setKeyInArray(keyInArrayList);
-                controller.setInscriptionsPanelController(this);
-
-                // Show the dialog and wait until the user closes it
-
-                dialogStage.showAndWait();
-
-                // return controller.isOkClicked();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainAppGF.getPrimaryStage());
-            alert.setTitle("Aucune ligne selectionnee");
-            alert.setHeaderText("Aucune ligne selectionnee");
-            alert.setContentText("Svp selectionnez un element dans la liste.");
-
-            alert.showAndWait();
-        }
-    }
-
-
-    @FXML
-    private void actionOnclickSupprimerInscptionAnnuelle() {
-
-        int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            inscritsAnnuelTable.getItems().remove(selectedIndex);
-            //BackendInterface.deleteMembre(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainAppGF.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
-
-            alert.showAndWait();
-        }
-    }
-    
-
-    @FXML
-    private void actionOnclickNouvelleInscptionCotisation() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
-            BorderPane page = (BorderPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the Member into the controller.
-            InscriptionCotisationController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setInscriptionsPanelController(this);
-
-            // Show the dialog and wait until the user closes it
-
-            dialogStage.showAndWait();
-
-            // return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void actionOnclickModifierInscptionCotisation() {
+    private void actionOnclickModifierCotisation() {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -253,11 +128,12 @@ public class InscriptionsPanelController {
                 dialogStage.setScene(scene);
 
                 // Set the Member into the controller.
-                InscriptionCotisationController controller = loader.getController();
+                EffectuerCotisationController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setInscriptionCotisation(mbreInscritFx);
+                controller.setTontinePanelController(this);
+              //  controller.setInscriptionCotisation(mbreInscritFx);
                 controller.setKeyInArray(keyInArrayList);
-                controller.setInscriptionsPanelController(this);
+              
 
                 // Show the dialog and wait until the user closes it
 
@@ -283,7 +159,7 @@ public class InscriptionsPanelController {
 
 
     @FXML
-    private void actionOnclickSupprimerInscptionCotisation() {
+    private void actionOnclickSupprimerCotisation() {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -309,9 +185,7 @@ public class InscriptionsPanelController {
         this.mainAppGF = mainAppGF;
     }
 
-    public ObservableList<InscriptionAnnuelleFx> getListMembreInscrits() {
-        return listeInscritsAnnuel;
-    }
+    
 
     public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {
         return listeInscritsCotisation;

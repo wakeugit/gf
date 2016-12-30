@@ -1,86 +1,68 @@
 package gf.view;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
-import gf.backend.BackendInterface;
-import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
-import gf.model.InscriptionAnnuelle;
-import gf.model.InscriptionAnnuelleFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
+import gf.model.*;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-public class InscriptionAnnuelleController {
+public class EffectuerCotisationController {
 	
-    private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
-    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
+    
+    private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 	
     @FXML
     private ComboBox<MembreFx> nomMembre;
     @FXML
-    private ComboBox<AnneeFx> annee;
+    private ComboBox<CotisationFx> cotisation;
     @FXML
-    private DatePicker dateInscription;
+    private DatePicker date;
     @FXML
     private TextField montant;
     @FXML
     private Button valider;
     
     private int keyInArray=0;
-    private MembrePanelController membrePanelController;
-    private InscriptionsPanelController inscriptionPanelController;
+    private TontinePanelController tontinePanelController;
     private Stage dialogStage;
-    private InscriptionAnnuelle inscriptionAnnuelle;
-    private InscriptionAnnuelleFx inscriptionAnnuelleFx;
+    private InscriptionCotisation inscriptionCotisation;
+    private InscriptionCotisationFx inscriptionCotisationFx;
     private boolean validerClicked = false;
 
     @FXML
     private void initialize() {
-    	if(annee != null){
-    	annee.setButtonCell( new ListCell<AnneeFx>() {
+
+    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
             @Override
-            protected void updateItem(AnneeFx item, boolean empty) {
+            protected void updateItem(CotisationFx item, boolean empty) {
                 super.updateItem(item, empty); 
                 if (empty) {
                     setText("");
                 } else {
-                    setText(item.getAnnee());
+                    setText(item.getnomCotisation() + " " + item.getAnnee());
                 }
             }
         });
     	
-    	annee.setCellFactory( 
-    			new Callback<ListView<AnneeFx>, ListCell<AnneeFx>>() {
+    	cotisation.setCellFactory( 
+    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
           
 
 			@Override
-			public ListCell<AnneeFx> call(ListView<AnneeFx> arg0) {
-	                ListCell<AnneeFx> cell = new ListCell<AnneeFx>() {
+			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
 	                    @Override
-	                    protected void updateItem(AnneeFx item, boolean empty) {
+	                    protected void updateItem(CotisationFx item, boolean empty) {
 	                        super.updateItem(item, empty);
 	                        if (empty) {
 	                            setText("");
 	                        } else {
-	                            setText(item.getAnnee());
+	                            setText(item.getnomCotisation() + " " + item.getAnnee());
 	                        }
 	                    }
 	                };
@@ -89,9 +71,23 @@ public class InscriptionAnnuelleController {
 
 			
         });
-    	annee.setItems(listeAnnees);
-    	}
-    	if(nomMembre !=null){
+    	
+    	cotisation.setConverter(new StringConverter<CotisationFx>() {
+            @Override
+            public String toString(CotisationFx item) {
+              if (item == null){
+                return null;
+              } else {
+                return item.getnomCotisation() + " " + item.getAnnee();
+              }
+            }
+
+          @Override
+          public CotisationFx fromString(String item) {
+              return null;
+          }
+      });
+    	
     	nomMembre.setButtonCell( new ListCell<MembreFx>() {
             @Override
             protected void updateItem(MembreFx item, boolean empty) {
@@ -103,6 +99,22 @@ public class InscriptionAnnuelleController {
                 }
             }
         });
+    	
+    	nomMembre.setConverter(new StringConverter<MembreFx>() {
+             @Override
+             public String toString(MembreFx item) {
+               if (item == null){
+                 return null;
+               } else {
+                 return item.getNom()+" "+item.getPrenom();
+               }
+             }
+
+           @Override
+           public MembreFx fromString(String item) {
+               return null;
+           }
+       });
     	
     	nomMembre.setCellFactory( 
     			new Callback<ListView<MembreFx>, ListCell<MembreFx>>() {
@@ -126,23 +138,12 @@ public class InscriptionAnnuelleController {
 
 			
         });
-    	nomMembre.setItems(listeMembres);
-    	}
-    	
-    	
+    	//cotisation.setItems(listeMembresInscrits);
+    	//nomMembre.setItems(listeMembres);
     }
 
-    public InscriptionAnnuelleController() {
-    	membrePanelController = new MembrePanelController();
-    	
-    	listeMembres=membrePanelController.getListMembre();
-    	
-    	listeAnnees.add(new AnneeFx(new Annee("2015", "01.01.2015", "13.12.2015")));
-        listeAnnees.add(new AnneeFx(new Annee("2016", "01.01.2016", "12.12.2016")));
-        listeAnnees.add(new AnneeFx(new Annee("2014", "01.01.2014", "12.12.2014")));
-        listeAnnees.add(new AnneeFx(new Annee("2013", "01.01.2013", "14.12.2013")));
-        
-        
+    public EffectuerCotisationController() {
+    	        
     }
 
     
@@ -158,16 +159,17 @@ public class InscriptionAnnuelleController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-        	inscriptionAnnuelleFx = new InscriptionAnnuelleFx(
-        			new InscriptionAnnuelle( new Annee(annee.getSelectionModel().getSelectedItem()),
+        	inscriptionCotisationFx = new InscriptionCotisationFx(
+        			new InscriptionCotisation( new Cotisation(
+        					cotisation.getSelectionModel().getSelectedItem()),
         					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
-        					DateUtil.format(dateInscription.getValue()),
+        					DateUtil.format(date.getValue()),
         					Integer.parseInt(montant.getText())));
 
         	if (valider.getText().equals("Valider")) {
-        		inscriptionPanelController.getListMembreInscrits().add(inscriptionAnnuelleFx); 
+        		tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx); 
     		} else {
-    			inscriptionPanelController.getListMembreInscrits().set(keyInArray, inscriptionAnnuelleFx);
+    			tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
     		}
 
             validerClicked = true;
@@ -178,8 +180,8 @@ public class InscriptionAnnuelleController {
     @FXML
     private void actionOnClickAnnuler() {
         nomMembre.getSelectionModel().select(null);
-        annee.getSelectionModel().select(null);
-        dateInscription.setValue(null);
+        cotisation.getSelectionModel().select(null);
+        date.setValue(null);
         montant.setText("");
     }
     
@@ -190,21 +192,21 @@ public class InscriptionAnnuelleController {
         if (nomMembre.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Membre invalide!\n";
         }
-        if (annee.getSelectionModel().getSelectedItem() == null) {
-            errorMessage += "Annee invalide!\n";
+        if (cotisation.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Cotisation invalide!\n";
         }
-        if (dateInscription.getValue() == null ) {
+        if (date.getValue() == null ) {
             errorMessage += "Date Inscription invalide!\n";
         } 
 
         if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
-            errorMessage += "Montant invalide!\n";
+            errorMessage += "Numero tirage invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
                 Integer.parseInt(montant.getText());
             } catch (NumberFormatException e) {
-                errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
+                errorMessage += "Numero tirage invalide (ne doit contenir que des chiffres)!\n";
             }
         }
 
@@ -224,24 +226,25 @@ public class InscriptionAnnuelleController {
         }
     }
 
-    public InscriptionsPanelController getInscriptionsPanelController() {
-        return inscriptionPanelController;
+    public TontinePanelController getTontinePanelController() {
+        return tontinePanelController;
     }
 
-    public void setInscriptionsPanelController(InscriptionsPanelController inscriptionPanelController) {
-        this.inscriptionPanelController = inscriptionPanelController;
+    public void setTontinePanelController(TontinePanelController tontinePanelController) {
+        this.tontinePanelController = tontinePanelController;
     }
 
-    public InscriptionAnnuelle getInscriptionAnnuelle() {
-        return inscriptionAnnuelle;
+    public InscriptionCotisation getInscriptionCotisation() {
+        return inscriptionCotisation;
     }
 
-    public void setInscriptionAnnuelle(InscriptionAnnuelleFx inscriptionAnnuelleFx) {
+    public void setEffectuerCotisation(InscriptionCotisationFx inscriptionCotisationFx) {
+    	initialize();
         valider.setText("Modifier");
-        nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
-        annee.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
-        dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        montant.setText("" + inscriptionAnnuelleFx.getMontant());
+        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
+        cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
+        date.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
+        montant.setText("" + inscriptionCotisationFx.getNumeroTirage());
     }
 
 	public int getKeyInArray() {

@@ -14,7 +14,6 @@ public class Cotisation {
 	private String dateFin;
 	private long id = -1;
 
-
 	public Cotisation(String nomCotisation, Type type, String dateDebut, String dateFin, String annee) {
 		this.nomCotisation = nomCotisation;
 		this.type = type;
@@ -32,8 +31,6 @@ public class Cotisation {
 		this.id=id;
 	}
 
-	
-	
 	public Cotisation(CotisationFx cotisationFx) {
 		this.nomCotisation = cotisationFx.getnomCotisation();
 		this.type = Type.valueOf(cotisationFx.getType().toUpperCase());
@@ -42,6 +39,5 @@ public class Cotisation {
 		this.annee = cotisationFx.getAnnee();
 		this.id = cotisationFx.getId();
 	}
-	
 	
 }
