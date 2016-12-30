@@ -37,7 +37,7 @@
             <TableColumn fx:id="type" prefWidth="103.0" text="type" />
             <TableColumn fx:id="dateDebut" prefWidth="115.0" text="Date début" />
             <TableColumn fx:id="dateFin" prefWidth="110.0" text="Date fin" />
-            <TableColumn fx:id="nom" prefWidth="107.0" text="Année"/>
+            <TableColumn fx:id="annee" prefWidth="107.0" text="Année"/>
         </columns>
          <opaqueInsets>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

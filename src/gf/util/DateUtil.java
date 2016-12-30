@@ -11,10 +11,14 @@ import java.time.format.DateTimeParseException;
  */
 public class DateUtil {
 
-    /** The date pattern that is used for conversion. Change as you wish. */
+    /**
+     * The date pattern that is used for conversion. Change as you wish.
+     */
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
-    /** The date formatter. */
+    /**
+     * The date formatter.
+     */
     private static final DateTimeFormatter DATE_FORMATTER =
             DateTimeFormatter.ofPattern(DATE_PATTERN);
 
@@ -35,7 +39,7 @@ public class DateUtil {
     /**
      * Converts a String in the format of the defined {@link DateUtil#DATE_PATTERN}
      * to a {@link LocalDate} object.
-     *
+     * <p>
      * Returns null if the String could not be converted.
      *
      * @param dateString the date as String
@@ -43,7 +47,10 @@ public class DateUtil {
      */
     public static LocalDate parse(String dateString) {
         try {
-            return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            if (dateString != null && dateString != "null")
+                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            else
+                return null;
         } catch (DateTimeParseException e) {
             return null;
         }

@@ -7,11 +7,13 @@ import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import gf.model.Annee;
+import gf.model.Cotisation;
 import gf.model.Membre;
+import gf.model.Type;
 
 public class BackendInterface {
 
-    public static final String APP_URL = "http://localhost:8082";
+    public static final String APP_URL = "http://localhost:8085";
 
     public static void initRequest() {
 
@@ -200,6 +202,82 @@ public class BackendInterface {
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
         } catch (UnirestException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static Response<Cotisation[]> getCotisations(Type type) {
+        initRequest();
+        Response<Cotisation[]> response = new Response<>();
+        try {
+            HttpResponse<Cotisation[]> bookResponse = null;
+
+            if (type == Type.TONTINE)
+                bookResponse = Unirest.get(APP_URL + "/cotisation/tontine").asObject(Cotisation[].class);
+            else if (type == Type.EPARGNE)
+
+                bookResponse = Unirest.get(APP_URL + "/cotisation/epargne").asObject(Cotisation[].class);
+
+            if (bookResponse.getStatus() == 200) {
+                response.setBody(bookResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+            }
+
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+        return response;
+    }
+
+    public static Response<Cotisation> createCotisation(Cotisation cotisation) {
+        initRequest();
+        Response<Cotisation> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/cotisation/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(cotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Cotisation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Cotisation.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<Cotisation> updateCotisation(Cotisation cotisation) {
+        initRequest();
+        Response<Cotisation> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/cotisation/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(cotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Cotisation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Cotisation.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
         }
     }
 }
