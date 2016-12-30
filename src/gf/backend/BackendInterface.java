@@ -13,7 +13,7 @@ import gf.model.Type;
 
 public class BackendInterface {
 
-    public static final String APP_URL = "http://localhost:8082";
+    public static final String APP_URL = "http://localhost:8085";
 
     public static void initRequest() {
 
