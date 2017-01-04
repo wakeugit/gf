@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class TontinePanelController {
+public class EpargnePanelController {
 
     private MainAppGF mainAppGF;
     // pour effectuer cotisation
@@ -63,7 +63,7 @@ public class TontinePanelController {
     private TableColumn<EffectuerFx, Integer> montantCol;
    
     
-    public TontinePanelController() {
+    public EpargnePanelController() {
 
      /*   Response<Membre[]> response = BackendInterface.getMembres();
         if (response.getBody() != null) {
@@ -85,20 +85,10 @@ public class TontinePanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
+        
      
         inscritsCotisationTable.setItems(listeInscritsCotisation);
         
-        //Beneficier cotisation
-        idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
-        cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
-        typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
-        anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
-
-        Cotisations.setItems(listesTontines_Membres);
-
     }
 
 
@@ -121,7 +111,7 @@ public class TontinePanelController {
             // Set the Member into the controller.
             EffectuerCotisationController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setTontinePanelController(this);
+            controller.setEpargnePanelController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -137,38 +127,7 @@ public class TontinePanelController {
 
     
 
-    @FXML
-    private void actionOnclickNouveauBeneficiaire() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/beneficierCotisation.fxml"));
-            BorderPane page = (BorderPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Beneficier Cotisation");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the Member into the controller.
-            BeneficierCotisationController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setTontinePanelController(this);
-
-            // Show the dialog and wait until the user closes it
-
-            dialogStage.showAndWait();
-
-            // return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
+   
 
     @FXML
     private void actionOnclickModifierCotisation() {
@@ -194,7 +153,7 @@ public class TontinePanelController {
                 // Set the Member into the controller.
                 EffectuerCotisationController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setTontinePanelController(this);
+                controller.setEpargnePanelController(this);
               //  controller.setInscriptionCotisation(mbreInscritFx);
                 controller.setKeyInArray(keyInArrayList);
               

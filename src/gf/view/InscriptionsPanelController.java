@@ -2,10 +2,15 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
+import gf.model.Annee;
+import gf.model.AnneeFx;
+import gf.model.Cotisation;
+import gf.model.CotisationFx;
 import gf.model.InscriptionAnnuelleFx;
 import gf.model.InscriptionCotisationFx;
 import gf.model.Membre;
 import gf.model.MembreFx;
+import gf.model.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,11 +18,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,7 +39,8 @@ public class InscriptionsPanelController {
 
     private ObservableList<InscriptionAnnuelleFx> listeInscritsAnnuel = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
-    
+    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
     @FXML
     private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
     @FXML
@@ -56,25 +68,129 @@ public class InscriptionsPanelController {
     @FXML
     private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
-
+    @FXML
+    private ComboBox<AnneeFx> annee;
+    @FXML
+    private ComboBox<CotisationFx> cotisation;
+    
     public InscriptionsPanelController() {
 
-     /*   Response<Membre[]> response = BackendInterface.getMembres();
+    	Response<Annee[]> response = BackendInterface.getAnnees();
         if (response.getBody() != null) {
-            for (Membre membre : response.getBody()) {
-                listeMembres.add(new MembreFx(membre));
+            for (Annee annee : response.getBody()) {
+                listeAnnees.add(new AnneeFx(annee));
             }
         } else {
             //Todo Display error message
+            System.out.println("An error occured - Annee");
         }
-        */
+        
+        Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
+        if (response1.getBody() != null) {
+            for (Cotisation cotisation : response1.getBody()) {
+                listeCotisations.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Cotisation");
+        }
     }
 
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
+    	if(annee != null){
+        	annee.setButtonCell( new ListCell<AnneeFx>() {
+                @Override
+                protected void updateItem(AnneeFx item, boolean empty) {
+                    super.updateItem(item, empty); 
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getAnnee());
+                    }
+                }
+            });
+        	
+        	annee.setCellFactory( 
+        			new Callback<ListView<AnneeFx>, ListCell<AnneeFx>>() {
+              
 
+    			@Override
+    			public ListCell<AnneeFx> call(ListView<AnneeFx> arg0) {
+    	                ListCell<AnneeFx> cell = new ListCell<AnneeFx>() {
+    	                    @Override
+    	                    protected void updateItem(AnneeFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+
+    			
+            });
+        	annee.setItems(listeAnnees);
+        	}
+    	if(cotisation != null){
+    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
+            @Override
+            protected void updateItem(CotisationFx item, boolean empty) {
+                super.updateItem(item, empty); 
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getnomCotisation() + " " + item.getAnnee());
+                }
+            }
+        });
+    	
+    	cotisation.setCellFactory( 
+    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+          
+
+			@Override
+			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+	                    @Override
+	                    protected void updateItem(CotisationFx item, boolean empty) {
+	                        super.updateItem(item, empty);
+	                        if (empty) {
+	                            setText("");
+	                        } else {
+	                            setText(item.getnomCotisation() + " " + item.getAnnee());
+	                        }
+	                    }
+	                };
+	                return cell;
+			}
+
+			
+        });
+    	
+    	cotisation.setConverter(new StringConverter<CotisationFx>() {
+            @Override
+            public String toString(CotisationFx item) {
+              if (item == null){
+                return null;
+              } else {
+                return item.getnomCotisation() + " " + item.getAnnee();
+              }
+            }
+
+          @Override
+          public CotisationFx fromString(String item) {
+              return null;
+          }
+      });
+    	cotisation.setItems(listeCotisations);
+    	}
+    	
     	idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
@@ -90,6 +206,7 @@ public class InscriptionsPanelController {
      
         inscritsCotisationTable.setItems(listeInscritsCotisation);
         inscritsAnnuelTable.setItems(listeInscritsAnnuel);
+        
 
     }
 

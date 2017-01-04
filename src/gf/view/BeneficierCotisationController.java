@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-public class EffectuerCotisationController {
+public class BeneficierCotisationController {
 	
     
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
@@ -29,7 +29,6 @@ public class EffectuerCotisationController {
     
     private int keyInArray=0;
     private TontinePanelController tontinePanelController;
-    private EpargnePanelController epargnePanelController;
     private Stage dialogStage;
     private InscriptionCotisation inscriptionCotisation;
     private InscriptionCotisationFx inscriptionCotisationFx;
@@ -37,7 +36,7 @@ public class EffectuerCotisationController {
 
     @FXML
     private void initialize() {
-
+    	/*
     	cotisation.setButtonCell( new ListCell<CotisationFx>() {
             @Override
             protected void updateItem(CotisationFx item, boolean empty) {
@@ -141,9 +140,12 @@ public class EffectuerCotisationController {
         });
     	//cotisation.setItems(listeMembresInscrits);
     	//nomMembre.setItems(listeMembres);
+    	 * 
+    	 * */
+    	 
     }
 
-    public EffectuerCotisationController() {
+    public BeneficierCotisationController() {
     	        
     }
 
@@ -168,9 +170,9 @@ public class EffectuerCotisationController {
         					Integer.parseInt(montant.getText())));
 
         	if (valider.getText().equals("Valider")) {
-        		//tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx); 
+        		tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx); 
     		} else {
-    			//tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+    			tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
     		}
 
             validerClicked = true;
@@ -230,20 +232,11 @@ public class EffectuerCotisationController {
     public TontinePanelController getTontinePanelController() {
         return tontinePanelController;
     }
-    
-    public EpargnePanelController getEpargnePanelController() {
-        return epargnePanelController;
-    }
 
     public void setTontinePanelController(TontinePanelController tontinePanelController) {
         this.tontinePanelController = tontinePanelController;
     }
-    
-    public void setEpargnePanelController(EpargnePanelController epargnePanelController) {
-        this.epargnePanelController = epargnePanelController;
-    }
 
-    
     public InscriptionCotisation getInscriptionCotisation() {
         return inscriptionCotisation;
     }

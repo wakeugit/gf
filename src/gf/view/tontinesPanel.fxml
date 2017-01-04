@@ -51,25 +51,21 @@
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                              <Insets bottom="150.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
                               <Button fx:id="nouveau" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouvelleCotisation" onMouseClicked="#actionOnclickNouvelleCotisation" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
-                              <Button fx:id="modifMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickModifierCotisation" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-                              <Button fx:id="supprimerMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickSupprimerCotisation" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
-                              <Button fx:id="imprimerListMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
+                              <Button fx:id="imprimerListMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </right>
                      <top>
                         <GridPane BorderPane.alignment="CENTER">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="184.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="181.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="163.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="78.0" />
                            </columnConstraints>
                            <rowConstraints>
@@ -79,8 +75,8 @@
                               <Insets bottom="10.0" left="180.0" right="200.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label text="Sélectionner une tontine :" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Label prefHeight="21.0" prefWidth="183.0" text="Sélectionner une tontine :" />
+                              <ComboBox prefHeight="31.0" prefWidth="156.0" GridPane.columnIndex="1" />
                               <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
@@ -108,35 +104,33 @@
                         </TableView>
                      </center>
                      <right>
-                        <GridPane BorderPane.alignment="CENTER">
+                        <GridPane prefHeight="90.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                              <Insets bottom="110.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
-                              <Button fx:id="modifMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-                              <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
-                              <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
+                              <Button fx:id="modifMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" />
+                              <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="1" />
+                              <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </right>
                      <top>
                         <GridPane BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="144.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="145.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="44.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="127.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="173.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="120.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="41.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="122.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="97.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -164,13 +158,14 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="Cotisations" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
-                              <TableColumn fx:id="nomMembre2" prefWidth="144.0" text="Date" />
-                              <TableColumn fx:id="prenomMembre2" prefWidth="155.0" text="Nom cotisation" />
-                              <TableColumn fx:id="telephone2" maxWidth="157.0" minWidth="91.0" prefWidth="91.0" text="Type" />
-                              <TableColumn fx:id="cni2" prefWidth="113.0" text="Année" />
-                              <TableColumn prefWidth="140.0" text="Montant total" />
+                              <TableColumn fx:id="idCol" prefWidth="75.0" text="Id" visible="false" />
+                              <TableColumn fx:id="dateCol" prefWidth="144.0" text="Date" />
+                              <TableColumn fx:id="cotisationCol" prefWidth="155.0" text="Nom cotisation" />
+                              <TableColumn fx:id="typeCol" maxWidth="157.0" minWidth="91.0" prefWidth="91.0" text="Type" />
+                              <TableColumn fx:id="anneeCol" prefWidth="113.0" text="Année" />
+                              <TableColumn fx:id="montantCol" prefWidth="140.0" text="Montant total" />
                            </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -188,17 +183,13 @@
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                              <Insets bottom="150.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="nouveauMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
-                              <Button fx:id="modifMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-                              <Button fx:id="supprimerMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
-                              <Button fx:id="imprimerListMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
+                              <Button fx:id="nouveaubeneficier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouveauBeneficiaire" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+                              <Button fx:id="imprimerListMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </right>
