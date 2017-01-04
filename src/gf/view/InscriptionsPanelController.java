@@ -1,11 +1,7 @@
 package gf.view;
 
-import gf.backend.BackendInterface;
-import gf.backend.Response;
 import gf.model.InscriptionAnnuelleFx;
 import gf.model.InscriptionCotisationFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -81,10 +77,10 @@ public class InscriptionsPanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
-        
-        idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+
+//        idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+//        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+//        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());

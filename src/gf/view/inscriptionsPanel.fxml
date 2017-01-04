@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.InscriptionsPanelController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gf.view.InscriptionsPanelController">
    <top>
       <Label text="Gestion des inscriptions" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
@@ -77,7 +79,7 @@
                               <Insets bottom="10.0" left="200.0" right="250.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une nom :"/>
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une année :"/>
                               <MenuButton fx:id="anneeIns" mnemonicParsing="false" text="2015" GridPane.columnIndex="1">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
