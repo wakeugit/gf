@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.InscriptionsPanelController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.InscriptionsPanelController">
    <top>
       <Label text="Gestion des inscriptions" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
@@ -64,27 +64,22 @@
                         </GridPane>
                      </right>
                      <top>
-                        <GridPane BorderPane.alignment="CENTER">
+                        <GridPane prefHeight="30.0" prefWidth="459.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="75.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="205.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="75.0" prefWidth="149.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="59.0" prefWidth="83.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="10.0" left="200.0" right="250.0" top="10.0" />
+                              <Insets bottom="10.0" left="170.0" right="200.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une année :" />
-                              <MenuButton fx:id="anneeIns" mnemonicParsing="false" text="2015" GridPane.columnIndex="1">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                                </items>
-                              </MenuButton>
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une annee :" />
+                              <ComboBox fx:id="annee" prefHeight="39.0" prefWidth="127.0" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" text="Valider" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                      </top>
@@ -136,26 +131,22 @@
                         </GridPane>
                      </right>
                      <top>
-                        <GridPane BorderPane.alignment="CENTER">
+                        <GridPane prefHeight="30.0" prefWidth="543.0" BorderPane.alignment="CENTER">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="231.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="151.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="87.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="10.0" left="210.0" right="240.0" top="10.0" />
+                              <Insets bottom="10.0" left="150.0" right="180.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
                               <Label text="Sélectionner une cotisation" />
-                              <MenuButton mnemonicParsing="false" text="Tontine" GridPane.columnIndex="1">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                                </items>
-                              </MenuButton>
+                              <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="135.0" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" text="Valider" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                      </top>

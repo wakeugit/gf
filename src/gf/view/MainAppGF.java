@@ -261,8 +261,8 @@ public class MainAppGF extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("epargnePanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
-//            MembrePanelController controller = loader.getController();
-//            controller.setMainAppGF(this);
+            EpargnePanelController controller = loader.getController();
+            controller.setMainAppGF(this);
             rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();
@@ -275,8 +275,8 @@ public class MainAppGF extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("tontinesPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
-//            MembrePanelController controller = loader.getController();
-//            controller.setMainAppGF(this);
+            TontinePanelController controller = loader.getController();
+            controller.setMainAppGF(this);
             rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();

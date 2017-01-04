@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EpargneDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EffectuerCotisationController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="297.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -26,13 +26,13 @@
          </BorderPane.margin>
          <children>
             <Label text="Cotisation" GridPane.rowIndex="1" />
-            <TextField fx:id="anneeTxt" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Date" GridPane.rowIndex="2" />
             <Label text="Montant" GridPane.rowIndex="3" />
-            <DatePicker fx:id="dateDebut" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="date" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nom membre" />
-            <ComboBox prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
-            <ComboBox prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <padding>
             <Insets top="5.0" />

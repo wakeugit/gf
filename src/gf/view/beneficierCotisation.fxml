@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EpargneDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.BeneficierCotisationController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="202.0" prefWidth="340.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -28,10 +28,10 @@
          </BorderPane.margin>
          <children>
             <Label text="Cotisation" GridPane.rowIndex="1" />
-            <TextField fx:id="anneeTxt" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Date" GridPane.rowIndex="2" />
             <Label text="Montant placé" GridPane.rowIndex="3" />
-            <DatePicker fx:id="dateDebut" prefHeight="25.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker prefHeight="25.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nom membre" />
             <ComboBox prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" />
             <ComboBox prefHeight="25.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
