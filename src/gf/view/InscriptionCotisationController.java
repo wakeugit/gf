@@ -1,6 +1,8 @@
 package gf.view;
 
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.*;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
@@ -35,6 +37,8 @@ public class InscriptionCotisationController {
     private InscriptionCotisation inscriptionCotisation;
     private InscriptionCotisationFx inscriptionCotisationFx;
     private boolean validerClicked = false;
+    private Cotisation mCotisation;
+    private Membre mMembre;
 
     @FXML
     private void initialize() {
@@ -47,6 +51,7 @@ public class InscriptionCotisationController {
                     setText("");
                 } else {
                     setText(item.getnomCotisation() + " " + item.getAnnee());
+                    mCotisation = new Cotisation(item);
                 }
             }
         });
@@ -98,6 +103,7 @@ public class InscriptionCotisationController {
                     setText("");
                 } else {
                     setText(item.getNom()+" "+item.getPrenom());
+                    mMembre = new Membre(item);
                 }
             }
         });
@@ -149,10 +155,21 @@ public class InscriptionCotisationController {
     	
     	listeMembres=membrePanelController.getListMembre();
 
-        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2015", Type.TONTINE, "01.01.2015", "13.12.2015", "2015")));
-        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2016", Type.TONTINE, "01.01.2016", "12.12.2016", "2016")));
-        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2014", Type.TONTINE, "01.01.2014", "12.12.2014", "2014")));
-        listeCotisation.add(new CotisationFx(new Cotisation("Tontine 2013", Type.TONTINE, "01.01.2013", "14.12.2013", "2013")));
+        Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
+        if (response1.getBody() != null) {
+            for (Cotisation cotisation : response1.getBody()) {
+                listeCotisation.add(new CotisationFx(cotisation));
+            }
+            //Todo share data between panel and controller
+            //if (listeCotisation.size() != 0) {
+            //cotisation.setValue();
+            //}
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Cotisation");
+        }
+
+
         
     }
 
@@ -169,18 +186,33 @@ public class InscriptionCotisationController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-        	inscriptionCotisationFx = new InscriptionCotisationFx(
-        			new InscriptionCotisation( new Cotisation(
-        					cotisation.getSelectionModel().getSelectedItem()),
-        					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
-        					DateUtil.format(dateInscription.getValue()),
-        					Integer.parseInt(numeroTirage.getText())));
+
+            InscriptionCotisation ic = new InscriptionCotisation(mCotisation,
+                    mMembre,
+                    DateUtil.format(dateInscription.getValue()),
+                    Integer.parseInt(numeroTirage.getText()));
+
+            Response<InscriptionCotisation> response;
 
         	if (valider.getText().equals("Valider")) {
-        		inscriptionPanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx); 
-    		} else {
-    			inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
-    		}
+                response = BackendInterface.createInscriptionCotisation(ic);
+                if (response.getBody() != null) {
+                    inscriptionPanelController.getListMembreInscritsCotisation().add(new InscriptionCotisationFx(response.getBody()));
+
+                } else {
+                    // Todo Display error message
+                }
+//        		inscriptionPanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
+            } else {
+                response = BackendInterface.updateInscriptionCotisation(ic);
+                if (response.getBody() != null) {
+                    inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, new InscriptionCotisationFx(response.getBody()));
+
+                } else {
+                    // Todo Display error message
+                }
+//    			inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+            }
 
             validerClicked = true;
             dialogStage.close();

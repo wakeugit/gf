@@ -6,10 +6,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import gf.model.Annee;
-import gf.model.Cotisation;
-import gf.model.Membre;
-import gf.model.Type;
+import gf.model.*;
 
 public class BackendInterface {
 
@@ -269,6 +266,57 @@ public class BackendInterface {
             if (nodeHttpResponse.getStatus() == 200) {
                 Gson gson = new Gson();
                 Cotisation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Cotisation.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+
+    public static Response<InscriptionCotisation> createInscriptionCotisation(InscriptionCotisation inscriptionCotisation) {
+        initRequest();
+        Response<InscriptionCotisation> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/cotisation/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(inscriptionCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionCotisation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), InscriptionCotisation.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<InscriptionCotisation> updateInscriptionCotisation(InscriptionCotisation inscriptionCotisation) {
+        initRequest();
+        Response<InscriptionCotisation> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/inscription/cotisation/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(inscriptionCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionCotisation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), InscriptionCotisation.class);
                 response.setBody(created);
             } else {
                 response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
