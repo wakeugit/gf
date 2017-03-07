@@ -2,28 +2,15 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
-import gf.model.Cotisation;
-import gf.model.CotisationFx;
-import gf.model.InscriptionAnnuelleFx;
-import gf.model.InscriptionCotisationFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
-import gf.model.Type;
+import gf.model.*;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,6 +19,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class InscriptionsPanelController {
 
@@ -72,7 +60,11 @@ public class InscriptionsPanelController {
     private ComboBox<AnneeFx> annee;
     @FXML
     private ComboBox<CotisationFx> cotisation;
-    
+    @FXML
+    private Button validerCotisation;
+
+    private Cotisation mCotisation;
+
     public InscriptionsPanelController() {
 
     	Response<Annee[]> response = BackendInterface.getAnnees();
@@ -146,6 +138,7 @@ public class InscriptionsPanelController {
                     setText("");
                 } else {
                     setText(item.getnomCotisation() + " " + item.getAnnee());
+                    mCotisation = new Cotisation(item);
                 }
             }
         });
@@ -206,7 +199,30 @@ public class InscriptionsPanelController {
      
         inscritsCotisationTable.setItems(listeInscritsCotisation);
         inscritsAnnuelTable.setItems(listeInscritsAnnuel);
-        
+
+
+    }
+
+
+    @FXML
+    private void actionOnClickValiderCotisation() {
+
+        if (mCotisation != null) {
+            Response<InscriptionCotisation[]> response;
+
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                listeInscritsCotisation.clear();
+                for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                    listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
 
     }
 

@@ -146,7 +146,9 @@
                            <children>
                               <Label text="Sélectionner une cotisation" />
                               <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="135.0" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" text="Valider" GridPane.columnIndex="2" />
+                               <Button mnemonicParsing="false" fx:id="validerCotisation" prefHeight="39.0"
+                                       prefWidth="85.0" text="Valider" onAction="#actionOnClickValiderCotisation"
+                                       GridPane.columnIndex="2"/>
                            </children>
                         </GridPane>
                      </top>

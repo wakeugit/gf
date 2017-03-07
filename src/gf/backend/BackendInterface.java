@@ -8,6 +8,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import gf.model.*;
 
+import java.util.List;
+
 public class BackendInterface {
 
     public static final String APP_URL = "http://localhost:8082";
@@ -325,6 +327,40 @@ public class BackendInterface {
         } catch (UnirestException e) {
             response.getExceptions().add(e);
             e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<InscriptionCotisation[]> getInscriptionCotisation(Cotisation mCotisation) {
+        Response<InscriptionCotisation[]> response = new Response<>();
+        try {
+//            HttpResponse<InscriptionCotisation[]> bookResponse = Unirest
+//                    .post(APP_URL + "/inscription/cotisation/element")
+//                    .body(mCotisation)
+//                    .asObject(InscriptionCotisation[].class);
+//            if (bookResponse.getStatus() == 200) {
+//                response.setBody(bookResponse.getBody());
+//            } else {
+//                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+//            }
+//            return response;
+
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/cotisation/element")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(mCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionCotisation[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionCotisation[].class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
             return response;
         }
     }
