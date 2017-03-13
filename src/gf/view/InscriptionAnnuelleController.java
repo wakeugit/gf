@@ -8,6 +8,8 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Annee;
 import gf.model.AnneeFx;
+import gf.model.Cotisation;
+import gf.model.CotisationFx;
 import gf.model.InscriptionAnnuelle;
 import gf.model.InscriptionAnnuelleFx;
 import gf.model.Membre;
@@ -31,12 +33,12 @@ import javafx.util.StringConverter;
 public class InscriptionAnnuelleController {
 	
     private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
-    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
 	
     @FXML
     private ComboBox<MembreFx> nomMembre;
     @FXML
-    private ComboBox<AnneeFx> annee;
+    private ComboBox<CotisationFx> annee;
     @FXML
     private DatePicker dateInscription;
     @FXML
@@ -55,9 +57,9 @@ public class InscriptionAnnuelleController {
     @FXML
     private void initialize() {
     	if(annee != null){
-    	annee.setButtonCell( new ListCell<AnneeFx>() {
+    	annee.setButtonCell( new ListCell<CotisationFx>() {
             @Override
-            protected void updateItem(AnneeFx item, boolean empty) {
+            protected void updateItem(CotisationFx item, boolean empty) {
                 super.updateItem(item, empty); 
                 if (empty) {
                     setText("");
@@ -68,14 +70,14 @@ public class InscriptionAnnuelleController {
         });
     	
     	annee.setCellFactory( 
-    			new Callback<ListView<AnneeFx>, ListCell<AnneeFx>>() {
+    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
           
 
 			@Override
-			public ListCell<AnneeFx> call(ListView<AnneeFx> arg0) {
-	                ListCell<AnneeFx> cell = new ListCell<AnneeFx>() {
+			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
 	                    @Override
-	                    protected void updateItem(AnneeFx item, boolean empty) {
+	                    protected void updateItem(CotisationFx item, boolean empty) {
 	                        super.updateItem(item, empty);
 	                        if (empty) {
 	                            setText("");
@@ -136,13 +138,7 @@ public class InscriptionAnnuelleController {
     	membrePanelController = new MembrePanelController();
     	
     	listeMembres=membrePanelController.getListMembre();
-    	
-    	listeAnnees.add(new AnneeFx(new Annee("2015", "01.01.2015", "13.12.2015")));
-        listeAnnees.add(new AnneeFx(new Annee("2016", "01.01.2016", "12.12.2016")));
-        listeAnnees.add(new AnneeFx(new Annee("2014", "01.01.2014", "12.12.2014")));
-        listeAnnees.add(new AnneeFx(new Annee("2013", "01.01.2013", "14.12.2013")));
-        
-        
+    	        
     }
 
     
@@ -159,7 +155,7 @@ public class InscriptionAnnuelleController {
     private void actionOnClickValider() {
         if (isInputValid()) {
         	inscriptionAnnuelleFx = new InscriptionAnnuelleFx(
-        			new InscriptionAnnuelle( new Annee(annee.getSelectionModel().getSelectedItem()),
+        			new InscriptionAnnuelle( new Cotisation(annee.getSelectionModel().getSelectedItem()),
         					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
         					DateUtil.format(dateInscription.getValue()),
         					Integer.parseInt(montant.getText())));

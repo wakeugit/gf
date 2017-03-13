@@ -7,20 +7,20 @@ import lombok.Data;
 
 public class InscriptionAnnuelle {
 
-	private Annee annee;
+	private Cotisation annee;
 	private Membre membre;
 	private String dateInscription;
 	private int montant;
 	private long id = -1;
 		
-	public InscriptionAnnuelle(Annee annee, Membre membre, String dateInscription, int montant){
+	public InscriptionAnnuelle(Cotisation annee, Membre membre, String dateInscription, int montant){
 		this.annee=annee;
 		this.membre = membre;
 		this.dateInscription = dateInscription;
 		this.montant = montant;
 	}
 	
-	public InscriptionAnnuelle(long id, Annee annee, Membre membre, String dateInscription, int montant){
+	public InscriptionAnnuelle(long id, Cotisation annee, Membre membre, String dateInscription, int montant){
 		this.annee=annee;
 		this.membre = membre;
 		this.dateInscription = dateInscription;
@@ -29,7 +29,7 @@ public class InscriptionAnnuelle {
 	}
 
 	public InscriptionAnnuelle(InscriptionAnnuelleFx inscriptionAnnuelleFx) {
-		this.annee = new Annee(inscriptionAnnuelleFx.getAnneeFx());
+		this.annee = new Cotisation(inscriptionAnnuelleFx.getAnneeFx());
 		this.membre = new Membre(inscriptionAnnuelleFx.getMembreFx());
 		this.dateInscription = inscriptionAnnuelleFx.getDateInscrption();
 		this.montant = inscriptionAnnuelleFx.getMontant();

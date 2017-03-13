@@ -2,8 +2,9 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
+import gf.model.Cotisation;
+import gf.model.CotisationFx;
+import gf.model.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,23 +23,23 @@ import java.time.LocalDate;
 
 public class AnneesWindowController {
 
-    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<AnneeFx> anneeTable;
+    private TableView<CotisationFx> anneeTable;
     @FXML
-    private TableColumn<AnneeFx, String> anneeFx;
+    private TableColumn<CotisationFx, String> anneeFx;
     @FXML
-    private TableColumn<AnneeFx, LocalDate> dateDebut;
+    private TableColumn<CotisationFx, LocalDate> dateDebut;
     @FXML
-    private TableColumn<AnneeFx, LocalDate> dateFin;
+    private TableColumn<CotisationFx, LocalDate> dateFin;
 
     public AnneesWindowController() {
 
-        Response<Annee[]> response = BackendInterface.getAnnees();
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
         if (response.getBody() != null) {
-            for (Annee annee : response.getBody()) {
-                listeAnnees.add(new AnneeFx(annee));
+            for (Cotisation annee : response.getBody()) {
+                listeAnnees.add(new CotisationFx(annee));
             }
         } else {
             //Todo Display error message
@@ -96,8 +97,8 @@ public class AnneesWindowController {
         int selectedIndex = anneeTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            AnneeFx anneeFx = anneeTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeAnnees.indexOf(anneeFx);
+            CotisationFx CotisationFx = anneeTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAnnees.indexOf(CotisationFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -106,7 +107,7 @@ public class AnneesWindowController {
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Ann�e");
+                dialogStage.setTitle("Modifier Annee");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
@@ -114,7 +115,7 @@ public class AnneesWindowController {
 
                 AnneesDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setAnnee(anneeFx);
+                controller.setAnnee(CotisationFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setAnneesWindowCOntroller(this);
 
@@ -131,9 +132,9 @@ public class AnneesWindowController {
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());
-            alert.setTitle("Aucune ligne selection�e");
-            alert.setHeaderText("Aucune ligne selection�e");
-            alert.setContentText("Svp selectionnez un �lement dans la liste.");
+            alert.setTitle("Aucune ligne selectionee");
+            alert.setHeaderText("Aucune ligne selectionee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
 
             alert.showAndWait();
         }
@@ -142,11 +143,11 @@ public class AnneesWindowController {
     }
 
 
-    public ObservableList<AnneeFx> getListeAnnees() {
+    public ObservableList<CotisationFx> getListeAnnees() {
         return listeAnnees;
     }
 
-    public void setListeAnnees(ObservableList<AnneeFx> listeAnnees) {
+    public void setListeAnnees(ObservableList<CotisationFx> listeAnnees) {
         this.listeAnnees = listeAnnees;
     }
 

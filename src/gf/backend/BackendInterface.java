@@ -214,9 +214,10 @@ public class BackendInterface {
             if (type == Type.TONTINE)
                 bookResponse = Unirest.get(APP_URL + "/cotisation/tontine").asObject(Cotisation[].class);
             else if (type == Type.EPARGNE)
-
                 bookResponse = Unirest.get(APP_URL + "/cotisation/epargne").asObject(Cotisation[].class);
-
+            else if (type == Type.ANNEE)
+            	bookResponse = Unirest.get(APP_URL + "/cotisation/annee").asObject(Cotisation[].class);
+            
             if (bookResponse.getStatus() == 200) {
                 response.setBody(bookResponse.getBody());
             } else {

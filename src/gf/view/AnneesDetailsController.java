@@ -2,8 +2,9 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
+import gf.model.Cotisation;
+import gf.model.CotisationFx;
+import gf.model.Type;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,7 +26,7 @@ public class AnneesDetailsController {
 
 	private AnneesWindowController anneeWindowController;
 	private Stage dialogStage;
-	private AnneeFx anneeFx;
+	private CotisationFx anneeFx;
 	private int keyInArray=0;
 	private boolean validerClicked = false;
 
@@ -48,15 +49,15 @@ public class AnneesDetailsController {
 
 	@FXML
 	private void actionOnClickValider() {
-
 		if (isInputValid()) {
-			Annee annee = new Annee(anneeTxt.getText(), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()));
+			
+			Cotisation annee = new Cotisation("Cotisation Annuelle", Type.ANNEE , DateUtil.format(dateDebut
+					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 
 			if (valider.getText().equals("Valider")) {
-				Response<Annee> response = BackendInterface.createAnnee(annee);
+				Response<Cotisation> response = BackendInterface.createCotisation(annee);
 				if (response.getBody() != null) {
-					anneeWindowController.getListeAnnees().add(new AnneeFx(response.getBody()));
+					anneeWindowController.getListeAnnees().add(new CotisationFx(response.getBody()));
 				} else {
 					// Todo Display error message
 				}
@@ -64,9 +65,9 @@ public class AnneesDetailsController {
 			} else {
 				if (anneeFx.getId() != -1) {
 					annee.setId(anneeFx.getId());
-					Response<Annee> response = BackendInterface.updateAnnee(annee);
+					Response<Cotisation> response = BackendInterface.updateCotisation(annee);
 					if (response.getBody() != null) {
-						anneeWindowController.getListeAnnees().set(keyInArray, new AnneeFx(response.getBody()));
+						anneeWindowController.getListeAnnees().set(keyInArray, new CotisationFx(response.getBody()));
 					} else {
 						// Todo Display error message
 					}
@@ -122,11 +123,11 @@ public class AnneesDetailsController {
 		this.anneeWindowController = anneeWindowController;
 	}
 
-	public AnneeFx getAnnee() {
+	public CotisationFx getAnnee() {
 		return anneeFx;
 	}
 
-	public void setAnnee(AnneeFx anneeFx) {
+	public void setAnnee(CotisationFx anneeFx) {
 		this.anneeFx = anneeFx;
 		valider.setText("Modifier");
 		anneeTxt.setText(anneeFx.getAnnee());

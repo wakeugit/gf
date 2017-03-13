@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class InscriptionAnnuelleFx {
 	
-	private AnneeFx anneeFx;
+	private CotisationFx anneeFx;
 	private MembreFx membreFx;
 	private final ObjectProperty<LocalDate> dateInscription;
 	private final SimpleIntegerProperty montant;
@@ -23,7 +23,7 @@ public class InscriptionAnnuelleFx {
 	}
 	
 	public InscriptionAnnuelleFx(InscriptionAnnuelle inscriptionAnnuelle){
-		this.anneeFx= new AnneeFx(inscriptionAnnuelle.getAnnee());
+		this.anneeFx= new CotisationFx(inscriptionAnnuelle.getAnnee());
 		this.membreFx= new MembreFx(inscriptionAnnuelle.getMembre());
 		this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parse(inscriptionAnnuelle.getDateInscription()));
 		this.montant = new SimpleIntegerProperty(inscriptionAnnuelle.getMontant());
@@ -31,11 +31,11 @@ public class InscriptionAnnuelleFx {
 	}
 	
 		
-	public AnneeFx getAnneeFx() {
+	public CotisationFx getAnneeFx() {
 		return anneeFx;
 	}
 		
-	public void setAnneefx(AnneeFx anneeFx) {
+	public void setAnneefx(CotisationFx anneeFx) {
 		this.anneeFx=anneeFx;
 	}
 	

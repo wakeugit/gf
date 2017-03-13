@@ -27,7 +27,7 @@ public class InscriptionsPanelController {
 
     private ObservableList<InscriptionAnnuelleFx> listeInscritsAnnuel = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
-    private ObservableList<AnneeFx> listeAnnees = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
     @FXML
     private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
@@ -57,7 +57,7 @@ public class InscriptionsPanelController {
     private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
     @FXML
-    private ComboBox<AnneeFx> annee;
+    private ComboBox<CotisationFx> annee;
     @FXML
     private ComboBox<CotisationFx> cotisation;
     @FXML
@@ -67,10 +67,10 @@ public class InscriptionsPanelController {
 
     public InscriptionsPanelController() {
 
-    	Response<Annee[]> response = BackendInterface.getAnnees();
+    	Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
         if (response.getBody() != null) {
-            for (Annee annee : response.getBody()) {
-                listeAnnees.add(new AnneeFx(annee));
+            for (Cotisation annee : response.getBody()) {
+                listeAnnees.add(new CotisationFx(annee));
             }
         } else {
             //Todo Display error message
@@ -93,9 +93,9 @@ public class InscriptionsPanelController {
     private void initialize() {
         // Initialize the person table with the two columns.
     	if(annee != null){
-        	annee.setButtonCell( new ListCell<AnneeFx>() {
+        	annee.setButtonCell( new ListCell<CotisationFx>() {
                 @Override
-                protected void updateItem(AnneeFx item, boolean empty) {
+                protected void updateItem(CotisationFx item, boolean empty) {
                     super.updateItem(item, empty); 
                     if (empty) {
                         setText("");
@@ -106,14 +106,14 @@ public class InscriptionsPanelController {
             });
         	
         	annee.setCellFactory( 
-        			new Callback<ListView<AnneeFx>, ListCell<AnneeFx>>() {
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
               
 
     			@Override
-    			public ListCell<AnneeFx> call(ListView<AnneeFx> arg0) {
-    	                ListCell<AnneeFx> cell = new ListCell<AnneeFx>() {
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
     	                    @Override
-    	                    protected void updateItem(AnneeFx item, boolean empty) {
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
     	                        super.updateItem(item, empty);
     	                        if (empty) {
     	                            setText("");
