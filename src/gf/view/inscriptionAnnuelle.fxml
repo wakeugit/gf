@@ -25,14 +25,14 @@
             <Insets bottom="20.0" left="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Label text="Année" GridPane.rowIndex="1" />
-            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Date inscription" GridPane.rowIndex="2" />
-            <Label text="Montant" GridPane.rowIndex="3" />
-            <DatePicker fx:id="dateInscription" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nom membre" />
             <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
-             <ComboBox fx:id="nom" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label text="Année" GridPane.rowIndex="1" />
+             <ComboBox fx:id="nom" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Date inscription" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dateInscription" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Montant" GridPane.rowIndex="3" />
+            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <padding>
             <Insets top="5.0" />

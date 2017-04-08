@@ -1,9 +1,12 @@
 package gf.view;
 
 
+import java.time.LocalDate;
+
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -146,8 +149,14 @@ public class InscriptionCotisationController {
 
 			
         });
+    	
+    	
+    	dateInscription.setValue(LocalDate.now());
+    	
     	cotisation.setItems(listeCotisation);
     	nomMembre.setItems(listeMembres);
+    	
+    	new ComboBoxAutoComplete<MembreFx>(nomMembre);
     }
 
     public InscriptionCotisationController() {

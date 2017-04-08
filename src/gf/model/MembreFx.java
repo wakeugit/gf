@@ -1,5 +1,7 @@
 package gf.model;
 
+import java.util.Comparator;
+
 import javafx.beans.property.*;
 
 import java.util.Comparator;
@@ -9,7 +11,7 @@ import java.util.Comparator;
  *
  * @author Marco Jakob
  */
-public class MembreFx implements Comparable<MembreFx>, Comparator<MembreFx>{
+public class MembreFx{
 
 	private final SimpleStringProperty photo;
 	private final SimpleStringProperty nom;
@@ -126,13 +128,8 @@ public class MembreFx implements Comparable<MembreFx>, Comparator<MembreFx>{
 		return id.get();
 	}
 
-	@Override
-	public int compareTo(MembreFx o) {
-		return this.getNom().compareTo(o.getNom());
+	public String toString() {
+		return getNom();
 	}
 
-	@Override
-	public int compare(MembreFx o1, MembreFx o2) {
-		return o1.getNom().compareTo(o2.getNom());
-	}
 }

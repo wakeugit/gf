@@ -1,6 +1,7 @@
 package gf.view;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,6 +130,9 @@ public class InscriptionAnnuelleController {
 			
         });
     	nomMembre.setItems(listeMembres);
+    	
+    	
+		dateInscription.setValue(LocalDate.now());
     	}
     	
     	
