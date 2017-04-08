@@ -1,5 +1,7 @@
 package gf.model;
 
+import java.util.Comparator;
+
 import javafx.beans.property.*;
 
 /**
@@ -123,4 +125,11 @@ public class MembreFx {
 	public long getId() {
 		return id.get();
 	}
+
+	@Override
+	public String toString() {
+		return getNom();
+	}
+	
+	
 }
