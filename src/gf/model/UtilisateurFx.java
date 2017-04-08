@@ -111,4 +111,9 @@ public class UtilisateurFx {
 		return id.get();
 	}
 	
+	@Override
+	public String toString() {
+		return getNom();
+	}
+	
 }

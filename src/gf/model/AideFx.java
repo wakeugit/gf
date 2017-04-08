@@ -37,6 +37,9 @@ public class AideFx {
 		return id.get();
 	}
 	
-	
+	@Override
+	public String toString() {
+		return getMotif();
+	}
 	
 }

@@ -128,6 +128,7 @@ public class MembreFx{
 		return id.get();
 	}
 
+	@Override
 	public String toString() {
 		return getNom();
 	}

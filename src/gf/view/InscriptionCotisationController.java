@@ -157,22 +157,28 @@ public class InscriptionCotisationController {
     	nomMembre.setItems(listeMembres);
     	
     	new ComboBoxAutoComplete<MembreFx>(nomMembre);
+    	
+    	new ComboBoxAutoComplete<CotisationFx>(cotisation);
     }
 
     public InscriptionCotisationController() {
-    	membrePanelController = new MembrePanelController();
     	
-    	listeMembres=membrePanelController.getListMembre();
+    	Response<Membre[]> response = BackendInterface.getMembres();
+        if (response.getBody() != null) {
+            for (Membre membre : response.getBody()) {
+                listeMembres.add(new MembreFx(membre));
+            }
+        } else {
+            //Todo Display error message
+        	System.out.println("An error occured - Membres");
+        }
 
         Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisation.add(new CotisationFx(cotisation));
             }
-            //Todo share data between panel and controller
-            //if (listeCotisation.size() != 0) {
-            //cotisation.setValue();
-            //}
+            
         } else {
             //Todo Display error message
             System.out.println("An error occured - Cotisation");

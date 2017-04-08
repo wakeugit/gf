@@ -15,6 +15,8 @@ import gf.model.InscriptionAnnuelle;
 import gf.model.InscriptionAnnuelleFx;
 import gf.model.Membre;
 import gf.model.MembreFx;
+import gf.model.Type;
+import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,6 +57,32 @@ public class InscriptionAnnuelleController {
     private InscriptionAnnuelleFx inscriptionAnnuelleFx;
     private boolean validerClicked = false;
 
+    public InscriptionAnnuelleController() {
+    	
+   	 Response<Membre[]> response = BackendInterface.getMembres();
+        if (response.getBody() != null) {
+            for (Membre membre : response.getBody()) {
+                listeMembres.add(new MembreFx(membre));
+            }
+        } else {
+            //Todo Display error message
+       	 System.out.println("An error occured - Membres");
+        }
+   	
+   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.ANNEE);
+       if (response1.getBody() != null) {
+           for (Cotisation anne : response1.getBody()) {
+               listeAnnees.add(new CotisationFx(anne));
+           }
+       } else {
+           //Todo Display error message
+           System.out.println("An error occured - Annee");
+       }
+       
+         	
+   	        
+   }
+    
     @FXML
     private void initialize() {
     	if(annee != null){
@@ -92,7 +120,7 @@ public class InscriptionAnnuelleController {
 
 			
         });
-    	annee.setItems(listeAnnees);
+    	
     	}
     	if(nomMembre !=null){
     	nomMembre.setButtonCell( new ListCell<MembreFx>() {
@@ -129,23 +157,20 @@ public class InscriptionAnnuelleController {
 
 			
         });
+    	
+    	annee.setItems(listeAnnees);
     	nomMembre.setItems(listeMembres);
     	
     	
 		dateInscription.setValue(LocalDate.now());
+		
+		new ComboBoxAutoComplete<MembreFx>(nomMembre);
+		
     	}
     	
     	
     }
-
-    public InscriptionAnnuelleController() {
-    	membrePanelController = new MembrePanelController();
-    	
-    	listeMembres=membrePanelController.getListMembre();
-    	        
-    }
-
-    
+ 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }

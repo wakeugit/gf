@@ -28,7 +28,7 @@
             <Label text="Nom membre" />
             <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
             <Label text="Année" GridPane.rowIndex="1" />
-             <ComboBox fx:id="nom" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <ComboBox fx:id="annee" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date inscription" GridPane.rowIndex="2" />
             <DatePicker fx:id="dateInscription" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Montant" GridPane.rowIndex="3" />

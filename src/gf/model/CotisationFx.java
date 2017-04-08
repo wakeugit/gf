@@ -90,5 +90,9 @@ public class CotisationFx {
 		return id.get();
 	}
 	
+	@Override
+	public String toString() {
+		return getnomCotisation();
+	}
 	
 }

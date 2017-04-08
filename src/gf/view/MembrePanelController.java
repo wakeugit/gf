@@ -50,6 +50,7 @@ public class MembrePanelController {
             }
         } else {
             //Todo Display error message
+        	System.out.println("An error occured - Membres");
         }
     }
 

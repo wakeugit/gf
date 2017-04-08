@@ -70,4 +70,5 @@ public class InscriptionCotisationFx {
 		return id.get();
 	}
 	
+	
 }

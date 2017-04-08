@@ -38,6 +38,10 @@ public class SanctionFx {
 		return id.get();
 	}
 	
+	@Override
+	public String toString() {
+		return getMotif();
+	}
 	
 	
 }

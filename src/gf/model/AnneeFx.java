@@ -62,4 +62,9 @@ public class AnneeFx {
 		return id.get();
 	}
 	
+	@Override
+	public String toString() {
+		return getAnnee();
+	}
+	
 }
