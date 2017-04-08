@@ -43,7 +43,7 @@ public class AnneesWindowController {
             }
         } else {
             //Todo Display error message
-            System.out.println("An error occured - Annee");
+            System.out.println("An error occured - Année");
         }
     }
 
