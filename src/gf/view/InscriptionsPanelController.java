@@ -25,22 +25,22 @@ public class InscriptionsPanelController {
 
     private MainAppGF mainAppGF;
 
-    private ObservableList<InscriptionAnnuelleFx> listeInscritsAnnuel = FXCollections.observableArrayList();
+    private ObservableList<InscriptionCotisationFx> listeInscritsAnnuel = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
     @FXML
-    private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
+    private TableView<InscriptionCotisationFx> inscritsAnnuelTable;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, Long> idCol;
+    private TableColumn<InscriptionCotisationFx, Long> idCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> nomCol;
+    private TableColumn<InscriptionCotisationFx, String> nomCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> prenomCol;
+    private TableColumn<InscriptionCotisationFx, String> prenomCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, LocalDate> dateInscriptionCol;
+    private TableColumn<InscriptionCotisationFx, LocalDate> dateInscriptionCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> montantCol;
+    private TableColumn<InscriptionCotisationFx, Integer> montantCol;
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
     @FXML
@@ -62,6 +62,8 @@ public class InscriptionsPanelController {
     private ComboBox<CotisationFx> cotisation;
     @FXML
     private Button validerCotisation;
+    @FXML
+    private Button validerAnnuelCotisation;
 
     private Cotisation mCotisation;
 
@@ -101,6 +103,7 @@ public class InscriptionsPanelController {
                         setText("");
                     } else {
                         setText(item.getAnnee());
+                        mCotisation = new Cotisation(item);
                     }
                 }
             });
@@ -176,20 +179,20 @@ public class InscriptionsPanelController {
               }
             }
 
-          @Override
-          public CotisationFx fromString(String item) {
+            @Override
+            public CotisationFx fromString(String item) {
               return null;
           }
-      });
-    	cotisation.setItems(listeCotisations);
+        });
+            cotisation.setItems(listeCotisations);
     	}
-    	
-    	idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+
+        idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
-        
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
+
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
@@ -212,10 +215,18 @@ public class InscriptionsPanelController {
 
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                listeInscritsCotisation.clear();
-                for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                    listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                if (mCotisation.getType() == Type.ANNEE) {
+                    listeInscritsAnnuel.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsAnnuel.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                } else if (mCotisation.getType() == Type.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
                 }
+
 
             } else {
                 // Todo Display error message
@@ -265,8 +276,8 @@ public class InscriptionsPanelController {
 
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-        	InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
+            InscriptionCotisationFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -442,7 +453,7 @@ public class InscriptionsPanelController {
         this.mainAppGF = mainAppGF;
     }
 
-    public ObservableList<InscriptionAnnuelleFx> getListMembreInscrits() {
+    public ObservableList<InscriptionCotisationFx> getListMembreInscrits() {
         return listeInscritsAnnuel;
     }
 

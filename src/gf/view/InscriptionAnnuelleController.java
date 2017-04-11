@@ -7,15 +7,7 @@ import java.util.Map;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.Annee;
-import gf.model.AnneeFx;
-import gf.model.Cotisation;
-import gf.model.CotisationFx;
-import gf.model.InscriptionAnnuelle;
-import gf.model.InscriptionAnnuelleFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
-import gf.model.Type;
+import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
@@ -56,6 +48,8 @@ public class InscriptionAnnuelleController {
     private InscriptionAnnuelle inscriptionAnnuelle;
     private InscriptionAnnuelleFx inscriptionAnnuelleFx;
     private boolean validerClicked = false;
+    private Membre mMembre;
+    private Cotisation mCotisation;
 
     public InscriptionAnnuelleController() {
     	
@@ -94,6 +88,8 @@ public class InscriptionAnnuelleController {
                     setText("");
                 } else {
                     setText(item.getAnnee());
+                    mCotisation = new Cotisation(item);
+
                 }
             }
         });
@@ -131,6 +127,8 @@ public class InscriptionAnnuelleController {
                     setText("");
                 } else {
                     setText(item.getNom()+" "+item.getPrenom());
+                    mMembre = new Membre(item);
+
                 }
             }
         });
@@ -183,17 +181,32 @@ public class InscriptionAnnuelleController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-        	inscriptionAnnuelleFx = new InscriptionAnnuelleFx(
-        			new InscriptionAnnuelle( new Cotisation(annee.getSelectionModel().getSelectedItem()),
-        					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
-        					DateUtil.format(dateInscription.getValue()),
-        					Integer.parseInt(montant.getText())));
+            InscriptionCotisation ic = new InscriptionCotisation(mCotisation,
+                    mMembre,
+                    DateUtil.format(dateInscription.getValue()),
+                    Integer.parseInt(montant.getText()));
 
-        	if (valider.getText().equals("Valider")) {
-        		inscriptionPanelController.getListMembreInscrits().add(inscriptionAnnuelleFx); 
-    		} else {
-    			inscriptionPanelController.getListMembreInscrits().set(keyInArray, inscriptionAnnuelleFx);
-    		}
+            Response<InscriptionCotisation> response;
+
+            if (valider.getText().equals("Valider")) {
+                response = BackendInterface.createInscriptionCotisation(ic);
+                if (response.getBody() != null) {
+                    inscriptionPanelController.getListMembreInscrits().add(new InscriptionCotisationFx(response.getBody()));
+
+                } else {
+                    // Todo Display error message
+                }
+//        		inscriptionPanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
+            } else {
+                response = BackendInterface.updateInscriptionCotisation(ic);
+                if (response.getBody() != null) {
+                    inscriptionPanelController.getListMembreInscrits().set(keyInArray, new InscriptionCotisationFx(response.getBody()));
+
+                } else {
+                    // Todo Display error message
+                }
+//    			inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+            }
 
             validerClicked = true;
             dialogStage.close();
@@ -261,12 +274,12 @@ public class InscriptionAnnuelleController {
         return inscriptionAnnuelle;
     }
 
-    public void setInscriptionAnnuelle(InscriptionAnnuelleFx inscriptionAnnuelleFx) {
+    public void setInscriptionAnnuelle(InscriptionCotisationFx inscriptionAnnuelleFx) {
         valider.setText("Modifier");
         nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
-        annee.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
+        annee.getSelectionModel().select(inscriptionAnnuelleFx.getCotisationFx());
         dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        montant.setText("" + inscriptionAnnuelleFx.getMontant());
+        montant.setText("" + inscriptionAnnuelleFx.getNumeroTirage());
     }
 
 	public int getKeyInArray() {
