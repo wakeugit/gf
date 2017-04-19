@@ -79,7 +79,9 @@
                            <children>
                                <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une annee :" />
                               <ComboBox fx:id="annee" prefHeight="39.0" prefWidth="127.0" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" text="Valider" GridPane.columnIndex="2" />
+                               <Button fx:id="validerAnnuelCotisation" mnemonicParsing="false" prefHeight="39.0"
+                                       prefWidth="88.0" onAction="#actionOnClickValiderCotisation" text="Valider"
+                                       GridPane.columnIndex="2"/>
                            </children>
                         </GridPane>
                      </top>
