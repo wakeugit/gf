@@ -65,7 +65,7 @@ public class TontinePanelController {
     
     public TontinePanelController() {
 
-     /*   Response<Membre[]> response = BackendInterface.getMembres();
+     /*Response<Membre[]> response = BackendInterface.getMembres();
         if (response.getBody() != null) {
             for (Membre membre : response.getBody()) {
                 listeMembres.add(new MembreFx(membre));

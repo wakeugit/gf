@@ -77,10 +77,7 @@ public class InscriptionAnnuelleController {
        } else {
            //Todo Display error message
            System.out.println("An error occured - Annee");
-       }
-       
-         	
-   	        
+       }      
    }
     
     @FXML
@@ -194,7 +191,6 @@ public class InscriptionAnnuelleController {
     		} else {
     			inscriptionPanelController.getListMembreInscrits().set(keyInArray, inscriptionAnnuelleFx);
     		}
-
             validerClicked = true;
             dialogStage.close();
         }

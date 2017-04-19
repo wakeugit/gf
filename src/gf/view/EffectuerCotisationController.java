@@ -144,7 +144,7 @@ public class EffectuerCotisationController {
     }
 
     public EffectuerCotisationController() {
-    	        
+ 
     }
 
     

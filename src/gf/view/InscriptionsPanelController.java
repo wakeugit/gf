@@ -29,6 +29,7 @@ public class InscriptionsPanelController {
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
+    
     @FXML
     private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
     @FXML
@@ -108,7 +109,6 @@ public class InscriptionsPanelController {
         	annee.setCellFactory( 
         			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
               
-
     			@Override
     			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
     	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
@@ -184,9 +184,9 @@ public class InscriptionsPanelController {
     	cotisation.setItems(listeCotisations);
     	}
     	
-    	idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+    	idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
         
@@ -266,7 +266,7 @@ public class InscriptionsPanelController {
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
         	InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
+        	int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
