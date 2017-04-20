@@ -77,9 +77,11 @@
                               <Insets bottom="10.0" left="170.0" right="200.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une annee :" />
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une cotisation :" />
                               <ComboBox fx:id="annee" prefHeight="39.0" prefWidth="127.0" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" text="Valider" GridPane.columnIndex="2" />
+                               <Button fx:id="validerAnnuelCotisation" mnemonicParsing="false" prefHeight="39.0"
+                                       prefWidth="88.0" onAction="#actionOnClickValiderAnnuelle" text="Valider"
+                                       GridPane.columnIndex="2"/>
                            </children>
                         </GridPane>
                      </top>

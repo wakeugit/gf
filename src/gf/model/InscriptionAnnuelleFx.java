@@ -8,7 +8,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 public class InscriptionAnnuelleFx {
 	
@@ -23,7 +22,7 @@ public class InscriptionAnnuelleFx {
 	}
 	
 	public InscriptionAnnuelleFx(InscriptionAnnuelle inscriptionAnnuelle){
-		this.anneeFx= new CotisationFx(inscriptionAnnuelle.getAnnee());
+		this.anneeFx= new CotisationFx(inscriptionAnnuelle.getCotisation());
 		this.membreFx= new MembreFx(inscriptionAnnuelle.getMembre());
 		this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parse(inscriptionAnnuelle.getDateInscription()));
 		this.montant = new SimpleIntegerProperty(inscriptionAnnuelle.getMontant());

@@ -219,6 +219,9 @@ public class InscriptionCotisationController {
                 }
 //        		inscriptionPanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
             } else {
+                ic.setId(inscriptionCotisationFx.getId());
+                ic.setCotisation(new Cotisation(inscriptionCotisationFx.getCotisationFx()));
+                ic.setMembre(new Membre(inscriptionCotisationFx.getMembreFx()));
                 response = BackendInterface.updateInscriptionCotisation(ic);
                 if (response.getBody() != null) {
                     inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, new InscriptionCotisationFx(response.getBody()));
@@ -302,6 +305,7 @@ public class InscriptionCotisationController {
         cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
         dateInscription.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
         numeroTirage.setText("" + inscriptionCotisationFx.getNumeroTirage());
+        this.inscriptionCotisationFx = inscriptionCotisationFx;
     }
 
 	public int getKeyInArray() {

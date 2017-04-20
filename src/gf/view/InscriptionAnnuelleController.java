@@ -2,8 +2,6 @@ package gf.view;
 
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
@@ -23,7 +21,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 public class InscriptionAnnuelleController {
 	
@@ -33,7 +30,7 @@ public class InscriptionAnnuelleController {
     @FXML
     private ComboBox<MembreFx> nomMembre;
     @FXML
-    private ComboBox<CotisationFx> annee;
+    private ComboBox<CotisationFx> cotisation;
     @FXML
     private DatePicker dateInscription;
     @FXML
@@ -65,8 +62,8 @@ public class InscriptionAnnuelleController {
    	
    	Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.ANNEE);
        if (response1.getBody() != null) {
-           for (Cotisation anne : response1.getBody()) {
-               listeAnnees.add(new CotisationFx(anne));
+           for (Cotisation cotisation : response1.getBody()) {
+               listeAnnees.add(new CotisationFx(cotisation));
            }
        } else {
            //Todo Display error message
@@ -76,8 +73,8 @@ public class InscriptionAnnuelleController {
     
     @FXML
     private void initialize() {
-    	if(annee != null){
-    	annee.setButtonCell( new ListCell<CotisationFx>() {
+    	if(cotisation != null){
+    	cotisation.setButtonCell(new ListCell<CotisationFx>() {
             @Override
             protected void updateItem(CotisationFx item, boolean empty) {
                 super.updateItem(item, empty); 
@@ -91,7 +88,7 @@ public class InscriptionAnnuelleController {
             }
         });
     	
-    	annee.setCellFactory( 
+    	cotisation.setCellFactory(
     			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
           
 
@@ -153,7 +150,7 @@ public class InscriptionAnnuelleController {
 			
         });
     	
-    	annee.setItems(listeAnnees);
+    	cotisation.setItems(listeAnnees);
     	nomMembre.setItems(listeMembres);
     	
     	
@@ -178,50 +175,43 @@ public class InscriptionAnnuelleController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-            InscriptionCotisation ic = new InscriptionCotisation(mCotisation,
+            InscriptionAnnuelle ic = new InscriptionAnnuelle(mCotisation,
                     mMembre,
                     DateUtil.format(dateInscription.getValue()),
                     Integer.parseInt(montant.getText()));
 
-            Response<InscriptionCotisation> response;
+            Response<InscriptionAnnuelle> response;
 
             if (valider.getText().equals("Valider")) {
-                response = BackendInterface.createInscriptionCotisation(ic);
+                response = BackendInterface.createInscriptionAnnuelle(ic);
                 if (response.getBody() != null) {
-                    inscriptionPanelController.getListMembreInscrits().add(new InscriptionCotisationFx(response.getBody()));
+                    inscriptionPanelController.getListMembreInscrits().add(new InscriptionAnnuelleFx(response.getBody()));
 
                 } else {
                     // Todo Display error message
                 }
-//        		inscriptionPanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
             } else {
-                response = BackendInterface.updateInscriptionCotisation(ic);
+                ic.setId(inscriptionAnnuelleFx.getId());
+                ic.setMembre(new Membre(inscriptionAnnuelleFx.getMembreFx()));
+                ic.setCotisation(new Cotisation(inscriptionAnnuelleFx.getAnneeFx()));
+                response = BackendInterface.updateInscriptionAnnuelle(ic);
                 if (response.getBody() != null) {
-                    inscriptionPanelController.getListMembreInscrits().set(keyInArray, new InscriptionCotisationFx(response.getBody()));
-
-<<<<<<< HEAD
-        	if (valider.getText().equals("Valider")) {
-        		inscriptionPanelController.getListMembreInscrits().add(inscriptionAnnuelleFx); 
-    		} else {
-    			inscriptionPanelController.getListMembreInscrits().set(keyInArray, inscriptionAnnuelleFx);
-    		}
-=======
+                    inscriptionPanelController.getListMembreInscrits().set(keyInArray, new InscriptionAnnuelleFx(response.getBody()));
                 } else {
                     // Todo Display error message
                 }
-//    			inscriptionPanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
             }
-
->>>>>>> dc7ce6e5a1526f222a91e19accd09019a98ffac3
             validerClicked = true;
             dialogStage.close();
         }
     }
-    
+
+
+
     @FXML
     private void actionOnClickAnnuler() {
         nomMembre.getSelectionModel().select(null);
-        annee.getSelectionModel().select(null);
+        cotisation.getSelectionModel().select(null);
         dateInscription.setValue(null);
         montant.setText("");
     }
@@ -233,7 +223,7 @@ public class InscriptionAnnuelleController {
         if (nomMembre.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Membre invalide!\n";
         }
-        if (annee.getSelectionModel().getSelectedItem() == null) {
+        if (cotisation.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Annee invalide!\n";
         }
         if (dateInscription.getValue() == null ) {
@@ -279,12 +269,13 @@ public class InscriptionAnnuelleController {
         return inscriptionAnnuelle;
     }
 
-    public void setInscriptionAnnuelle(InscriptionCotisationFx inscriptionAnnuelleFx) {
+    public void setInscriptionAnnuelle(InscriptionAnnuelleFx inscriptionAnnuelleFx) {
         valider.setText("Modifier");
         nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
-        annee.getSelectionModel().select(inscriptionAnnuelleFx.getCotisationFx());
+        cotisation.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
         dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        montant.setText("" + inscriptionAnnuelleFx.getNumeroTirage());
+        montant.setText("" + inscriptionAnnuelleFx.getMontant());
+        this.inscriptionAnnuelleFx = inscriptionAnnuelleFx;
     }
 
 	public int getKeyInArray() {

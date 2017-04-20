@@ -125,7 +125,7 @@ public class BackendInterface {
         initRequest();
         Response<Annee[]> response = new Response<>();
         try {
-            HttpResponse<Annee[]> bookResponse = Unirest.get(APP_URL + "/annee/").asObject(Annee[].class);
+            HttpResponse<Annee[]> bookResponse = Unirest.get(APP_URL + "/cotisation/").asObject(Annee[].class);
             if (bookResponse.getStatus() == 200) {
                 response.setBody(bookResponse.getBody());
             } else {
@@ -142,7 +142,7 @@ public class BackendInterface {
         initRequest();
         Response<Annee> response = new Response<>();
         try {
-            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/annee/")
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .body(annee)
@@ -169,7 +169,7 @@ public class BackendInterface {
         initRequest();
         Response<Annee> response = new Response<>();
         try {
-            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/annee/")
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .body(annee)
@@ -194,7 +194,46 @@ public class BackendInterface {
     public static void deleteAnnee(long anneeId) {
         initRequest();
         try {
-            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/annee/" + anneeId)
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/cotisation/" + anneeId)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteInscriptionCotisation(long id) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/inscription/cotisation/" + id)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteInscriptionAnnuelle(long id) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/inscription/annuelle/" + id)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCotisation(long id) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/cotisation/" + id)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .asJson();
@@ -307,6 +346,56 @@ public class BackendInterface {
         }
     }
 
+    public static Response<InscriptionAnnuelle> createInscriptionAnnuelle(InscriptionAnnuelle inscriptionCotisation) {
+        initRequest();
+        Response<InscriptionAnnuelle> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/annuelle/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(inscriptionCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionAnnuelle created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), InscriptionAnnuelle.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<InscriptionAnnuelle> updateInscriptionAnnuelle(InscriptionAnnuelle inscriptionCotisation) {
+        initRequest();
+        Response<InscriptionAnnuelle> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/inscription/annuelle/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(inscriptionCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionAnnuelle created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), InscriptionAnnuelle.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
     public static Response<InscriptionCotisation> updateInscriptionCotisation(InscriptionCotisation inscriptionCotisation) {
         initRequest();
         Response<InscriptionCotisation> response = new Response<>();
@@ -335,16 +424,6 @@ public class BackendInterface {
     public static Response<InscriptionCotisation[]> getInscriptionCotisation(Cotisation mCotisation) {
         Response<InscriptionCotisation[]> response = new Response<>();
         try {
-//            HttpResponse<InscriptionCotisation[]> bookResponse = Unirest
-//                    .post(APP_URL + "/inscription/cotisation/element")
-//                    .body(mCotisation)
-//                    .asObject(InscriptionCotisation[].class);
-//            if (bookResponse.getStatus() == 200) {
-//                response.setBody(bookResponse.getBody());
-//            } else {
-//                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
-//            }
-//            return response;
 
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/cotisation/element")
                     .header("accept", "application/json")
@@ -355,6 +434,30 @@ public class BackendInterface {
             if (nodeHttpResponse.getStatus() == 200) {
                 Gson gson = new Gson();
                 InscriptionCotisation[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionCotisation[].class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<InscriptionAnnuelle[]> getInscriptionAnnuelle(Cotisation mCotisation) {
+        Response<InscriptionAnnuelle[]> response = new Response<>();
+        try {
+
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/annuelle/element")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(mCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionAnnuelle[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionAnnuelle[].class);
                 response.setBody(created);
             } else {
                 response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));

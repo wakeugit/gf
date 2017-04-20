@@ -25,23 +25,23 @@ public class InscriptionsPanelController {
 
     private MainAppGF mainAppGF;
 
-    private ObservableList<InscriptionCotisationFx> listeInscritsAnnuel = FXCollections.observableArrayList();
+    private ObservableList<InscriptionAnnuelleFx> listeInscritsAnnuel = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
     
     @FXML
-    private TableView<InscriptionCotisationFx> inscritsAnnuelTable;
+    private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
     @FXML
-    private TableColumn<InscriptionCotisationFx, Long> idCol;
+    private TableColumn<InscriptionAnnuelleFx, Long> idCol;
     @FXML
-    private TableColumn<InscriptionCotisationFx, String> nomCol;
+    private TableColumn<InscriptionAnnuelleFx, String> nomCol;
     @FXML
-    private TableColumn<InscriptionCotisationFx, String> prenomCol;
+    private TableColumn<InscriptionAnnuelleFx, String> prenomCol;
     @FXML
-    private TableColumn<InscriptionCotisationFx, LocalDate> dateInscriptionCol;
+    private TableColumn<InscriptionAnnuelleFx, LocalDate> dateInscriptionCol;
     @FXML
-    private TableColumn<InscriptionCotisationFx, Integer> montantCol;
+    private TableColumn<InscriptionAnnuelleFx, Integer> montantCol;
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
     @FXML
@@ -70,15 +70,18 @@ public class InscriptionsPanelController {
 
     public InscriptionsPanelController() {
 
-    	Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
+
+
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
         if (response.getBody() != null) {
-            for (Cotisation annee : response.getBody()) {
-                listeAnnees.add(new CotisationFx(annee));
+            for (Cotisation cotisation : response.getBody()) {
+                listeAnnees.add(new CotisationFx(cotisation));
             }
         } else {
             //Todo Display error message
             System.out.println("An error occured - Annee");
         }
+
         
         Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
         if (response1.getBody() != null) {
@@ -109,7 +112,7 @@ public class InscriptionsPanelController {
                 }
             });
         	
-        	annee.setCellFactory( 
+        	annee.setCellFactory(
         			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
               
     			@Override
@@ -186,17 +189,12 @@ public class InscriptionsPanelController {
         });
             cotisation.setItems(listeCotisations);
     	}
-<<<<<<< HEAD
-    	
-    	idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-=======
 
         idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
->>>>>>> dc7ce6e5a1526f222a91e19accd09019a98ffac3
         nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
 
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -220,15 +218,34 @@ public class InscriptionsPanelController {
 
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == Type.ANNEE) {
-                    listeInscritsAnnuel.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsAnnuel.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                } else if (mCotisation.getType() == Type.TONTINE) {
+                if (mCotisation.getType() == Type.TONTINE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+
+    @FXML
+    private void actionOnClickValiderAnnuelle() {
+
+        if (mCotisation != null) {
+            Response<InscriptionAnnuelle[]> response;
+
+            response = BackendInterface.getInscriptionAnnuelle(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getType() == Type.ANNEE) {
+                    listeInscritsAnnuel.clear();
+                    for (InscriptionAnnuelle inscriptionCotisation : response.getBody()) {
+                        listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
                     }
                 }
 
@@ -281,13 +298,8 @@ public class InscriptionsPanelController {
 
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-<<<<<<< HEAD
-        	InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-        	int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
-=======
-            InscriptionCotisationFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
+            InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
             int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
->>>>>>> dc7ce6e5a1526f222a91e19accd09019a98ffac3
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -337,8 +349,10 @@ public class InscriptionsPanelController {
 
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            inscritsAnnuelTable.getItems().remove(selectedIndex);
-            //BackendInterface.deleteMembre(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+            //// TODO: 20/04/2017 Add alert before delete element
+            BackendInterface.deleteInscriptionAnnuelle(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+
+            actionOnClickValiderAnnuelle();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
@@ -441,8 +455,9 @@ public class InscriptionsPanelController {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            inscritsCotisationTable.getItems().remove(selectedIndex);
-            //BackendInterface.deleteMembre(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+            //// TODO: 20/04/2017 Add alert before delete element
+            BackendInterface.deleteInscriptionCotisation(inscritsCotisationTable.getItems().get(selectedIndex).getId());
+            actionOnClickValiderCotisation();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
@@ -463,7 +478,7 @@ public class InscriptionsPanelController {
         this.mainAppGF = mainAppGF;
     }
 
-    public ObservableList<InscriptionCotisationFx> getListMembreInscrits() {
+    public ObservableList<InscriptionAnnuelleFx> getListMembreInscrits() {
         return listeInscritsAnnuel;
     }
 

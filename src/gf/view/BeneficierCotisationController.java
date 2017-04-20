@@ -44,7 +44,7 @@ public class BeneficierCotisationController {
                 if (empty) {
                     setText("");
                 } else {
-                    setText(item.getnomCotisation() + " " + item.getAnnee());
+                    setText(item.getnomCotisation() + " " + item.getCotisation());
                 }
             }
         });
@@ -62,7 +62,7 @@ public class BeneficierCotisationController {
 	                        if (empty) {
 	                            setText("");
 	                        } else {
-	                            setText(item.getnomCotisation() + " " + item.getAnnee());
+	                            setText(item.getnomCotisation() + " " + item.getCotisation());
 	                        }
 	                    }
 	                };
@@ -78,7 +78,7 @@ public class BeneficierCotisationController {
               if (item == null){
                 return null;
               } else {
-                return item.getnomCotisation() + " " + item.getAnnee();
+                return item.getnomCotisation() + " " + item.getCotisation();
               }
             }
 
