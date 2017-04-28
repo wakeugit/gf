@@ -445,6 +445,34 @@ public class BackendInterface {
         }
     }
 
+
+
+    public static Response<InscriptionCotisation[]> getTransactionByCotisationAndDate(Cotisation mCotisation, String date) {
+        Response<InscriptionCotisation[]> response = new Response<>();
+        try {
+
+            //// TODO: 27/04/2017 Update URL endpoint
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/cotisation/element")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(mCotisation)
+                    .body(date)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionCotisation[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionCotisation[].class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
     public static Response<InscriptionAnnuelle[]> getInscriptionAnnuelle(Cotisation mCotisation) {
         Response<InscriptionAnnuelle[]> response = new Response<>();
         try {

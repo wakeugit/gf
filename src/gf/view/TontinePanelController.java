@@ -2,23 +2,19 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.EffectuerFx;
-import gf.model.InscriptionAnnuelleFx;
-import gf.model.InscriptionCotisationFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
+import gf.model.*;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,7 +24,9 @@ public class TontinePanelController {
     private MainAppGF mainAppGF;
     // pour effectuer cotisation
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
-    
+    private ObservableList<MembreFx> listeTontineurs = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeTontines = FXCollections.observableArrayList();
+
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
     @FXML
@@ -48,7 +46,7 @@ public class TontinePanelController {
     private ObservableList<EffectuerFx> listesTontines_Membres = FXCollections.observableArrayList();
     
     @FXML
-    private TableView<EffectuerFx> Cotisations;
+    private TableView<EffectuerFx> cotisations;
     @FXML
     private TableColumn<EffectuerFx, Long> idCol;
     @FXML
@@ -61,24 +59,122 @@ public class TontinePanelController {
     private TableColumn<EffectuerFx, String> anneeCol;
     @FXML
     private TableColumn<EffectuerFx, Integer> montantCol;
-   
-    
+
+    @FXML
+    private ComboBox<CotisationFx> comboEffectuer;
+
+    @FXML
+    private ComboBox<CotisationFx> comboTontineur;
+
+    @FXML
+    private ComboBox<CotisationFx> comboBeneficiaire;
+
+    @FXML
+    private DatePicker dateTontineur;
+
+    @FXML
+    private DatePicker dateBeneficiaire;
+
+    @FXML
+    private Button validerEffectuer;
+
+    @FXML
+    private Button validerTontineur;
+
+    @FXML
+    private Button validerBeneficiaire;
+
+    private Cotisation mCotisation;
+
+    private String dateRequest;
+
+
     public TontinePanelController() {
 
-     /*Response<Membre[]> response = BackendInterface.getMembres();
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.TONTINE);
         if (response.getBody() != null) {
-            for (Membre membre : response.getBody()) {
-                listeMembres.add(new MembreFx(membre));
+            for (Cotisation cotisation : response.getBody()) {
+                listeTontines.add(new CotisationFx(cotisation));
             }
         } else {
             //Todo Display error message
+            System.out.println("An error occured - Tontine");
         }
-        */
     }
 
 
     @FXML
     private void initialize() {
+        if(comboEffectuer != null){
+            comboEffectuer.setButtonCell( new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation());
+                    }
+                }
+            });
+/*
+            comboEffectuer.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });*/
+            comboEffectuer.setItems(listeTontines);
+        }
+
+        if(comboTontineur != null){
+            comboTontineur.setButtonCell( new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation());
+                    }
+                }
+            });
+
+            comboTontineur.setItems(listeTontines);
+        }
+
+        if(comboBeneficiaire != null){
+            comboBeneficiaire.setButtonCell( new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation());
+                    }
+                }
+            });
+
+            comboBeneficiaire.setItems(listeTontines);
+        }
+
+
         // Effectuer cotisation.
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -97,8 +193,102 @@ public class TontinePanelController {
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
 
-        Cotisations.setItems(listesTontines_Membres);
+        cotisations.setItems(listesTontines_Membres);
 
+    }
+
+    @FXML
+    private void actionOnClickValiderEffectuer(){
+        if (mCotisation != null && dateBeneficiaire != null) {
+            LocalDate dateFilter = dateBeneficiaire.getValue();
+            dateRequest = DateUtil.format(dateFilter);
+            System.out.println("date request="+ dateRequest);
+
+            if (!dateRequest.isEmpty()) {
+
+
+                // TODO: 27/04/2017 Update the view according the request result.
+
+//            Response<InscriptionCotisation[]> response;
+//
+//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
+//            if (response.getBody() != null) {
+//                if (mCotisation.getType() == Type.TONTINE) {
+//                    listeInscritsCotisation.clear();
+//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+//                    }
+//                }
+//
+//            } else {
+//                // Todo Display error message
+//                System.out.println("An error occured - ValiderCotisation");
+//            }
+            }
+        }
+    }
+
+
+    @FXML
+    private void actionOnClickValiderTontineur(){
+        if (mCotisation != null && dateTontineur != null) {
+            LocalDate dateFilter = dateTontineur.getValue();
+            dateRequest = DateUtil.format(dateFilter);
+            System.out.println("date request="+ dateRequest);
+
+            if (dateRequest!=null && !dateRequest.isEmpty()) {
+
+
+                // TODO: 27/04/2017 Update the view according the request result.
+
+//            Response<InscriptionCotisation[]> response;
+//
+//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
+//            if (response.getBody() != null) {
+//                if (mCotisation.getType() == Type.TONTINE) {
+//                    listeInscritsCotisation.clear();
+//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+//                    }
+//                }
+//
+//            } else {
+//                // Todo Display error message
+//                System.out.println("An error occured - ValiderCotisation");
+//            }
+            }
+        }
+    }
+
+    @FXML
+    private void actionOnClickValiderBeneficiaire(){
+        if (mCotisation != null && dateBeneficiaire != null) {
+            LocalDate dateFilter = dateBeneficiaire.getValue();
+            dateRequest = DateUtil.format(dateFilter);
+            System.out.println("date request="+ dateRequest);
+
+            if (dateRequest!=null && !dateRequest.isEmpty()) {
+
+
+                // TODO: 27/04/2017 Update the view according the request result.
+
+//            Response<InscriptionCotisation[]> response;
+//
+//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
+//            if (response.getBody() != null) {
+//                if (mCotisation.getType() == Type.TONTINE) {
+//                    listeInscritsCotisation.clear();
+//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+//                    }
+//                }
+//
+//            } else {
+//                // Todo Display error message
+//                System.out.println("An error occured - ValiderCotisation");
+//            }
+            }
+        }
     }
 
 
