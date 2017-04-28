@@ -1,0 +1,570 @@
+package gf.view;
+
+import gf.backend.BackendInterface;
+import gf.backend.Response;
+import gf.model.*;
+import gf.util.DateUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+public class PretsEtRembPanelController {
+
+    private MainAppGF mainAppGF;
+
+    private ObservableList<TransactionFx> listeInscritsAnnuel = FXCollections.observableArrayList();
+    private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
+    private ObservableList<TransactionFx> listePrets = FXCollections.observableArrayList();
+    private ObservableList<TransactionFx> listeRemboursements = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableView<InscriptionCotisationFx> inscritsCotisationTable;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, Long> idInscription;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, String> nomInscription;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, String> prenomInscription;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, Integer> cniInscription;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, String> nomCotisationInscription;
+    @FXML
+    private TableColumn<InscriptionCotisationFx, String> anneeInscription;
+    
+    @FXML
+    private TableView<TransactionFx> pretsTable;
+    @FXML
+    private TableColumn<TransactionFx, Long> idPret;
+    @FXML
+    private TableColumn<TransactionFx, String> nomPret;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomPret;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisationPret;
+    @FXML
+    private TableColumn<TransactionFx, String> anneePret;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> datePret;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantPret;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateRembPret;
+    @FXML
+    private TableColumn<TransactionFx, Float> tauxPret;
+    @FXML
+    private TableColumn<TransactionFx, String> avaliseurPret;
+    
+    @FXML
+    private TableView<TransactionFx> suiviPretsTable;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> datePretSuiviPret;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisationSuiviPret;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeSuiviPret;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantPlace;
+
+    
+    @FXML
+    private TableView<TransactionFx> pretsTable1;
+    @FXML
+    private TableColumn<TransactionFx, Long> idCol1;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCol1;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomCol1;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisationCol1;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeCol1;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateCol;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantCol;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateRembCol;
+    @FXML
+    private TableColumn<TransactionFx, Float> tauxCol;
+
+    
+    @FXML
+    private TableView<TransactionFx> suiviRemTable;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateRembSuiviRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisationSuiviRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeSuiviRemb;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantRemb;
+    @FXML
+    private TableColumn<TransactionFx, Integer> penalitesRemb;
+    
+    
+    @FXML
+    private ComboBox<CotisationFx> cotisationPret;
+    @FXML
+    private ComboBox<CotisationFx> cotisationListePret;
+    @FXML
+    private DatePicker dateListePret;
+    @FXML
+    private ComboBox<CotisationFx> cotisationSuiviPret;
+    @FXML
+    private ComboBox<CotisationFx> cotisationRemb;
+    @FXML
+    private ComboBox<CotisationFx> cotisationListeRemb;
+    @FXML
+    private DatePicker dateListeRemb;
+    @FXML
+    private ComboBox<CotisationFx> cotisationSuiviRemb;
+    
+    @FXML
+    private Button validerPret;
+    @FXML
+    private Button validerListePrets;
+    @FXML
+    private Button validerSuiviPrets;
+    @FXML
+    private Button validerRemb;
+    @FXML
+    private Button validerListeRemb;
+    @FXML
+    private Button validerSuiviRemb;
+    
+
+    private Cotisation mCotisation;
+
+    public PretsEtRembPanelController() {
+
+
+
+        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
+        if (response.getBody() != null) {
+            for (Cotisation cotisation : response.getBody()) {
+                listePrets.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Annee");
+        }
+
+        
+        Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
+        if (response1.getBody() != null) {
+            for (Cotisation cotisation : response1.getBody()) {
+                listeRemboursements.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Cotisation");
+        }
+    }
+
+
+    @FXML
+    private void initialize() {
+        // Initialize the person table with the two columns.
+    	if(annee != null){
+        	annee.setButtonCell( new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty); 
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
+            });
+        	
+        	annee.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+
+    			
+            });
+        	annee.setItems(listePrets);
+        	}
+    	if(cotisation != null){
+    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
+            @Override
+            protected void updateItem(CotisationFx item, boolean empty) {
+                super.updateItem(item, empty); 
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getnomCotisation() + " " + item.getAnnee());
+                    mCotisation = new Cotisation(item);
+                }
+            }
+        });
+    	
+    	cotisation.setCellFactory( 
+    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+          
+
+			@Override
+			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+	                    @Override
+	                    protected void updateItem(CotisationFx item, boolean empty) {
+	                        super.updateItem(item, empty);
+	                        if (empty) {
+	                            setText("");
+	                        } else {
+	                            setText(item.getnomCotisation() + " " + item.getAnnee());
+	                        }
+	                    }
+	                };
+	                return cell;
+			}
+
+			
+        });
+    	
+    	cotisation.setConverter(new StringConverter<CotisationFx>() {
+            @Override
+            public String toString(CotisationFx item) {
+              if (item == null){
+                return null;
+              } else {
+                return item.getnomCotisation() + " " + item.getAnnee();
+              }
+            }
+
+            @Override
+            public CotisationFx fromString(String item) {
+              return null;
+          }
+        });
+            cotisation.setItems(listeRemboursements);
+    	}
+
+        idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+
+        idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
+     
+        inscritsCotisationTable.setItems(listeInscritsCotisation);
+        inscritsAnnuelTable.setItems(listeInscritsAnnuel);
+
+
+    }
+
+
+    @FXML
+    private void actionOnClickValiderCotisation() {
+
+        if (mCotisation != null) {
+            Response<InscriptionCotisation[]> response;
+
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getType() == Type.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+
+    @FXML
+    private void actionOnClickValiderAnnuelle() {
+
+        if (mCotisation != null) {
+            Response<Transaction[]> response;
+
+            response = BackendInterface.getTransaction(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getType() == Type.ANNEE) {
+                    listeInscritsAnnuel.clear();
+                    for (Transaction inscriptionCotisation : response.getBody()) {
+                        listeInscritsAnnuel.add(new TransactionFx(inscriptionCotisation));
+                    }
+                }
+
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+
+    @FXML
+    private void actionOnclickPreter() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+        	
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnEmprunt.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+            
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Faire un emprunt");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainAppGF.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Member into the controller.
+            FaireEmpruntController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setPretsEtRembController(this);
+
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void actionOnclickModifierInscptionAnnuelle() {
+
+        int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            TransactionFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/Transaction.fxml"));
+                BorderPane page = (BorderPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Modifier Inscription");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                TransactionController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setTransaction(mbreInscritFx);
+                controller.setKeyInArray(keyInArrayList);
+                controller.setInscriptionsPanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionnee");
+            alert.setHeaderText("Aucune ligne selectionnee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+    }
+
+
+    @FXML
+    private void actionOnclickSupprimerInscptionAnnuelle() {
+
+        int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            //// TODO: 20/04/2017 Add alert before delete element
+            BackendInterface.deleteTransaction(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+
+            actionOnClickValiderAnnuelle();
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
+    }
+    
+
+    @FXML
+    private void actionOnclickNouvelleInscptionCotisation() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+            BorderPane page = (BorderPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Nouvelle Inscription");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(mainAppGF.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Member into the controller.
+            InscriptionCotisationController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setInscriptionsPanelController(this);
+
+            // Show the dialog and wait until the user closes it
+
+            dialogStage.showAndWait();
+
+            // return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void actionOnclickModifierInscptionCotisation() {
+
+        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+        	InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
+        	 int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+                BorderPane page = (BorderPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Modifier Inscription");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                InscriptionCotisationController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setInscriptionCotisation(mbreInscritFx);
+                controller.setKeyInArray(keyInArrayList);
+                controller.setInscriptionsPanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionnee");
+            alert.setHeaderText("Aucune ligne selectionnee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+    }
+
+
+    @FXML
+    private void actionOnclickSupprimerInscptionCotisation() {
+
+        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            //// TODO: 20/04/2017 Add alert before delete element
+            BackendInterface.deleteInscriptionCotisation(inscritsCotisationTable.getItems().get(selectedIndex).getId());
+            actionOnClickValiderCotisation();
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
+    }
+
+    public MainAppGF getMainAppGF() {
+        return mainAppGF;
+    }
+
+    public void setMainAppGF(MainAppGF mainAppGF) {
+        this.mainAppGF = mainAppGF;
+    }
+
+    public ObservableList<TransactionFx> getListMembreInscrits() {
+        return listeInscritsAnnuel;
+    }
+
+    public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {
+        return listeInscritsCotisation;
+    }
+
+}
