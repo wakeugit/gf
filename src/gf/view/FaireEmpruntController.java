@@ -60,7 +60,7 @@ public class FaireEmpruntController {
        	 System.out.println("An error occured - Membres");
         }
    	
-   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.ANNEE);
+   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.ANNEE);
        if (response1.getBody() != null) {
            for (Cotisation cotisation : response1.getBody()) {
                listeAnnees.add(new CotisationFx(cotisation));
@@ -185,7 +185,7 @@ public class FaireEmpruntController {
             if (valider.getText().equals("Valider")) {
                 response = BackendInterface.createInscriptionAnnuelle(ic);
                 if (response.getBody() != null) {
-                    pretsEtRembController.getListMembreInscrits().add(new InscriptionAnnuelleFx(response.getBody()));
+                    //pretsEtRembController.getListMembreInscrits().add(new InscriptionAnnuelleFx(response.getBody()));
 
                 } else {
                     // Todo Display error message
@@ -193,10 +193,10 @@ public class FaireEmpruntController {
             } else {
                 ic.setId(transactionFx.getId());
                 ic.setMembre(new Membre(transactionFx.getMembreFx()));
-                ic.setCotisation(new Cotisation(transactionFx.getAnneeFx()));
+                //ic.setCotisation(new Cotisation(transactionFx.getAnneeFx()));
                 response = BackendInterface.updateInscriptionAnnuelle(ic);
                 if (response.getBody() != null) {
-                    pretsEtRembController.getListMembreInscrits().set(keyInArray, new InscriptionAnnuelleFx(response.getBody()));
+                    //pretsEtRembController.getListMembreInscrits().set(keyInArray, new InscriptionAnnuelleFx(response.getBody()));
                 } else {
                     // Todo Display error message
                 }
@@ -271,11 +271,11 @@ public class FaireEmpruntController {
 
     public void setTransaction(TransactionFx transactionFx) {
         valider.setText("Modifier");
-        nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
-        cotisation.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
-        dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        montant.setText("" + inscriptionAnnuelleFx.getMontant());
-        this.transactionFx = transactionFx;
+        //nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
+        //cotisation.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
+        //dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
+        //montant.setText("" + inscriptionAnnuelleFx.getMontant());
+        //this.transactionFx = transactionFx;
     }
 
 	public int getKeyInArray() {

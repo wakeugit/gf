@@ -60,7 +60,7 @@ public class InscriptionAnnuelleController {
        	 System.out.println("An error occured - Membres");
         }
    	
-   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.ANNEE);
+   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.ANNEE);
        if (response1.getBody() != null) {
            for (Cotisation cotisation : response1.getBody()) {
                listeAnnees.add(new CotisationFx(cotisation));

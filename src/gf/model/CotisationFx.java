@@ -23,7 +23,7 @@ public class CotisationFx {
 	}
 	public CotisationFx(Cotisation cotisation){
 		this.nomCotisation = new SimpleStringProperty(cotisation.getNom());
-		this.type = new SimpleStringProperty(cotisation.getType().name());
+		this.type = new SimpleStringProperty(cotisation.getTypeCotisation().name());
 		this.dateDebut = new SimpleObjectProperty<LocalDate>(DateUtil.parse(cotisation.getDateDebut()));
 		this.dateFin = new SimpleObjectProperty<LocalDate>(DateUtil.parse(cotisation.getDateFin()));
 		this.annee= new SimpleStringProperty(cotisation.getAnnee());

@@ -4,7 +4,7 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
-import gf.model.Type;
+import gf.model.TypeCotisation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,7 +36,7 @@ public class AnneesWindowController {
 
     public AnneesWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
+        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.ANNEE);
         if (response.getBody() != null) {
             for (Cotisation annee : response.getBody()) {
                 listeAnnees.add(new CotisationFx(annee));

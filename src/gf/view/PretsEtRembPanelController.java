@@ -25,10 +25,11 @@ public class PretsEtRembPanelController {
 
     private MainAppGF mainAppGF;
 
-    private ObservableList<TransactionFx> listeInscritsAnnuel = FXCollections.observableArrayList();
+    private ObservableList<TransactionFx> suiviPrets = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     private ObservableList<TransactionFx> listePrets = FXCollections.observableArrayList();
     private ObservableList<TransactionFx> listeRemboursements = FXCollections.observableArrayList();
+    private ObservableList<TransactionFx> suiviRemboursements = FXCollections.observableArrayList();
     
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
@@ -101,6 +102,18 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, Float> tauxCol;
 
+    @FXML
+    private TableView<TransactionFx> rembTable;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateRembRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisationRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeRemb;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantRemb;
+    @FXML
+    private TableColumn<TransactionFx, Integer> penalitesRemb;
     
     @FXML
     private TableView<TransactionFx> suiviRemTable;
@@ -111,9 +124,9 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, String> anneeSuiviRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantRemb;
+    private TableColumn<TransactionFx, Integer> montantSuiviRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> penalitesRemb;
+    private TableColumn<TransactionFx, Integer> penalitesSuiviRemb;
     
     
     @FXML
@@ -152,11 +165,11 @@ public class PretsEtRembPanelController {
     public PretsEtRembPanelController() {
 
 
-
-        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
+/*
+        Response<Transaction[]> response = BackendInterface.getTransaction(TypeTransaction.EMPRUNTER);
         if (response.getBody() != null) {
-            for (Cotisation cotisation : response.getBody()) {
-                listePrets.add(new CotisationFx(cotisation));
+            for (Transaction transaction : response.getBody()) {
+                listePrets.add(new TransactionFx(transaction));
             }
         } else {
             //Todo Display error message
@@ -164,7 +177,7 @@ public class PretsEtRembPanelController {
         }
 
         
-        Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
+        Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
                 listeRemboursements.add(new CotisationFx(cotisation));
@@ -173,13 +186,13 @@ public class PretsEtRembPanelController {
             //Todo Display error message
             System.out.println("An error occured - Cotisation");
         }
+    */
     }
-
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-    	if(annee != null){
+    	/*if(annee != null){
         	annee.setButtonCell( new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
@@ -270,36 +283,69 @@ public class PretsEtRembPanelController {
         });
             cotisation.setItems(listeRemboursements);
     	}
+*/
+        idInscription.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        cniInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().cniProperty().asObject());
+        nomCotisationInscription.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getnomCotisationProperty());
+        anneeInscription.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
 
-        idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
-        dateInscriptionCol.setCellValueFactory(cellData -> cellData.getValue().getDateInscrptionProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        idPret.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        nomPret.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomPret.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        nomCotisationPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneePret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        datePret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        montantPret.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
+        dateRembPret.setCellValueFactory(cellData -> cellData.getValue().getDateRemb());
+        tauxPret.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
+        avaliseurPret.setCellValueFactory(cellData -> cellData.getValue().getAvaliseur1().nomProperty());
+        
+        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        nomCotisationSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        montantPlace.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
 
+        
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
-        cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        nomCotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
-     
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
+        dateRembCol.setCellValueFactory(cellData -> cellData.getValue().getDateRemb());
+        tauxCol.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
+
+        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        nomCotisationSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        montantSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
+        penalitesRemb.setCellValueFactory(cellData -> cellData.getValue().getPenalitesProperty().asObject());
+        
+        //cotisationPret;cotisationListePret;dateListePret;cotisationSuiviPret;cotisationRemb; cotisationListeRemb;dateListeRemb; cotisationSuiviRemb;
+
+       
         inscritsCotisationTable.setItems(listeInscritsCotisation);
-        inscritsAnnuelTable.setItems(listeInscritsAnnuel);
-
-
+        pretsTable.setItems(listePrets);
+        suiviPretsTable.setItems(suiviPrets);
+        pretsTable1.setItems(listePrets);
+        rembTable.setItems(listeRemboursements);
+        suiviRemTable.setItems(suiviRemboursements);
+        
     }
 
 
     @FXML
     private void actionOnClickValiderCotisation() {
 
-        if (mCotisation != null) {
-            Response<InscriptionCotisation[]> response;
-
+  //      if (mCotisation != null) {
+      //      Response<InscriptionCotisation[]> response;
+/*
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == Type.TONTINE) {
+                if (mCotisation.getType() == TypeCotisation.TONTINE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
@@ -311,22 +357,22 @@ public class PretsEtRembPanelController {
                 System.out.println("An error occured - ValiderCotisation");
             }
         }
-
+*/
 
     }
 
     @FXML
     private void actionOnClickValiderAnnuelle() {
 
-        if (mCotisation != null) {
+  /*      if (mCotisation != null) {
             Response<Transaction[]> response;
 
             response = BackendInterface.getTransaction(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == Type.ANNEE) {
-                    listeInscritsAnnuel.clear();
+                if (mCotisation.getType() == TypeCotisation.ANNEE) {
+                    suiviPrets.clear();
                     for (Transaction inscriptionCotisation : response.getBody()) {
-                        listeInscritsAnnuel.add(new TransactionFx(inscriptionCotisation));
+                        suiviPrets.add(new TransactionFx(inscriptionCotisation));
                     }
                 }
 
@@ -337,7 +383,7 @@ public class PretsEtRembPanelController {
             }
         }
 
-
+*/
     }
 
     @FXML
@@ -358,9 +404,9 @@ public class PretsEtRembPanelController {
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            FaireEmpruntController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setPretsEtRembController(this);
+            //FaireEmpruntController controller = loader.getController();
+            //controller.setDialogStage(dialogStage);
+           // controller.setPretsEtRembController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -376,11 +422,11 @@ public class PretsEtRembPanelController {
 
     @FXML
     private void actionOnclickModifierInscptionAnnuelle() {
-
+/*
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             TransactionFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
+            int keyInArrayList = suiviPrets.indexOf(mbreInscritFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -421,13 +467,13 @@ public class PretsEtRembPanelController {
             alert.setContentText("Svp selectionnez un element dans la liste.");
 
             alert.showAndWait();
-        }
+        }*/
     }
 
 
     @FXML
     private void actionOnclickSupprimerInscptionAnnuelle() {
-
+/*
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             //// TODO: 20/04/2017 Add alert before delete element
@@ -443,16 +489,16 @@ public class PretsEtRembPanelController {
             alert.setContentText("Please select a person in the table.");
 
             alert.showAndWait();
-        }
+        }*/
     }
     
 
     @FXML
-    private void actionOnclickNouvelleInscptionCotisation() {
+    private void actionOnclickRembourser() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnRemb.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -464,9 +510,9 @@ public class PretsEtRembPanelController {
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            InscriptionCotisationController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setInscriptionsPanelController(this);
+            //InscriptionCotisationController controller = loader.getController();
+            //controller.setDialogStage(dialogStage);
+            //controller.setInscriptionsPanelController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -502,11 +548,11 @@ public class PretsEtRembPanelController {
                 dialogStage.setScene(scene);
 
                 // Set the Member into the controller.
-                InscriptionCotisationController controller = loader.getController();
-                controller.setDialogStage(dialogStage);
-                controller.setInscriptionCotisation(mbreInscritFx);
-                controller.setKeyInArray(keyInArrayList);
-                controller.setInscriptionsPanelController(this);
+                //InscriptionCotisationController controller = loader.getController();
+                //controller.setDialogStage(dialogStage);
+                //controller.setInscriptionCotisation(mbreInscritFx);
+                //controller.setKeyInArray(keyInArrayList);
+                //controller.setInscriptionsPanelController(this);
 
                 // Show the dialog and wait until the user closes it
 
@@ -560,7 +606,7 @@ public class PretsEtRembPanelController {
     }
 
     public ObservableList<TransactionFx> getListMembreInscrits() {
-        return listeInscritsAnnuel;
+        return suiviPrets;
     }
 
     public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {

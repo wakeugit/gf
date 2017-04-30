@@ -72,7 +72,7 @@ public class InscriptionsPanelController {
 
 
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.ANNEE);
+        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.ANNEE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeAnnees.add(new CotisationFx(cotisation));
@@ -83,7 +83,7 @@ public class InscriptionsPanelController {
         }
 
         
-        Response<Cotisation[]> response1 = BackendInterface.getCotisations(Type.TONTINE);
+        Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisations.add(new CotisationFx(cotisation));
@@ -218,7 +218,7 @@ public class InscriptionsPanelController {
 
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == Type.TONTINE) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
@@ -242,7 +242,7 @@ public class InscriptionsPanelController {
 
             response = BackendInterface.getInscriptionAnnuelle(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == Type.ANNEE) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.ANNEE) {
                     listeInscritsAnnuel.clear();
                     for (InscriptionAnnuelle inscriptionCotisation : response.getBody()) {
                         listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));

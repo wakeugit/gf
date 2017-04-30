@@ -16,13 +16,16 @@ public class TransactionFx {
 	
 	private CotisationFx cotisationFx;
 	private MembreFx membreFx;
+	private final ObjectProperty<LocalDate> dateModif;
 	private final ObjectProperty<LocalDate> date;
-	private final SimpleIntegerProperty montantEmprunte;
+	private final SimpleIntegerProperty montant;
 	private final SimpleFloatProperty tauxInterets;
 	private final SimpleIntegerProperty montantInterets;
+	private final SimpleIntegerProperty penalites;
 	private final ObjectProperty<LocalDate> dateRemb;
 	private MembreFx avaliseur1;
 	private SimpleStringProperty avaliseur2;
+	private SimpleStringProperty type;
 	private final SimpleLongProperty id;
 	
 	public TransactionFx(){
@@ -32,16 +35,44 @@ public class TransactionFx {
 	public TransactionFx(Transaction transaction){
 		this.cotisationFx= new CotisationFx(transaction.getCotisation());
 		this.membreFx= new MembreFx(transaction.getMembre());
+		this.dateModif = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateModif()));
 		this.date = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDate()));
-		this.montantEmprunte = new SimpleIntegerProperty(transaction.getMontantEmprunte());
+		this.montant = new SimpleIntegerProperty(transaction.getMontant());
 		this.tauxInterets=new SimpleFloatProperty(transaction.getTauxInterets());
 		this.montantInterets=new SimpleIntegerProperty(transaction.getMontantInterets());
+		this.penalites=new SimpleIntegerProperty(transaction.getPenalites());
 		this.dateRemb=new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateRemb()));
 		this.avaliseur1=new MembreFx(transaction.getAvaliseur1());
 		this.avaliseur2=new SimpleStringProperty(transaction.getAvaliseur2());
+		this.type = new SimpleStringProperty(transaction.getType().name());
 		this.id = new SimpleLongProperty(transaction.getId());
 	}
 			
+	public ObjectProperty<LocalDate> getDateModifProperty() {
+		return dateModif;
+	}
+
+	public SimpleIntegerProperty getMontantProperty() {
+		return montant;
+	}
+
+	public SimpleIntegerProperty getPenalitesProperty() {
+		return penalites;
+	}
+
+	public String getDateModif() {
+		return dateModif.get().toString();
+	}
+
+	public int getMontant() {
+		return montant.get();
+	}
+
+	public int getPenalites() {
+		return penalites.get();
+	}
+
+	
 	public CotisationFx getCotisationFx() {
 		return cotisationFx;
 	}
@@ -75,7 +106,7 @@ public class TransactionFx {
 	}
 
 	public SimpleIntegerProperty getMontantEmprunte() {
-		return montantEmprunte;
+		return montant;
 	}
 
 	public SimpleFloatProperty getTauxInterets() {
@@ -109,6 +140,14 @@ public class TransactionFx {
 	
 	public long getId() {
 		return id.get();
+	}
+
+	public SimpleStringProperty getType() {
+		return type;
+	}
+
+	public void setType(SimpleStringProperty type) {
+		this.type = type;
 	}
 	
 }
