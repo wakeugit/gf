@@ -4,7 +4,7 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
-import gf.model.Type;
+import gf.model.TypeCotisation;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -51,7 +51,7 @@ public class AnneesDetailsController {
 	private void actionOnClickValider() {
 		if (isInputValid()) {
 			
-			Cotisation annee = new Cotisation("Cotisation Annuelle", Type.ANNEE , DateUtil.format(dateDebut
+			Cotisation annee = new Cotisation("Cotisation Annuelle", TypeCotisation.ANNEE , DateUtil.format(dateDebut
 					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 
 			if (valider.getText().equals("Valider")) {

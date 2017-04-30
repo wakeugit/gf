@@ -5,7 +5,7 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
-import gf.model.Type;
+import gf.model.TypeCotisation;
 import gf.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -54,7 +54,7 @@ public class EpargneDetailsController {
 
 		if (isInputValid()) {
 
-			Cotisation cotisation = new Cotisation(nomCotisation.getText(), Type.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
+			Cotisation cotisation = new Cotisation(nomCotisation.getText(), TypeCotisation.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
 					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 
 			Response<Cotisation> response;

@@ -4,7 +4,7 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
-import gf.model.Type;
+import gf.model.TypeCotisation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,7 +40,7 @@ public class EpargneWindowController {
 
     public EpargneWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.EPARGNE);
+        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.EPARGNE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeEpargne.add(new CotisationFx(cotisation));

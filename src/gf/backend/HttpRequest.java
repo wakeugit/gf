@@ -108,9 +108,9 @@ public class HttpRequest {
     public static final String HEADER_CONTENT_LENGTH = "Content-Length";
 
     /**
-     * 'Content-Type' header name
+     * 'Content-TypeCotisation' header name
      */
-    public static final String HEADER_CONTENT_TYPE = "Content-Type";
+    public static final String HEADER_CONTENT_TYPE = "Content-TypeCotisation";
 
     /**
      * 'Date' header name
@@ -2214,7 +2214,7 @@ public class HttpRequest {
     }
 
     /**
-     * Get 'charset' parameter from 'Content-Type' response header
+     * Get 'charset' parameter from 'Content-TypeCotisation' response header
      *
      * @return charset or null if none
      */
@@ -2421,7 +2421,7 @@ public class HttpRequest {
     }
 
     /**
-     * Set the 'Content-Type' request header to the given value
+     * Set the 'Content-TypeCotisation' request header to the given value
      *
      * @param contentType
      * @return this request
@@ -2431,7 +2431,7 @@ public class HttpRequest {
     }
 
     /**
-     * Set the 'Content-Type' request header to the given value and charset
+     * Set the 'Content-TypeCotisation' request header to the given value and charset
      *
      * @param contentType
      * @param charset
@@ -2446,7 +2446,7 @@ public class HttpRequest {
     }
 
     /**
-     * Get the 'Content-Type' header from the response
+     * Get the 'Content-TypeCotisation' header from the response
      *
      * @return response header value
      */
@@ -2714,7 +2714,7 @@ public class HttpRequest {
      *
      * @param name
      * @param filename
-     * @param contentType value of the Content-Type part header
+     * @param contentType value of the Content-TypeCotisation part header
      * @param part
      * @return this request
      * @throws HttpRequestException
@@ -2790,7 +2790,7 @@ public class HttpRequest {
      *
      * @param name
      * @param filename
-     * @param contentType value of the Content-Type part header
+     * @param contentType value of the Content-TypeCotisation part header
      * @param part
      * @return this request
      * @throws HttpRequestException
@@ -2825,7 +2825,7 @@ public class HttpRequest {
      *
      * @param name
      * @param filename
-     * @param contentType value of the Content-Type part header
+     * @param contentType value of the Content-TypeCotisation part header
      * @param part
      * @return this request
      * @throws HttpRequestException

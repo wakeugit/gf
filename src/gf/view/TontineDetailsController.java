@@ -51,7 +51,7 @@ public class TontineDetailsController {
     private void actionOnClickValider() {
 
         if (isInputValid()) {
-            Cotisation cotisation = new Cotisation(nomCotisation.getText(), Type.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
+            Cotisation cotisation = new Cotisation(nomCotisation.getText(), TypeCotisation.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
                     .getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 
             Response<Cotisation> response;
