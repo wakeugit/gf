@@ -91,7 +91,7 @@ public class TontinePanelController {
 
     public TontinePanelController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(Type.TONTINE);
+        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.TONTINE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeTontines.add(new CotisationFx(cotisation));
@@ -199,12 +199,7 @@ public class TontinePanelController {
 
     @FXML
     private void actionOnClickValiderEffectuer(){
-        if (mCotisation != null && dateBeneficiaire != null) {
-            LocalDate dateFilter = dateBeneficiaire.getValue();
-            dateRequest = DateUtil.format(dateFilter);
-            System.out.println("date request="+ dateRequest);
-
-            if (!dateRequest.isEmpty()) {
+        if (mCotisation != null) {
 
 
                 // TODO: 27/04/2017 Update the view according the request result.
@@ -225,7 +220,6 @@ public class TontinePanelController {
 //                System.out.println("An error occured - ValiderCotisation");
 //            }
             }
-        }
     }
 
 

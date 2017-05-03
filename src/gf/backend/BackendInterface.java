@@ -80,7 +80,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/membre/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(membre)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -105,7 +105,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/membre/" + id)
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
             if (nodeHttpResponse.getStatus() == 200) {
@@ -144,7 +144,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(annee)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -171,7 +171,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(annee)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -196,7 +196,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/cotisation/" + anneeId)
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
         } catch (UnirestException e) {
@@ -209,7 +209,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/inscription/cotisation/" + id)
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
         } catch (UnirestException e) {
@@ -222,7 +222,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/inscription/annuelle/" + id)
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
         } catch (UnirestException e) {
@@ -235,7 +235,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/cotisation/" + id)
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
         } catch (UnirestException e) {
@@ -276,7 +276,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(cotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -301,7 +301,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(cotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -327,7 +327,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(inscriptionCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -352,7 +352,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/annuelle/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(inscriptionCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -377,7 +377,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/inscription/annuelle/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(inscriptionCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -402,7 +402,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/inscription/cotisation/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(inscriptionCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -427,7 +427,7 @@ public class BackendInterface {
 
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/cotisation/element")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(mCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
@@ -479,7 +479,7 @@ public class BackendInterface {
 
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/inscription/annuelle/element")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(mCotisation)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
