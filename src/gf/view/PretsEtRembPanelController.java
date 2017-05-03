@@ -30,6 +30,7 @@ public class PretsEtRembPanelController {
     private ObservableList<TransactionFx> listePrets = FXCollections.observableArrayList();
     private ObservableList<TransactionFx> listeRemboursements = FXCollections.observableArrayList();
     private ObservableList<TransactionFx> suiviRemboursements = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
     
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
@@ -105,13 +106,23 @@ public class PretsEtRembPanelController {
     @FXML
     private TableView<TransactionFx> rembTable;
     @FXML
-    private TableColumn<TransactionFx, LocalDate> dateRembRemb;
+    private TableColumn<TransactionFx, Long> idRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> nomRemb;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomRemb;
     @FXML
     private TableColumn<TransactionFx, String> nomCotisationRemb;
     @FXML
+    private TableColumn<TransactionFx, String> typeRemb;
+    @FXML
     private TableColumn<TransactionFx, String> anneeRemb;
     @FXML
+    private TableColumn<TransactionFx, LocalDate> dateRembRemb;
+    @FXML
     private TableColumn<TransactionFx, Integer> montantRemb;
+    @FXML
+    private TableColumn<TransactionFx, Integer> montantAvRemb;
     @FXML
     private TableColumn<TransactionFx, Integer> penalitesRemb;
     
@@ -130,21 +141,21 @@ public class PretsEtRembPanelController {
     
     
     @FXML
-    private ComboBox<CotisationFx> cotisationPret;
+    private ComboBox<CotisationFx> comboCotisationPret;
     @FXML
-    private ComboBox<CotisationFx> cotisationListePret;
+    private ComboBox<CotisationFx> comboCotisationListePret;
     @FXML
     private DatePicker dateListePret;
     @FXML
-    private ComboBox<CotisationFx> cotisationSuiviPret;
+    private ComboBox<CotisationFx> comboCotisationSuiviPret;
     @FXML
-    private ComboBox<CotisationFx> cotisationRemb;
+    private ComboBox<CotisationFx> comboCotisationRemb;
     @FXML
-    private ComboBox<CotisationFx> cotisationListeRemb;
+    private ComboBox<CotisationFx> comboCotisationListeRemb;
     @FXML
     private DatePicker dateListeRemb;
     @FXML
-    private ComboBox<CotisationFx> cotisationSuiviRemb;
+    private ComboBox<CotisationFx> comboCotisationSuiviRemb;
     
     @FXML
     private Button validerPret;
@@ -165,72 +176,25 @@ public class PretsEtRembPanelController {
     public PretsEtRembPanelController() {
 
 
-/*
-        Response<Transaction[]> response = BackendInterface.getTransaction(TypeTransaction.EMPRUNTER);
-        if (response.getBody() != null) {
-            for (Transaction transaction : response.getBody()) {
-                listePrets.add(new TransactionFx(transaction));
-            }
-        } else {
-            //Todo Display error message
-            System.out.println("An error occured - Annee");
-        }
-
-        
+       
         Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
-                listeRemboursements.add(new CotisationFx(cotisation));
+                listeCotisations.add(new CotisationFx(cotisation));
             }
         } else {
             //Todo Display error message
             System.out.println("An error occured - Cotisation");
         }
-    */
+    
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-    	/*if(annee != null){
-        	annee.setButtonCell( new ListCell<CotisationFx>() {
-                @Override
-                protected void updateItem(CotisationFx item, boolean empty) {
-                    super.updateItem(item, empty); 
-                    if (empty) {
-                        setText("");
-                    } else {
-                        setText(item.getAnnee());
-                        mCotisation = new Cotisation(item);
-                    }
-                }
-            });
-        	
-        	annee.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-              
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
-
-    			
-            });
-        	annee.setItems(listePrets);
-        	}
-    	if(cotisation != null){
-    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
+    	
+    	if(comboCotisationPret != null){
+    		comboCotisationPret.setButtonCell( new ListCell<CotisationFx>() {
             @Override
             protected void updateItem(CotisationFx item, boolean empty) {
                 super.updateItem(item, empty); 
@@ -243,7 +207,7 @@ public class PretsEtRembPanelController {
             }
         });
     	
-    	cotisation.setCellFactory( 
+    	comboCotisationPret.setCellFactory( 
     			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
           
 
@@ -266,7 +230,7 @@ public class PretsEtRembPanelController {
 			
         });
     	
-    	cotisation.setConverter(new StringConverter<CotisationFx>() {
+    	comboCotisationPret.setConverter(new StringConverter<CotisationFx>() {
             @Override
             public String toString(CotisationFx item) {
               if (item == null){
@@ -281,9 +245,9 @@ public class PretsEtRembPanelController {
               return null;
           }
         });
-            cotisation.setItems(listeRemboursements);
+    	comboCotisationPret.setItems(listeCotisations);
     	}
-*/
+
         idInscription.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
@@ -503,7 +467,7 @@ public class PretsEtRembPanelController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
+            dialogStage.setTitle("Faire remboursement");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
