@@ -289,8 +289,8 @@ public class MainAppGF extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("pretsEtRembPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
-//            MembrePanelController controller = loader.getController();
-//            controller.setMainAppGF(this);
+            PretsEtRembPanelController controller = loader.getController();
+            controller.setMainAppGF(this);
             rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();
