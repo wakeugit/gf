@@ -76,8 +76,8 @@
                            </BorderPane.margin>
                            <children>
                               <Label prefHeight="21.0" prefWidth="183.0" text="Sélectionner une tontine :" />
-                              <ComboBox prefHeight="31.0" prefWidth="156.0" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
+                              <ComboBox prefHeight="31.0" prefWidth="156.0" fx:id="comboEffectuer" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" text="Valider" fx:id="validerEffectuer" onAction="#actionOnClickValiderEffectuer" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                      </top>
@@ -141,13 +141,13 @@
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une tontine :" />
                               <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <DatePicker GridPane.columnIndex="3" fx:id="dateTontineur"/>
+                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" fx:id="validerTontineur" onAction="#actionOnClickValiderTontineur" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
-                              <ComboBox prefHeight="25.0" prefWidth="136.0" GridPane.columnIndex="1" />
+                              <ComboBox prefHeight="25.0" prefWidth="136.0" fx:id="comboTontineur" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </top>
@@ -158,7 +158,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="Cotisations" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="cotisations" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
                               <TableColumn fx:id="idCol" prefWidth="75.0" text="Id" visible="false" />
                               <TableColumn fx:id="dateCol" prefWidth="144.0" text="Date" />
@@ -275,13 +275,13 @@
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une tontine :" />
                               <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <DatePicker GridPane.columnIndex="3" fx:id="dateBeneficiaire"/>
+                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" fx:id="validerBeneficiaire" text="Valider" GridPane.columnIndex="4" onAction="#actionOnClickValiderBeneficiaire">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
-                              <ComboBox prefHeight="25.0" prefWidth="132.0" GridPane.columnIndex="1" />
+                              <ComboBox prefHeight="25.0" prefWidth="132.0" fx:id="comboBeneficiaire" GridPane.columnIndex="1" />
                            </children>
                            <BorderPane.margin>
                               <Insets left="110.0" right="150.0" top="10.0" />
