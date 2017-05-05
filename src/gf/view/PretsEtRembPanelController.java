@@ -180,6 +180,7 @@ public class PretsEtRembPanelController {
         Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
+            	System.out.println("type "+cotisation.getTypeCotisation());
                 listeCotisations.add(new CotisationFx(cotisation));
             }
         } else {
