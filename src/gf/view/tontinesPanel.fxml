@@ -208,8 +208,9 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date :" />
-                              <DatePicker GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
+                              <DatePicker GridPane.columnIndex="1" fx:id="dateBeneficier"/>
+                              <Button mnemonicParsing="false" fx:id="validerBeneficier" text="Valider"
+                                      GridPane.columnIndex="2" onAction="#actionOnClickValiderBeneficer"/>
                            </children>
                         </GridPane>
                      </top>

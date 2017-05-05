@@ -3,7 +3,6 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +18,6 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
 public class InscriptionsPanelController {
 
@@ -71,8 +69,7 @@ public class InscriptionsPanelController {
     public InscriptionsPanelController() {
 
 
-
-        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.ANNEE);
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeAnnees.add(new CotisationFx(cotisation));
@@ -82,8 +79,8 @@ public class InscriptionsPanelController {
             System.out.println("An error occured - Annee");
         }
 
-        
-        Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
+
+        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisations.add(new CotisationFx(cotisation));

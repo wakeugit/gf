@@ -59,8 +59,8 @@ public class FaireEmpruntController {
             //Todo Display error message
        	 System.out.println("An error occured - Membres");
         }
-   	
-   	Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.ANNEE);
+
+        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
        if (response1.getBody() != null) {
            for (Cotisation cotisation : response1.getBody()) {
                listeAnnees.add(new CotisationFx(cotisation));

@@ -14,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -76,6 +75,9 @@ public class TontinePanelController {
     private DatePicker dateBeneficiaire;
 
     @FXML
+    private DatePicker dateBeneficier;
+
+    @FXML
     private Button validerEffectuer;
 
     @FXML
@@ -91,7 +93,7 @@ public class TontinePanelController {
 
     public TontinePanelController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.TONTINE);
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeTontines.add(new CotisationFx(cotisation));
@@ -201,24 +203,23 @@ public class TontinePanelController {
     private void actionOnClickValiderEffectuer(){
         if (mCotisation != null) {
 
+            EffectuerCotisationController.tmpCotisation = mCotisation;
 
-                // TODO: 27/04/2017 Update the view according the request result.
+            Response<InscriptionCotisation[]> response;
 
-//            Response<InscriptionCotisation[]> response;
-//
-//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
-//            if (response.getBody() != null) {
-//                if (mCotisation.getType() == Type.TONTINE) {
-//                    listeInscritsCotisation.clear();
-//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-//                    }
-//                }
-//
-//            } else {
-//                // Todo Display error message
-//                System.out.println("An error occured - ValiderCotisation");
-//            }
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
             }
     }
 
@@ -258,6 +259,38 @@ public class TontinePanelController {
     private void actionOnClickValiderBeneficiaire(){
         if (mCotisation != null && dateBeneficiaire != null) {
             LocalDate dateFilter = dateBeneficiaire.getValue();
+            dateRequest = DateUtil.format(dateFilter);
+            System.out.println("date request=" + dateRequest);
+
+            if (dateRequest != null && !dateRequest.isEmpty()) {
+
+
+                // TODO: 27/04/2017 Update the view according the request result.
+
+//            Response<InscriptionCotisation[]> response;
+//
+//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
+//            if (response.getBody() != null) {
+//                if (mCotisation.getType() == Type.TONTINE) {
+//                    listeInscritsCotisation.clear();
+//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+//                    }
+//                }
+//
+//            } else {
+//                // Todo Display error message
+//                System.out.println("An error occured - ValiderCotisation");
+//            }
+            }
+        }
+    }
+
+
+    @FXML
+    private void actionOnClickValiderBeneficer() {
+        if (dateBeneficier != null) {
+            LocalDate dateFilter = dateBeneficier.getValue();
             dateRequest = DateUtil.format(dateFilter);
             System.out.println("date request="+ dateRequest);
 

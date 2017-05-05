@@ -36,7 +36,7 @@ public class AnneesWindowController {
 
     public AnneesWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.ANNEE);
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
         if (response.getBody() != null) {
             for (Cotisation annee : response.getBody()) {
                 listeAnnees.add(new CotisationFx(annee));

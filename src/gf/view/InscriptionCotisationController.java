@@ -173,7 +173,7 @@ public class InscriptionCotisationController {
         	System.out.println("An error occured - Membres");
         }
 
-        Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
+        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisation.add(new CotisationFx(cotisation));
