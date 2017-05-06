@@ -40,7 +40,7 @@ public class EpargneWindowController {
 
     public EpargneWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.EPARGNE);
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeEpargne.add(new CotisationFx(cotisation));

@@ -38,7 +38,7 @@ public class TontineWindowController {
 
     public TontineWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisations(TypeCotisation.TONTINE);
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
                 listeTontine.add(new CotisationFx(cotisation));

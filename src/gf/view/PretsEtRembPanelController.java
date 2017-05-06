@@ -3,7 +3,6 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +18,6 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PretsEtRembPanelController {
 
@@ -176,8 +174,7 @@ public class PretsEtRembPanelController {
     public PretsEtRembPanelController() {
 
 
-       
-        Response<Cotisation[]> response1 = BackendInterface.getCotisations(TypeCotisation.TONTINE);
+        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response1.getBody() != null) {
             for (Cotisation cotisation : response1.getBody()) {
             	System.out.println("type "+cotisation.getTypeCotisation());

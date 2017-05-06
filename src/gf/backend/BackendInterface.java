@@ -244,7 +244,7 @@ public class BackendInterface {
     }
 
 
-    public static Response<Cotisation[]> getCotisations(TypeCotisation typeCotisation) {
+    public static Response<Cotisation[]> getCotisationsByType(TypeCotisation typeCotisation) {
         initRequest();
         Response<Cotisation[]> response = new Response<>();
         try {
@@ -452,12 +452,69 @@ public class BackendInterface {
         try {
 
             //// TODO: 27/04/2017 Update URL endpoint
-            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/cotisation/element")
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/cotisation/date")
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .body(mCotisation)
                     .body(date)
                     .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                InscriptionCotisation[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionCotisation[].class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+
+            //// TODO: 27/04/2017 Update URL endpoint
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/cotisation/element")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(mCotisation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Transaction[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), Transaction[].class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<InscriptionCotisation[]> getTransactionByType(TypeTransaction typeTransaction) {
+        Response<InscriptionCotisation[]> response = new Response<>();
+        try {
+
+            //// TODO: 27/04/2017 Update URL endpoint
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.get(APP_URL + "/transaction/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+
+//            if (typeTransaction == TypeCotisation.TONTINE)
+//                bookResponse = Unirest.get(APP_URL + "/cotisation/tontine").asObject(Cotisation[].class);
+//            else if (typeTransaction == TypeCotisation.EPARGNE)
+//                bookResponse = Unirest.get(APP_URL + "/cotisation/epargne").asObject(Cotisation[].class);
+//            else if (typeTransaction == TypeCotisation.ANNEE)
+//                bookResponse = Unirest.get(APP_URL + "/cotisation/annee").asObject(Cotisation[].class);
+
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
             if (nodeHttpResponse.getStatus() == 200) {
                 Gson gson = new Gson();
