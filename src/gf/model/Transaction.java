@@ -11,13 +11,13 @@ public class Transaction {
 
     private long id;
 
-    private Date dateCreation = new Date();
+    private long dateCreation;
 
-    private Date dateDerniereModification = new Date();
+    private long dateDerniereModification;
 
-    private Date dateOperation;
+    private long dateOperation;
 
-    private Date dateRemboursement;
+    private long dateRemboursement;
 
     private double montantOperation;
 
@@ -70,13 +70,17 @@ public class Transaction {
 		this.id=id;
 	}*/
 
+    public Transaction() {
+    }
+
+
     public Transaction(TransactionFx transactionFx) {
         this.cotisation = new Cotisation(transactionFx.getCotisationFx());
         this.membre = new Membre(transactionFx.getMembreFx());
-        this.dateCreation = DateUtil.parseToDate(transactionFx.getDateCreation());
-        this.dateOperation = DateUtil.parseToDate(transactionFx.getDateOperation());
-        this.dateDerniereModification = DateUtil.parseToDate(transactionFx.getDateDerniereModification());
-        this.dateRemboursement = DateUtil.parseToDate(transactionFx.getDateRemboursement());
+        this.dateCreation = DateUtil.parseToLong(transactionFx.dateCreationProperty().getValue());
+        this.dateOperation = DateUtil.parseToLong(transactionFx.dateOperationProperty().getValue());
+        this.dateDerniereModification = DateUtil.parseToLong(transactionFx.dateDerniereModificationProperty().getValue());
+        this.dateRemboursement = DateUtil.parseToLong(transactionFx.dateRemboursementProperty().getValue());
         this.montantOperation = transactionFx.getMontantEmprunte().get();
         this.tauxInteret = transactionFx.getTauxInterets().get();
         this.montantAttendu = transactionFx.getMontantInterets().get();

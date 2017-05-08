@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 
 public class TransactionFx {
 
@@ -31,12 +32,14 @@ public class TransactionFx {
     }
 
     public TransactionFx(Transaction transaction) {
+
+
         this.cotisationFx = new CotisationFx(transaction.getCotisation());
         this.membreFx = new MembreFx(transaction.getMembre());
-        this.dateDerniereModification = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateDerniereModification()));
-        this.dateCreation = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateCreation()));
-        this.dateRemboursement = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateRemboursement()));
-        this.dateOperation = new SimpleObjectProperty<LocalDate>(DateUtil.parse(transaction.getDateOperation()));
+        this.dateCreation = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateCreation())));
+        this.dateDerniereModification = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateDerniereModification())));
+        this.dateRemboursement = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateRemboursement())));
+        this.dateOperation = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateOperation())));
         this.montantOperation = new SimpleDoubleProperty(transaction.getMontantOperation());
         this.tauxInterets = new SimpleDoubleProperty(transaction.getTauxInteret());
         this.montantInterets = new SimpleDoubleProperty(transaction.getMontantAttendu());
@@ -49,9 +52,6 @@ public class TransactionFx {
         this.id = new SimpleLongProperty(transaction.getId());
     }
 
-    public ObjectProperty<LocalDate> getDateModifProperty() {
-        return dateDerniereModification;
-    }
 
     public SimpleDoubleProperty getMontantProperty() {
         return montantOperation;
@@ -61,9 +61,6 @@ public class TransactionFx {
         return montantPenalites;
     }
 
-    public LocalDate getDateDerniereModification() {
-        return dateDerniereModification.get();
-    }
 
     public double getMontantAvance() {
         return montantAvance.get();
@@ -130,22 +127,11 @@ public class TransactionFx {
         return montantInterets;
     }
 
-    public LocalDate getDateRemboursement() {
-        return dateRemboursement.get();
-    }
 
     public void setMembreFx(MembreFx membreFx) {
         this.membreFx = membreFx;
     }
 
-    public ObjectProperty<LocalDate> getDateProperty() {
-        return dateCreation;
-    }
-
-
-    public LocalDate getDateCreation() {
-        return dateCreation.get();
-    }
 
     public SimpleLongProperty getIdProperty() {
         return id;
@@ -175,15 +161,47 @@ public class TransactionFx {
         this.montantAttendu.set(montantAttendu);
     }
 
+    public LocalDate getDateDerniereModification() {
+        return dateDerniereModification.get();
+    }
+
+    public ObservableValue<LocalDate> dateDerniereModificationProperty() {
+        return dateDerniereModification;
+    }
+
+    public void setDateDerniereModification(LocalDate dateDerniereModification) {
+        this.dateDerniereModification.set(dateDerniereModification);
+    }
+
     public LocalDate getDateOperation() {
         return dateOperation.get();
     }
 
-    public ObjectProperty<LocalDate> dateOperationProperty() {
+    public ObservableValue<LocalDate> dateOperationProperty() {
         return dateOperation;
     }
 
     public void setDateOperation(LocalDate dateOperation) {
         this.dateOperation.set(dateOperation);
+    }
+
+    public ObservableValue<LocalDate> dateCreationProperty() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation.set(dateCreation);
+    }
+
+    public LocalDate getDateRemboursement() {
+        return dateRemboursement.get();
+    }
+
+    public ObservableValue<LocalDate> dateRemboursementProperty() {
+        return dateRemboursement;
+    }
+
+    public void setDateRemboursement(LocalDate dateRemboursement) {
+        this.dateRemboursement.set(dateRemboursement);
     }
 }

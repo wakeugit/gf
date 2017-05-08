@@ -85,6 +85,20 @@ public class DateUtil {
         }
     }
 
+    public static long parseToLong(LocalDate localDate) {
+        try {
+            if (localDate != null) {
+
+                return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime();
+//                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            } else {
+            }
+            return -1;
+        } catch (DateTimeParseException e) {
+            return -1;
+        }
+    }
+
     /**
      * Checks the String whether it is a valid date.
      *

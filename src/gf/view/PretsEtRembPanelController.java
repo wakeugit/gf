@@ -257,13 +257,13 @@ public class PretsEtRembPanelController {
         prenomPret.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneePret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        datePret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        datePret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         montantPret.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
-        dateRembPret.setCellValueFactory(cellData -> cellData.getValue().getDateRemboursement());
+        dateRembPret.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxPret.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
         avaliseurPret.setCellValueFactory(cellData -> cellData.getValue().getAvaliseur1().nomProperty());
-        
-        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+
+        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         nomCotisationSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         montantPlace.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
@@ -274,12 +274,12 @@ public class PretsEtRembPanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
-        dateRembCol.setCellValueFactory(cellData -> cellData.getValue().getDateRemboursement());
+        dateRembCol.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxCol.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
 
-        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         nomCotisationSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         montantSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());

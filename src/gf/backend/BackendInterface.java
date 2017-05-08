@@ -255,8 +255,8 @@ public class BackendInterface {
             else if (typeCotisation == TypeCotisation.EPARGNE)
                 bookResponse = Unirest.get(APP_URL + "/cotisation/epargne").asObject(Cotisation[].class);
             else if (typeCotisation == TypeCotisation.ANNEE)
-            	bookResponse = Unirest.get(APP_URL + "/cotisation/annee").asObject(Cotisation[].class);
-            
+                bookResponse = Unirest.get(APP_URL + "/cotisation/annee").asObject(Cotisation[].class);
+
             if (bookResponse.getStatus() == 200) {
                 response.setBody(bookResponse.getBody());
             } else {
@@ -371,6 +371,31 @@ public class BackendInterface {
         }
     }
 
+    public static Response<Transaction> createTransaction(Transaction transaction) {
+        initRequest();
+        Response<Transaction> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(transaction)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Transaction created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Transaction.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
     public static Response<InscriptionAnnuelle> updateInscriptionAnnuelle(InscriptionAnnuelle inscriptionCotisation) {
         initRequest();
         Response<InscriptionAnnuelle> response = new Response<>();
@@ -444,7 +469,6 @@ public class BackendInterface {
             return response;
         }
     }
-
 
 
     public static Response<InscriptionCotisation[]> getTransactionByCotisationAndDate(Cotisation mCotisation, String date) {
