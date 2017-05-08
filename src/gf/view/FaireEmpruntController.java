@@ -274,7 +274,7 @@ public class FaireEmpruntController {
         //nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
         //cotisation.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
         //dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        //montant.setText("" + inscriptionAnnuelleFx.getMontant());
+        //montant.setText("" + inscriptionAnnuelleFx.getMontantOperation());
         //this.transactionFx = transactionFx;
     }
 
