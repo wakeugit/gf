@@ -3,6 +3,7 @@ package gf.model;
 import gf.util.DateUtil;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javafx.beans.property.*;
 
@@ -16,6 +17,7 @@ public class TransactionFx {
     private final ObjectProperty<LocalDate> dateRemboursement;
     private final SimpleDoubleProperty montantOperation;
     private final SimpleDoubleProperty montantAttendu;
+    private final SimpleDoubleProperty montantAvance;
     private final SimpleDoubleProperty tauxInterets;
     private final SimpleDoubleProperty montantInterets;
     private final SimpleDoubleProperty montantPenalites;
@@ -40,6 +42,7 @@ public class TransactionFx {
         this.montantInterets = new SimpleDoubleProperty(transaction.getMontantAttendu());
         this.montantPenalites = new SimpleDoubleProperty(transaction.getMontantPenalites());
         this.montantAttendu = new SimpleDoubleProperty(transaction.getMontantAttendu());
+        this.montantAvance = new SimpleDoubleProperty(transaction.getMontantAvance());
         this.avaliseur1 = new MembreFx(transaction.getAvaliseur1());
         this.avaliseur2 = new MembreFx(transaction.getAvaliseur2());
         this.type = new SimpleStringProperty(transaction.getType().name());
@@ -58,8 +61,20 @@ public class TransactionFx {
         return montantPenalites;
     }
 
-    public String getDateDerniereModification() {
-        return dateDerniereModification.get().toString();
+    public LocalDate getDateDerniereModification() {
+        return dateDerniereModification.get();
+    }
+
+    public double getMontantAvance() {
+        return montantAvance.get();
+    }
+
+    public SimpleDoubleProperty montantAvanceProperty() {
+        return montantAvance;
+    }
+
+    public void setMontantAvance(double montantAvance) {
+        this.montantAvance.set(montantAvance);
     }
 
     public double getMontantOperation() {
@@ -115,8 +130,8 @@ public class TransactionFx {
         return montantInterets;
     }
 
-    public ObjectProperty<LocalDate> getDateRemboursement() {
-        return dateRemboursement;
+    public LocalDate getDateRemboursement() {
+        return dateRemboursement.get();
     }
 
     public void setMembreFx(MembreFx membreFx) {
@@ -128,8 +143,8 @@ public class TransactionFx {
     }
 
 
-    public String getDateCreation() {
-        return dateCreation.get().toString();
+    public LocalDate getDateCreation() {
+        return dateCreation.get();
     }
 
     public SimpleLongProperty getIdProperty() {

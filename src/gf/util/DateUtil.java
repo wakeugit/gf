@@ -71,6 +71,20 @@ public class DateUtil {
         }
     }
 
+    public static Date parseToDate(LocalDate localDate) {
+        try {
+            if (localDate != null) {
+
+                return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            } else {
+            }
+            return null;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
     /**
      * Checks the String whether it is a valid date.
      *
