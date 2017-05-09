@@ -6,6 +6,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.HttpRequestWithBody;
 import gf.model.*;
 
 import java.util.List;
@@ -471,21 +472,32 @@ public class BackendInterface {
     }
 
 
-    public static Response<InscriptionCotisation[]> getTransactionByCotisationAndDate(Cotisation mCotisation, String date) {
-        Response<InscriptionCotisation[]> response = new Response<>();
+    public static Response<Transaction[]> getTransactionByCotisationAndDateandType(Cotisation mCotisation, long date, TypeTransaction typeTransaction) {
+        Response<Transaction[]> response = new Response<>();
         try {
 
-            //// TODO: 27/04/2017 Update URL endpoint
-            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/cotisation/date")
+            HttpRequestWithBody request = null;
+
+            if (typeTransaction == TypeTransaction.TONTINER) {
+                request = Unirest.post(APP_URL + "/transaction/cotisation/tontiner/"+date);
+            } else if (typeTransaction == TypeTransaction.BENEFICIER) {
+                request = Unirest.post(APP_URL + "/transaction/cotisation/beneficier");
+            }else if (typeTransaction == TypeTransaction.EMPRUNTER) {
+                request = Unirest.post(APP_URL + "/transaction/cotisation/emprunter");
+            }else if (typeTransaction == TypeTransaction.REMBOURSER) {
+                request = Unirest.post(APP_URL + "/transaction/cotisation/rembourser");
+            }
+
+            HttpResponse<JsonNode> nodeHttpResponse = request
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .body(mCotisation)
-                    .body(date)
                     .asJson();
+
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
             if (nodeHttpResponse.getStatus() == 200) {
                 Gson gson = new Gson();
-                InscriptionCotisation[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), InscriptionCotisation[].class);
+                Transaction[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), Transaction[].class);
                 response.setBody(created);
             } else {
                 response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
