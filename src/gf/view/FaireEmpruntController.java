@@ -21,14 +21,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class FaireEmpruntController {
 	
-    private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
-    private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
+	private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
+    private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 	
     @FXML
-    private ComboBox<MembreFx> nomMembre;
+    private ComboBox<InscriptionCotisationFx> nomMembre;
     @FXML
     private ComboBox<CotisationFx> cotisation;
     @FXML
@@ -47,116 +48,145 @@ public class FaireEmpruntController {
     private boolean validerClicked = false;
     private Membre mMembre;
     private Cotisation mCotisation;
+    private Cotisation tmpCotisation;
 
     public FaireEmpruntController() {
     	
-   	 Response<Membre[]> response = BackendInterface.getMembres();
-        if (response.getBody() != null) {
-            for (Membre membre : response.getBody()) {
-                listeMembres.add(new MembreFx(membre));
-            }
-        } else {
-            //Todo Display error message
-       	 System.out.println("An error occured - Membres");
-        }
+    	if (tmpCotisation != null) {
+            Response<InscriptionCotisation[]> response;
 
-        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
-       if (response1.getBody() != null) {
-           for (Cotisation cotisation : response1.getBody()) {
-               listeAnnees.add(new CotisationFx(cotisation));
-           }
-       } else {
-           //Todo Display error message
-           System.out.println("An error occured - Annee");
-       }      
+            response = BackendInterface.getInscriptionCotisation(tmpCotisation);
+            if (response.getBody() != null) {
+                if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+
+            listeCotisation.add(new CotisationFx(tmpCotisation));
+        }     
    }
     
     @FXML
     private void initialize() {
-    	if(cotisation != null){
+    	if (cotisation != null) {
     	cotisation.setButtonCell(new ListCell<CotisationFx>() {
             @Override
             protected void updateItem(CotisationFx item, boolean empty) {
-                super.updateItem(item, empty); 
+                super.updateItem(item, empty);
                 if (empty) {
                     setText("");
                 } else {
-                    setText(item.getAnnee());
+                    setText(item.getnomCotisation() + " " + item.getAnnee());
                     mCotisation = new Cotisation(item);
-
                 }
             }
         });
-    	
-    	cotisation.setCellFactory(
-    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-          
 
-			@Override
-			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-	                    @Override
-	                    protected void updateItem(CotisationFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getAnnee());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
+        cotisation.setCellFactory(
+                new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
 
-			
-        });
-    	
-    	}
-    	if(nomMembre !=null){
-    	nomMembre.setButtonCell( new ListCell<MembreFx>() {
+
+                    @Override
+                    public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                        ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                            @Override
+                            protected void updateItem(CotisationFx item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText("");
+                                } else {
+                                    setText(item.getnomCotisation() + " " + item.getAnnee());
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+
+
+                });
+
+        cotisation.setConverter(new StringConverter<CotisationFx>() {
             @Override
-            protected void updateItem(MembreFx item, boolean empty) {
-                super.updateItem(item, empty); 
+            public String toString(CotisationFx item) {
+                if (item == null) {
+                    return null;
+                } else {
+                    return item.getnomCotisation() + " " + item.getAnnee();
+                }
+            }
+
+            @Override
+            public CotisationFx fromString(String item) {
+                return null;
+            }
+        });
+    	}
+    	if (nomMembre != null) {
+        nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+            @Override
+            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+                super.updateItem(item, empty);
                 if (empty) {
                     setText("");
                 } else {
-                    setText(item.getNom()+" "+item.getPrenom());
-                    mMembre = new Membre(item);
-
+                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+                    mMembre = new Membre(item.getMembreFx());
                 }
             }
         });
-    	
-    	nomMembre.setCellFactory( 
-    			new Callback<ListView<MembreFx>, ListCell<MembreFx>>() {
-          
 
-			@Override
-			public ListCell<MembreFx> call(ListView<MembreFx> arg0) {
-	                ListCell<MembreFx> cell = new ListCell<MembreFx>() {
-	                    @Override
-	                    protected void updateItem(MembreFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getNom()+" "+item.getPrenom());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
+        nomMembre.setConverter(new StringConverter<InscriptionCotisationFx>() {
+            @Override
+            public String toString(InscriptionCotisationFx item) {
+                if (item == null) {
+                    return null;
+                } else {
+                    return item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom();
+                }
+            }
 
-			
+            @Override
+            public InscriptionCotisationFx fromString(String item) {
+                return null;
+            }
         });
-    	
-    	cotisation.setItems(listeAnnees);
-    	nomMembre.setItems(listeMembres);
+
+        nomMembre.setCellFactory(
+                new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+
+
+                    @Override
+                    public ListCell<InscriptionCotisationFx> call(ListView<InscriptionCotisationFx> arg0) {
+                        ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+                            @Override
+                            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText("");
+                                } else {
+                                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+
+
+                });
+        cotisation.setItems(listeCotisation);
+        nomMembre.setItems(listeMembresInscrits);
     	
     	
 		dateInscription.setValue(LocalDate.now());
 		
-		new ComboBoxAutoComplete<MembreFx>(nomMembre);
+		//new ComboBoxAutoComplete<MembreFx>(nomMembre);
 		
     	}
     	

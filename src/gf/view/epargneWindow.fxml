@@ -7,9 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0"
-            prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.EpargneWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EpargneWindowController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -37,7 +35,7 @@
             <TableColumn fx:id="type" prefWidth="103.0" text="type" />
             <TableColumn fx:id="dateDebut" prefWidth="115.0" text="Date début" />
             <TableColumn fx:id="dateFin" prefWidth="110.0" text="Date fin" />
-            <TableColumn fx:id="cotisation" prefWidth="107.0" text="Année"/>
+            <TableColumn fx:id="annee" prefWidth="107.0" text="Année" />
         </columns>
          <opaqueInsets>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
