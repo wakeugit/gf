@@ -298,15 +298,18 @@ public class PretsEtRembPanelController {
     }
 
 
-    @FXML
-    private void actionOnClickValiderCotisation() {
+   
+	@FXML
+    private void actionOnClickValiderPreter() {
+        if (mCotisation != null) {
 
-  //      if (mCotisation != null) {
-      //      Response<InscriptionCotisation[]> response;
-/*
+            EffectuerCotisationController.tmpCotisation = mCotisation;
+
+            Response<InscriptionCotisation[]> response;
+
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getType() == TypeCotisation.TONTINE) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
@@ -318,9 +321,9 @@ public class PretsEtRembPanelController {
                 System.out.println("An error occured - ValiderCotisation");
             }
         }
-*/
-
     }
+
+    
 
     @FXML
     private void actionOnClickValiderAnnuelle() {
@@ -545,7 +548,7 @@ public class PretsEtRembPanelController {
         if (selectedIndex >= 0) {
             //// TODO: 20/04/2017 Add alert before delete element
             BackendInterface.deleteInscriptionCotisation(inscritsCotisationTable.getItems().get(selectedIndex).getId());
-            actionOnClickValiderCotisation();
+            //actionOnClickValiderCotisation();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);

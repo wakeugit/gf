@@ -217,7 +217,7 @@ public class EffectuerCotisationController {
                 response = BackendInterface.createTransaction(transaction);
                 if (response.getBody() != null) {
 //                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a tontiné!");
+                    System.out.println(mMembre.getNom() + " a tontine!");
 
                 } else {
                     // Todo Display error message

@@ -61,7 +61,7 @@ public class BackendInterface {
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/membre/")
                     .header("accept", "application/json")
-                    .header("Content-TypeCotisation", "application/json")
+                    .header("Content-Type", "application/json")
                     .body(membre)
                     .asJson();
             System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");

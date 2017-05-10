@@ -31,7 +31,7 @@ public class Transaction {
 
     private Membre avaliseur1;
 
-    private Membre avaliseur2;
+    private String avaliseur2;
 
     private TypeTransaction type;
 
@@ -87,7 +87,7 @@ public class Transaction {
         this.montantAvance = transactionFx.getMontantAvance();
         this.montantPenalites = transactionFx.getMontantPenalites();
         this.avaliseur1 = new Membre(transactionFx.getAvaliseur1());
-        this.avaliseur2 = new Membre(transactionFx.getAvaliseur2());
+        this.avaliseur2 = transactionFx.getAvaliseur2();
         this.type = TypeTransaction.valueOf(transactionFx.getType().getName());
         id = transactionFx.getId();
     }

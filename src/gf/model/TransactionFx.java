@@ -23,7 +23,7 @@ public class TransactionFx {
     private final SimpleDoubleProperty montantInterets;
     private final SimpleDoubleProperty montantPenalites;
     private MembreFx avaliseur1;
-    private MembreFx avaliseur2;
+    private SimpleStringProperty avaliseur2;
     private SimpleStringProperty type;
     private final SimpleLongProperty id;
 
@@ -46,8 +46,8 @@ public class TransactionFx {
         this.montantPenalites = new SimpleDoubleProperty(transaction.getMontantPenalites());
         this.montantAttendu = new SimpleDoubleProperty(transaction.getMontantAttendu());
         this.montantAvance = new SimpleDoubleProperty(transaction.getMontantAvance());
-        this.avaliseur1 = new MembreFx(transaction.getMembre());
-        this.avaliseur2 = new MembreFx(transaction.getMembre());
+        this.avaliseur1 = new MembreFx(transaction.getAvaliseur1());
+        this.avaliseur2 = new SimpleStringProperty(transaction.getAvaliseur2());
         this.type = new SimpleStringProperty(transaction.getType().name());
         this.id = new SimpleLongProperty(transaction.getId());
     }
@@ -107,12 +107,12 @@ public class TransactionFx {
         this.avaliseur1 = avaliseur1;
     }
 
-    public MembreFx getAvaliseur2() {
-        return avaliseur2;
+    public String getAvaliseur2() {
+        return avaliseur2.get();
     }
 
-    public void setAvaliseur2(MembreFx avaliseur2) {
-        this.avaliseur2 = avaliseur2;
+    public void setAvaliseur2(String avaliseur2) {
+        this.avaliseur2 = new SimpleStringProperty(avaliseur2);
     }
 
     public SimpleDoubleProperty getMontantEmprunte() {
