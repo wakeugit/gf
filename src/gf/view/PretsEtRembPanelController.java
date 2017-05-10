@@ -60,11 +60,11 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, LocalDate> datePret;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantPret;
+    private TableColumn<TransactionFx, Double> montantPret;
     @FXML
     private TableColumn<TransactionFx, LocalDate> dateRembPret;
     @FXML
-    private TableColumn<TransactionFx, Float> tauxPret;
+    private TableColumn<TransactionFx, Double> tauxPret;
     @FXML
     private TableColumn<TransactionFx, String> avaliseurPret;
     
@@ -77,7 +77,7 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, String> anneeSuiviPret;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantPlace;
+    private TableColumn<TransactionFx, Double> montantPlace;
 
     
     @FXML
@@ -95,11 +95,11 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, LocalDate> dateCol;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantCol;
+    private TableColumn<TransactionFx, Double> montantCol;
     @FXML
     private TableColumn<TransactionFx, LocalDate> dateRembCol;
     @FXML
-    private TableColumn<TransactionFx, Float> tauxCol;
+    private TableColumn<TransactionFx, Double> tauxCol;
 
     @FXML
     private TableView<TransactionFx> rembTable;
@@ -118,11 +118,11 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, LocalDate> dateRembRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantRemb;
+    private TableColumn<TransactionFx, Double> montantRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantAvRemb;
+    private TableColumn<TransactionFx, Double> montantAvRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> penalitesRemb;
+    private TableColumn<TransactionFx, Double> penalitesRemb;
     
     @FXML
     private TableView<TransactionFx> suiviRemTable;
@@ -133,9 +133,9 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<TransactionFx, String> anneeSuiviRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> montantSuiviRemb;
+    private TableColumn<TransactionFx, Double> montantSuiviRemb;
     @FXML
-    private TableColumn<TransactionFx, Integer> penalitesSuiviRemb;
+    private TableColumn<TransactionFx, Double> penalitesSuiviRemb;
     
     
     @FXML
@@ -258,13 +258,13 @@ public class PretsEtRembPanelController {
         prenomPret.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneePret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        datePret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        datePret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         montantPret.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
-        dateRembPret.setCellValueFactory(cellData -> cellData.getValue().getDateRemb());
+        dateRembPret.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxPret.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
         avaliseurPret.setCellValueFactory(cellData -> cellData.getValue().getAvaliseur1().nomProperty());
-        
-        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+
+        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         nomCotisationSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         montantPlace.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
@@ -275,12 +275,12 @@ public class PretsEtRembPanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());
-        dateRembCol.setCellValueFactory(cellData -> cellData.getValue().getDateRemb());
+        dateRembCol.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxCol.setCellValueFactory(cellData -> cellData.getValue().getTauxInterets().asObject());
 
-        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         nomCotisationSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         montantSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getMontantEmprunte().asObject());

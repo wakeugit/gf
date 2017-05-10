@@ -1,8 +1,10 @@
 package gf.util;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 /**
  * Helper functions for handling dates.
@@ -53,6 +55,47 @@ public class DateUtil {
                 return null;
         } catch (DateTimeParseException e) {
             return null;
+        }
+    }
+
+    public static LocalDate parse(Date date) {
+        try {
+            if (date != null) {
+                return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            } else {
+            }
+                return null;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
+    public static Date parseToDate(LocalDate localDate) {
+        try {
+            if (localDate != null) {
+
+                return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            } else {
+            }
+            return null;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
+    public static long parseToLong(LocalDate localDate) {
+        try {
+            if (localDate != null) {
+
+                return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime();
+//                return DATE_FORMATTER.parse(dateString, LocalDate::from);
+            } else {
+            }
+            return -1;
+        } catch (DateTimeParseException e) {
+            return -1;
         }
     }
 

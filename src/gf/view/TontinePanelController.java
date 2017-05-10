@@ -41,23 +41,42 @@ public class TontinePanelController {
     @FXML
     private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
- // pour Beneficier cotisation
-    private ObservableList<EffectuerFx> listesTontines_Membres = FXCollections.observableArrayList();
-    
+    // pour Beneficier cotisation
+    private ObservableList<TransactionFx> listesTontines_Membres = FXCollections.observableArrayList();
+
     @FXML
-    private TableView<EffectuerFx> cotisations;
+    private TableView<TransactionFx> cotisations;
     @FXML
-    private TableColumn<EffectuerFx, Long> idCol;
+    private TableColumn<TransactionFx, Long> idCol;
     @FXML
-    private TableColumn<EffectuerFx, LocalDate> dateCol;
+    private TableColumn<TransactionFx, LocalDate> dateCol;
     @FXML
-    private TableColumn<EffectuerFx, String> cotisationCol;
+    private TableColumn<TransactionFx, String> cotisationCol;
     @FXML
-    private TableColumn<EffectuerFx, String> typeCol;
+    private TableColumn<TransactionFx, String> typeCol;
     @FXML
-    private TableColumn<EffectuerFx, String> anneeCol;
+    private TableColumn<TransactionFx, String> anneeCol;
     @FXML
-    private TableColumn<EffectuerFx, Integer> montantCol;
+    private TableColumn<TransactionFx, Double> montantCol;
+
+
+    // pour Tontineur
+    private ObservableList<TransactionFx> listeDesTontineur = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<TransactionFx> tontineurs;
+    @FXML
+    private TableColumn<TransactionFx, Long> idTontineur;
+    @FXML
+    private TableColumn<TransactionFx, String> nomMembreTontineur;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomMembreTontineur;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateOperationTontineur;
+    @FXML
+    private TableColumn<TransactionFx, Double> montantTontineur;
+
+
 
     @FXML
     private ComboBox<CotisationFx> comboEffectuer;
@@ -88,7 +107,7 @@ public class TontinePanelController {
 
     private Cotisation mCotisation;
 
-    private String dateRequest;
+    private long dateRequest;
 
 
     public TontinePanelController() {
@@ -107,8 +126,8 @@ public class TontinePanelController {
 
     @FXML
     private void initialize() {
-        if(comboEffectuer != null){
-            comboEffectuer.setButtonCell( new ListCell<CotisationFx>() {
+        if (comboEffectuer != null) {
+            comboEffectuer.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
                     super.updateItem(item, empty);
@@ -144,8 +163,8 @@ public class TontinePanelController {
             comboEffectuer.setItems(listeTontines);
         }
 
-        if(comboTontineur != null){
-            comboTontineur.setButtonCell( new ListCell<CotisationFx>() {
+        if (comboTontineur != null) {
+            comboTontineur.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
                     super.updateItem(item, empty);
@@ -160,8 +179,8 @@ public class TontinePanelController {
             comboTontineur.setItems(listeTontines);
         }
 
-        if(comboBeneficiaire != null){
-            comboBeneficiaire.setButtonCell( new ListCell<CotisationFx>() {
+        if (comboBeneficiaire != null) {
+            comboBeneficiaire.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
                     super.updateItem(item, empty);
@@ -184,12 +203,12 @@ public class TontinePanelController {
         cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         numTirageCol.setCellValueFactory(cellData -> cellData.getValue().getNumeroTirageProperty().asObject());
-     
+
         inscritsCotisationTable.setItems(listeInscritsCotisation);
-        
+
         //Beneficier cotisation
         idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
@@ -197,10 +216,19 @@ public class TontinePanelController {
 
         cotisations.setItems(listesTontines_Membres);
 
+        //Tontineur
+        idTontineur.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        dateOperationTontineur.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        montantTontineur.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        nomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+
+        cotisations.setItems(listesTontines_Membres);
+
     }
 
     @FXML
-    private void actionOnClickValiderEffectuer(){
+    private void actionOnClickValiderEffectuer() {
         if (mCotisation != null) {
 
             EffectuerCotisationController.tmpCotisation = mCotisation;
@@ -220,49 +248,45 @@ public class TontinePanelController {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
             }
-            }
+        }
     }
 
 
     @FXML
-    private void actionOnClickValiderTontineur(){
+    private void actionOnClickValiderTontineur() {
         if (mCotisation != null && dateTontineur != null) {
             LocalDate dateFilter = dateTontineur.getValue();
-            dateRequest = DateUtil.format(dateFilter);
-            System.out.println("date request="+ dateRequest);
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
 
-            if (dateRequest!=null && !dateRequest.isEmpty()) {
+            if (dateRequest != -1) {
 
 
-                // TODO: 27/04/2017 Update the view according the request result.
+            Response<Transaction[]> response;
 
-//            Response<InscriptionCotisation[]> response;
-//
-//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
-//            if (response.getBody() != null) {
-//                if (mCotisation.getType() == Type.TONTINE) {
-//                    listeInscritsCotisation.clear();
-//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-//                    }
-//                }
-//
-//            } else {
-//                // Todo Display error message
-//                System.out.println("An error occured - ValiderCotisation");
-//            }
+            response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.TONTINER);
+            if (response.getBody() != null) {
+                    listeDesTontineur.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeDesTontineur.add(new TransactionFx(transaction));
+                    }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
             }
         }
     }
 
     @FXML
-    private void actionOnClickValiderBeneficiaire(){
+    private void actionOnClickValiderBeneficiaire() {
         if (mCotisation != null && dateBeneficiaire != null) {
             LocalDate dateFilter = dateBeneficiaire.getValue();
-            dateRequest = DateUtil.format(dateFilter);
+            dateRequest = DateUtil.parseToLong(dateFilter);
             System.out.println("date request=" + dateRequest);
 
-            if (dateRequest != null && !dateRequest.isEmpty()) {
+            if (dateRequest != -1) {
 
 
                 // TODO: 27/04/2017 Update the view according the request result.
@@ -289,12 +313,12 @@ public class TontinePanelController {
 
     @FXML
     private void actionOnClickValiderBeneficer() {
-        if (dateBeneficier != null) {
+        if (dateBeneficier != null && dateBeneficier.getValue() != null) {
             LocalDate dateFilter = dateBeneficier.getValue();
-            dateRequest = DateUtil.format(dateFilter);
-            System.out.println("date request="+ dateRequest);
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
 
-            if (dateRequest!=null && !dateRequest.isEmpty()) {
+            if (dateRequest != -1) {
 
 
                 // TODO: 27/04/2017 Update the view according the request result.
@@ -352,7 +376,6 @@ public class TontinePanelController {
         }
     }
 
-    
 
     @FXML
     private void actionOnclickNouveauBeneficiaire() {
@@ -392,8 +415,8 @@ public class TontinePanelController {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-        	InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
+            InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -412,9 +435,9 @@ public class TontinePanelController {
                 EffectuerCotisationController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
                 controller.setTontinePanelController(this);
-              //  controller.setInscriptionCotisation(mbreInscritFx);
+                //  controller.setInscriptionCotisation(mbreInscritFx);
                 controller.setKeyInArray(keyInArrayList);
-              
+
 
                 // Show the dialog and wait until the user closes it
 
@@ -458,7 +481,7 @@ public class TontinePanelController {
         }
     }
 
-    
+
     public MainAppGF getMainAppGF() {
         return mainAppGF;
     }
@@ -467,7 +490,6 @@ public class TontinePanelController {
         this.mainAppGF = mainAppGF;
     }
 
-    
 
     public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {
         return listeInscritsCotisation;
