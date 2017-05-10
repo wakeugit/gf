@@ -46,8 +46,8 @@ public class TransactionFx {
         this.montantPenalites = new SimpleDoubleProperty(transaction.getMontantPenalites());
         this.montantAttendu = new SimpleDoubleProperty(transaction.getMontantAttendu());
         this.montantAvance = new SimpleDoubleProperty(transaction.getMontantAvance());
-        this.avaliseur1 = new MembreFx(transaction.getAvaliseur1());
-        this.avaliseur2 = new MembreFx(transaction.getAvaliseur2());
+        this.avaliseur1 = new MembreFx(transaction.getMembre());
+        this.avaliseur2 = new MembreFx(transaction.getMembre());
         this.type = new SimpleStringProperty(transaction.getType().name());
         this.id = new SimpleLongProperty(transaction.getId());
     }
