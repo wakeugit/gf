@@ -33,14 +33,25 @@ public class MembreFx{
 	 * 
 	 */
 	public MembreFx(Membre membre) {
-		
-		this.photo = new SimpleStringProperty(membre.getPhoto());
-		this.nom = new SimpleStringProperty(membre.getNom());
-		this.prenom = new SimpleStringProperty(membre.getPrenom());
-		this.telephone = new SimpleIntegerProperty(membre.getTelephone());
-		this.adresse = new SimpleStringProperty(membre.getAdresse());
-		this.cni = new SimpleIntegerProperty(membre.getCni());
-		this.id = new SimpleLongProperty(membre.getId());
+
+		if (membre != null) {
+			this.photo = new SimpleStringProperty(membre.getPhoto());
+			this.nom = new SimpleStringProperty(membre.getNom());
+			this.prenom = new SimpleStringProperty(membre.getPrenom());
+			this.telephone = new SimpleIntegerProperty(membre.getTelephone());
+			this.adresse = new SimpleStringProperty(membre.getAdresse());
+			this.cni = new SimpleIntegerProperty(membre.getCni());
+			this.id = new SimpleLongProperty(membre.getId());
+		} else {
+			this.photo = new SimpleStringProperty("");
+			this.nom = new SimpleStringProperty("");
+			this.prenom = new SimpleStringProperty("");
+			this.telephone = new SimpleIntegerProperty(-1);
+			this.adresse = new SimpleStringProperty("");
+			this.cni = new SimpleIntegerProperty(-1);
+			this.id = new SimpleLongProperty(-1);
+		}
+
 
 	}
 

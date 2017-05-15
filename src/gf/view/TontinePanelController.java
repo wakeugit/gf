@@ -223,7 +223,7 @@ public class TontinePanelController {
         nomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
 
-        cotisations.setItems(listesTontines_Membres);
+        tontineurs.setItems(listeDesTontineur);
 
     }
 
