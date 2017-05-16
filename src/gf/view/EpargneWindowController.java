@@ -54,7 +54,6 @@ public class EpargneWindowController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-
         nomCotisation.setCellValueFactory(cellData -> cellData.getValue().getnomCotisationProperty());
         type.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
         dateDebut.setCellValueFactory(cellData -> cellData.getValue().getDateDebutProperty());
@@ -146,7 +145,6 @@ public class EpargneWindowController {
 
             alert.showAndWait();
         }
-
 
     }
 
