@@ -303,7 +303,7 @@ public class PretsEtRembPanelController {
     private void actionOnClickValiderPreter() {
         if (mCotisation != null) {
 
-            EffectuerCotisationController.tmpCotisation = mCotisation;
+//            EffectuerCotisationController.tmpCotisation = mCotisation;
 
             Response<InscriptionCotisation[]> response;
 

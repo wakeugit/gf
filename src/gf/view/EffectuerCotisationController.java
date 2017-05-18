@@ -311,6 +311,7 @@ public class EffectuerCotisationController {
         montant.setText("" + inscriptionCotisationFx.getNumeroTirage());
     }
 
+
     public int getKeyInArray() {
         return keyInArray;
     }

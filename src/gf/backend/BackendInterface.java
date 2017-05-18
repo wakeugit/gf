@@ -1,20 +1,14 @@
 package gf.backend;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
-import com.mashape.unirest.request.HttpRequestWithBody;
 import gf.model.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.JSONObject;
 
 public class BackendInterface {
 
@@ -276,6 +270,27 @@ public class BackendInterface {
         return response;
     }
 
+    public static Response<Transaction[]> getWinneableTontinesByDate(long date) {
+        initRequest();
+        Response<Transaction[]> response = new Response<>();
+        try {
+            HttpResponse<Transaction[]> bookResponse
+
+                    = Unirest.get(APP_URL + "/transaction/tontiner/" + date).asObject(Transaction[].class);
+
+            if (bookResponse.getStatus() == 200) {
+                response.setBody(bookResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+            }
+
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+        return response;
+    }
+
     public static Response<Cotisation> createCotisation(Cotisation cotisation) {
         initRequest();
         Response<Cotisation> response = new Response<>();
@@ -392,7 +407,9 @@ public class BackendInterface {
                 Transaction created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Transaction.class);
                 response.setBody(created);
             } else {
-                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+                JSONObject jsonObject = nodeHttpResponse.getBody().getObject();
+                String causeMessage = jsonObject.get("exception") + " -- " + jsonObject.get("message");
+                response.getExceptions().add(new RuntimeException(causeMessage));
             }
             return response;
         } catch (UnirestException e) {
@@ -480,50 +497,25 @@ public class BackendInterface {
     public static Response<Transaction[]> getTransactionByCotisationAndDateandType(Cotisation mCotisation, long date, TypeTransaction typeTransaction) {
         Response<Transaction[]> response = new Response<>();
         try {
-
-            Map<String, Object> params = new HashMap<>();
-            params.put("cotisation", mCotisation);
-            params.put("date", date);
-
             GetRequest request = null;
 
-            request = Unirest.get(APP_URL + "transaction/tontiner/"+mCotisation.getId()+"/"+date);
-//            if (typeTransaction == TypeTransaction.TONTINER) {
-//            } else if (typeTransaction == TypeTransaction.BENEFICIER) {
-//                request = Unirest.post(APP_URL + "/transaction/cotisation/beneficier");
-//            }else if (typeTransaction == TypeTransaction.EMPRUNTER) {
-//                request = Unirest.post(APP_URL + "/transaction/cotisation/emprunter");
-//            }else if (typeTransaction == TypeTransaction.REMBOURSER) {
-//                request = Unirest.post(APP_URL + "/transaction/cotisation/rembourser");
-//
-//
-//            }
+            if (typeTransaction == TypeTransaction.TONTINER) {
+                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+            } else if (typeTransaction == TypeTransaction.BENEFICIER) {
+                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+            } else if (typeTransaction == TypeTransaction.EMPRUNTER) {
+                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+            } else if (typeTransaction == TypeTransaction.REMBOURSER) {
+                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+            }
 
-            /*Gson gzon = new Gson();
-            String payload = gzon.toJson(mCotisation, Cotisation.class);
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("cotisation", payload);
-            jsonObject.addProperty("date", String.valueOf(date));
-            System.out.println("payload: "+jsonObject.toString());
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
 
-            HttpResponse<JsonNode> nodeHttpResponse = request
-                    .header("accept", "application/json")
-                    .header("Content-Type", "application/json")
-//                    .body(jsonObject.toString())
-                    .asJson();*/
-
-//            HttpResponse<Membre[]> bookResponse = Unirest.get(APP_URL + "/membre/").asObject(Membre[].class);
-            HttpResponse<Transaction[]> bookResponse = Unirest.get(APP_URL + "/transaction/tontiner/"+mCotisation.getId()+"/"+date).asObject(Transaction[].class);
-
-            System.out.println("request = [" + bookResponse.getStatus() + "]");
-            if (bookResponse.getStatus() == 200) {
-                response.setBody(bookResponse.getBody());
-
-//                Gson gson = new Gson();
-//                Transaction[] created = gson.fromJson(nodeHttpResponse.getBody().getArray().toString(), Transaction[].class);
-//                response.setBody(created);
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
             } else {
-                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
             }
             return response;
         } catch (UnirestException e) {

@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.*;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
@@ -12,12 +14,12 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 public class BeneficierCotisationController {
-	
-    
+
+
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 	
     @FXML
-    private ComboBox<MembreFx> nomMembre;
+    private ComboBox<InscriptionCotisationFx> nomMembre;
     @FXML
     private ComboBox<CotisationFx> cotisation;
     @FXML
@@ -32,120 +34,76 @@ public class BeneficierCotisationController {
     private Stage dialogStage;
     private InscriptionCotisation inscriptionCotisation;
     private InscriptionCotisationFx inscriptionCotisationFx;
+    private TransactionFx transactionFx;
     private boolean validerClicked = false;
+
+    public static Cotisation tmpCotisation;
+    private Membre mMembre;
 
     @FXML
     private void initialize() {
-    	/*
-    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
-            @Override
-            protected void updateItem(CotisationFx item, boolean empty) {
-                super.updateItem(item, empty); 
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(item.getnomCotisation() + " " + item.getCotisation());
+
+        if (tmpCotisation != null ) {
+            Response<InscriptionCotisation[]> response;
+
+
+            response = BackendInterface.getInscriptionCotisation(tmpCotisation);
+            if (response.getBody() != null) {
+                if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
                 }
-            }
-        });
-    	
-    	cotisation.setCellFactory( 
-    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-          
 
-			@Override
-			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-	                    @Override
-	                    protected void updateItem(CotisationFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getnomCotisation() + " " + item.getCotisation());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
-
-			
-        });
-    	
-    	cotisation.setConverter(new StringConverter<CotisationFx>() {
-            @Override
-            public String toString(CotisationFx item) {
-              if (item == null){
-                return null;
-              } else {
-                return item.getnomCotisation() + " " + item.getCotisation();
-              }
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
             }
 
-          @Override
-          public CotisationFx fromString(String item) {
-              return null;
-          }
-      });
-    	
-    	nomMembre.setButtonCell( new ListCell<MembreFx>() {
-            @Override
-            protected void updateItem(MembreFx item, boolean empty) {
-                super.updateItem(item, empty); 
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(item.getNom()+" "+item.getPrenom());
-                }
-            }
-        });
-    	
-    	nomMembre.setConverter(new StringConverter<MembreFx>() {
-             @Override
-             public String toString(MembreFx item) {
-               if (item == null){
-                 return null;
-               } else {
-                 return item.getNom()+" "+item.getPrenom();
-               }
-             }
-
-           @Override
-           public MembreFx fromString(String item) {
-               return null;
-           }
-       });
-    	
-    	nomMembre.setCellFactory( 
-    			new Callback<ListView<MembreFx>, ListCell<MembreFx>>() {
-          
-
-			@Override
-			public ListCell<MembreFx> call(ListView<MembreFx> arg0) {
-	                ListCell<MembreFx> cell = new ListCell<MembreFx>() {
-	                    @Override
-	                    protected void updateItem(MembreFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getNom()+" "+item.getPrenom());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
-
-			
-        });
-    	//cotisation.setItems(listeMembresInscrits);
-    	//nomMembre.setItems(listeMembres);
-    	 * 
-    	 * */
+//            listeCotisation.add(new CotisationFx(tmpCotisation));
+        }
     	 
     }
 
     public BeneficierCotisationController() {
+
+//        nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+//            @Override
+//            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty) {
+//                    setText("");
+//                } else {
+//                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+//                    mMembre = new Membre(item.getMembreFx());
+//                }
+//            }
+//        });
+//
+//        nomMembre.setCellFactory(
+//                new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+//
+//
+//                    @Override
+//                    public ListCell<InscriptionCotisationFx> call(ListView<InscriptionCotisationFx> arg0) {
+//                        ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+//                            @Override
+//                            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+//                                super.updateItem(item, empty);
+//                                if (empty) {
+//                                    setText("");
+//                                } else {
+//                                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+//                                }
+//                            }
+//                        };
+//                        return cell;
+//                    }
+//
+//
+//                });
+//        nomMembre.setItems(listeMembresInscrits);
     	        
     }
 
@@ -162,18 +120,18 @@ public class BeneficierCotisationController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-        	inscriptionCotisationFx = new InscriptionCotisationFx(
-        			new InscriptionCotisation( new Cotisation(
-        					cotisation.getSelectionModel().getSelectedItem()),
-        					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
-        					DateUtil.format(date.getValue()),
-        					Integer.parseInt(montant.getText())));
-
-        	if (valider.getText().equals("Valider")) {
-        		tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx); 
-    		} else {
-    			tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
-    		}
+//        	inscriptionCotisationFx = new InscriptionCotisationFx(
+//        			new InscriptionCotisation( new Cotisation(
+//        					cotisation.getSelectionModel().getSelectedItem()),
+//        					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
+//        					DateUtil.format(date.getValue()),
+//        					Integer.parseInt(montant.getText())));
+//
+//        	if (valider.getText().equals("Valider")) {
+//        		tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
+//    		} else {
+//    			tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+//    		}
 
             validerClicked = true;
             dialogStage.close();
@@ -244,10 +202,18 @@ public class BeneficierCotisationController {
     public void setEffectuerCotisation(InscriptionCotisationFx inscriptionCotisationFx) {
     	initialize();
         valider.setText("Modifier");
-        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
+//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
         cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
         date.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
         montant.setText("" + inscriptionCotisationFx.getNumeroTirage());
+    }
+
+    public void setCotisationFx(TransactionFx transactionFx) {
+    	initialize();
+//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
+        cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
+        date.setValue(transactionFx.getDateOperation());
+        montant.setText("" + transactionFx.getMontantProperty().getValue());
     }
 
 	public int getKeyInArray() {

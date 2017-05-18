@@ -42,7 +42,7 @@ public class TontinePanelController {
     private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
     // pour Beneficier cotisation
-    private ObservableList<TransactionFx> listesTontines_Membres = FXCollections.observableArrayList();
+    private ObservableList<TransactionFx> listeTontinesBeneficiables = FXCollections.observableArrayList();
 
     @FXML
     private TableView<TransactionFx> cotisations;
@@ -77,7 +77,6 @@ public class TontinePanelController {
     private TableColumn<TransactionFx, Double> montantTontineur;
 
 
-
     @FXML
     private ComboBox<CotisationFx> comboEffectuer;
 
@@ -104,6 +103,9 @@ public class TontinePanelController {
 
     @FXML
     private Button validerBeneficiaire;
+
+    @FXML
+    private Button validerBeneficier;
 
     private Cotisation mCotisation;
 
@@ -207,14 +209,15 @@ public class TontinePanelController {
         inscritsCotisationTable.setItems(listeInscritsCotisation);
 
         //Beneficier cotisation
-        idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        idCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getIdProperty().asObject());
         cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
-        typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
         montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
 
-        cotisations.setItems(listesTontines_Membres);
+
+        cotisations.setItems(listeTontinesBeneficiables);
 
         //Tontineur
         idTontineur.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
@@ -262,19 +265,19 @@ public class TontinePanelController {
             if (dateRequest != -1) {
 
 
-            Response<Transaction[]> response;
+                Response<Transaction[]> response;
 
-            response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.TONTINER);
-            if (response.getBody() != null) {
+                response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.TONTINER);
+                if (response.getBody() != null) {
                     listeDesTontineur.clear();
                     for (Transaction transaction : response.getBody()) {
                         listeDesTontineur.add(new TransactionFx(transaction));
                     }
 
-            } else {
-                // Todo Display error message
-                System.out.println("An error occured - ValiderCotisation");
-            }
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
             }
         }
     }
@@ -319,25 +322,19 @@ public class TontinePanelController {
             System.out.println("date request=" + dateRequest);
 
             if (dateRequest != -1) {
+                Response<Transaction[]> response;
 
+                response = BackendInterface.getWinneableTontinesByDate(dateRequest);
+                if (response.getBody() != null) {
+                    listeTontinesBeneficiables.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeTontinesBeneficiables.add(new TransactionFx(transaction));
+                    }
 
-                // TODO: 27/04/2017 Update the view according the request result.
-
-//            Response<InscriptionCotisation[]> response;
-//
-//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
-//            if (response.getBody() != null) {
-//                if (mCotisation.getType() == Type.TONTINE) {
-//                    listeInscritsCotisation.clear();
-//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-//                    }
-//                }
-//
-//            } else {
-//                // Todo Display error message
-//                System.out.println("An error occured - ValiderCotisation");
-//            }
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
             }
         }
     }
@@ -380,29 +377,45 @@ public class TontinePanelController {
     @FXML
     private void actionOnclickNouveauBeneficiaire() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/beneficierCotisation.fxml"));
-            BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Beneficier Cotisation");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            int selectedIndex = cotisations.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                TransactionFx transactionFx = cotisations.getItems().get(selectedIndex);
+                BeneficierCotisationController.tmpCotisation = new Cotisation(transactionFx.getCotisationFx());
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/beneficierCotisation.fxml"));
+                BorderPane page = (BorderPane) loader.load();
 
-            // Set the Member into the controller.
-            BeneficierCotisationController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setTontinePanelController(this);
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Beneficier Cotisation");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
 
-            // Show the dialog and wait until the user closes it
+                // Set the Member into the controller.
+                BeneficierCotisationController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setTontinePanelController(this);
+                controller.setCotisationFx(transactionFx);
 
-            dialogStage.showAndWait();
+                // Show the dialog and wait until the user closes it
 
-            // return controller.isOkClicked();
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+            } else {
+                // Nothing selected.
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.initOwner(mainAppGF.getPrimaryStage());
+                alert.setTitle("Attention");
+                alert.setHeaderText("Aucune ligne selectionée");
+                alert.setContentText("Svp selectionnez un élement dans la liste.");
+
+                alert.showAndWait();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

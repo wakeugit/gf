@@ -28,13 +28,13 @@
          </BorderPane.margin>
          <children>
             <Label text="Cotisation" GridPane.rowIndex="1" />
-            <TextField prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Date" GridPane.rowIndex="2" />
             <Label text="Montant placé" GridPane.rowIndex="3" />
-            <DatePicker prefHeight="25.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="date" prefHeight="25.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nom membre" />
-            <ComboBox prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" />
-            <ComboBox prefHeight="25.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Interêt" GridPane.rowIndex="4" />
             <Label text="Montant retenu" GridPane.rowIndex="5" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
