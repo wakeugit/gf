@@ -3,6 +3,7 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -178,6 +179,10 @@ public class EffectuerCotisationController {
                 });
         cotisation.setItems(listeCotisation);
         nomMembre.setItems(listeMembresInscrits);
+        
+        
+        
+        new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
     }
 
 

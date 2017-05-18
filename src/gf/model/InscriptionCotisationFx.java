@@ -70,5 +70,10 @@ public class InscriptionCotisationFx {
 		return id.get();
 	}
 	
+	@Override
+	public String toString() {
+		return membreFx.getNom();
+	}
+	
 	
 }

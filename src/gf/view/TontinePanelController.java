@@ -343,7 +343,12 @@ public class TontinePanelController {
     @FXML
     private void actionOnclickNouvelleCotisation() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
+        	 int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+             if (selectedIndex >= 0) {
+                 InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
+                 EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+             }
+             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
             BorderPane page = (BorderPane) loader.load();

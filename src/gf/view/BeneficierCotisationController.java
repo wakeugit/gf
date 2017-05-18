@@ -3,6 +3,7 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,8 +43,55 @@ public class BeneficierCotisationController {
 
     @FXML
     private void initialize() {
+        if(nomMembre!=null){
+        nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+    		@Override
+    		protected void updateItem(InscriptionCotisationFx item,
+    				boolean empty) {
+    			super.updateItem(item, empty);
+    			if (empty) {
+    				setText("");
+    			} else {
+    				setText(item.getMembreFx().getNom() + " "
+    						+ item.getMembreFx().getPrenom());
+    				mMembre = new Membre(item.getMembreFx());
+    			}
+    		}
+    	});
 
-        if (tmpCotisation != null ) {
+    	nomMembre.setCellFactory(new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+
+    				@Override
+    				public ListCell<InscriptionCotisationFx> call(
+    						ListView<InscriptionCotisationFx> arg0) {
+    					ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+    						@Override
+    						protected void updateItem(
+    								InscriptionCotisationFx item, boolean empty) {
+    							super.updateItem(item, empty);
+    							if (empty) {
+    								setText("");
+    							} else {
+    								setText(item.getMembreFx().getNom() + " "
+    										+ item.getMembreFx().getPrenom());
+    							}
+    						}
+    					};
+    					return cell;
+    				}
+
+    			});
+        }
+    	nomMembre.setItems(listeMembresInscrits);
+    	
+    	new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
+		
+	
+    	 
+    }
+
+    public BeneficierCotisationController() {
+    	if (tmpCotisation != null ) {
             Response<InscriptionCotisation[]> response;
 
 
@@ -63,47 +111,7 @@ public class BeneficierCotisationController {
 
 //            listeCotisation.add(new CotisationFx(tmpCotisation));
         }
-    	 
-    }
-
-    public BeneficierCotisationController() {
-
-//        nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
-//            @Override
-//            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty) {
-//                    setText("");
-//                } else {
-//                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
-//                    mMembre = new Membre(item.getMembreFx());
-//                }
-//            }
-//        });
-//
-//        nomMembre.setCellFactory(
-//                new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
-//
-//
-//                    @Override
-//                    public ListCell<InscriptionCotisationFx> call(ListView<InscriptionCotisationFx> arg0) {
-//                        ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
-//                            @Override
-//                            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
-//                                super.updateItem(item, empty);
-//                                if (empty) {
-//                                    setText("");
-//                                } else {
-//                                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
-//                                }
-//                            }
-//                        };
-//                        return cell;
-//                    }
-//
-//
-//                });
-//        nomMembre.setItems(listeMembresInscrits);
+	
     	        
     }
 
