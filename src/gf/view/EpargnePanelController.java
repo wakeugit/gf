@@ -112,10 +112,10 @@ public class EpargnePanelController {
     
     @FXML
     private ComboBox<InscriptionCotisationFx> comboMembreEtatIndividuel;
-
+    
     @FXML
-    private DatePicker dateEtatIndividuel;
-
+    private ComboBox<CotisationFx> comboCotisationEtatIndividuel;
+    
     @FXML
     private ComboBox<CotisationFx> comboCotisationEtatGeneral;
     
@@ -375,7 +375,7 @@ public class EpargnePanelController {
 
     @FXML
     private void actionOnClickValiderEtatIndividuel() {
-        if (mMembre != null && dateEtatIndividuel != null) {
+        /*if (mMembre != null && dateEtatIndividuel != null) {
             LocalDate dateFilter = dateEtatIndividuel.getValue();
             dateRequest = DateUtil.parseToLong(dateFilter);
             System.out.println("date request=" + dateRequest);
@@ -396,9 +396,10 @@ public class EpargnePanelController {
                     // Todo Display error message
                     System.out.println("An error occured - ValiderCotisation");
                 }
-                */
+               
             }
         }
+         */
     }
 
     @FXML

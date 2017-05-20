@@ -152,14 +152,14 @@
                                       </items>
                                     </ContextMenu>
                                  </contextMenu></Label>
-                              <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker fx:id="dateEtatIndividuel" GridPane.columnIndex="3" />
+                              <Label text="Selectionner une cotisation" GridPane.columnIndex="2" />
                               <Button fx:id="validerEtatIndividuel" mnemonicParsing="false" onAction="#actionOnClickValiderEtatIndividuel" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
                               <ComboBox fx:id="comboMembreEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboCotisationEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="3" />
                            </children>
                         </GridPane>
                      </top>
