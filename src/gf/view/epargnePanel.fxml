@@ -74,7 +74,7 @@
                            </BorderPane.margin>
                            <children>
                               <Label text="Sélectionner une épargne :" />
-                              <Button fx:id="validerEpargne" mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
+                              <Button fx:id="validerEpargne" mnemonicParsing="false" onAction="#actionOnClickValiderEpargner" text="Valider" GridPane.columnIndex="2" />
                               <ComboBox fx:id="comboCotisationEpargner" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
@@ -154,7 +154,7 @@
                                  </contextMenu></Label>
                               <Label text="Date :" GridPane.columnIndex="2" />
                               <DatePicker fx:id="dateEtatIndividuel" GridPane.columnIndex="3" />
-                              <Button fx:id="validerEtatIndividuel" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <Button fx:id="validerEtatIndividuel" mnemonicParsing="false" onAction="#actionOnClickValiderEtatIndividuel" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
@@ -224,7 +224,7 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="105.0" text="Choisir une année :" />
-                              <Button fx:id="validerEtatGeneral" mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
+                              <Button fx:id="validerEtatGeneral" mnemonicParsing="false" onAction="#actionOnClickValiderEtatGeneral" text="Valider" GridPane.columnIndex="2" />
                               <ComboBox fx:id="comboCotisationEtatGeneral" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
@@ -285,7 +285,7 @@
                            </rowConstraints>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une année :" />
-                              <Button fx:id="validerSuivi" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="2">
+                              <Button fx:id="validerSuivi" mnemonicParsing="false" onAction="#actionOnClickValiderSuivi" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>

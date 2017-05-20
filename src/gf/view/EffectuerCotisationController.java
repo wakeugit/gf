@@ -24,6 +24,7 @@ public class EffectuerCotisationController {
 
 
     public static Cotisation tmpCotisation;
+    public static InscriptionCotisationFx tmpMembre;
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 
@@ -60,6 +61,11 @@ public class EffectuerCotisationController {
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
                     }
+                } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
                 }
 
             } else {
@@ -82,7 +88,7 @@ public class EffectuerCotisationController {
                     setText("");
                 } else {
                     setText(item.getnomCotisation() + " " + item.getAnnee());
-                    mCotisation = new Cotisation(item);
+                    //mCotisation = new Cotisation(item);
                 }
             }
         });
@@ -134,7 +140,7 @@ public class EffectuerCotisationController {
                     setText("");
                 } else {
                     setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
-                    mMembre = new Membre(item.getMembreFx());
+                    //mMembre = new Membre(item.getMembreFx());
                 }
             }
         });
@@ -179,8 +185,17 @@ public class EffectuerCotisationController {
                 });
         cotisation.setItems(listeCotisation);
         nomMembre.setItems(listeMembresInscrits);
+        //set default value of combox cotisation
+        if (tmpCotisation!=null){
+        	cotisation.getSelectionModel().select(new CotisationFx(tmpCotisation));
+        }
+      //set default value of combox membre
+        if (tmpMembre!=null){
+        	//nomMembre.setValue(tmpMembre);
+        	nomMembre.getSelectionModel().select(tmpMembre);
+        }
         
-        
+        date.setValue(LocalDate.now());
         
         new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
     }
@@ -205,14 +220,21 @@ public class EffectuerCotisationController {
 
             double montantOp = Double.parseDouble(montant.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
-
+            
+            mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
+            mCotisation = new Cotisation(cotisation.getSelectionModel().getSelectedItem());
+            
             Transaction transaction = new Transaction();
             transaction.setMembre(mMembre);
             transaction.setCotisation(mCotisation);
             transaction.setDateOperation(dateOp);
             transaction.setMontantOperation(montantOp);
-            transaction.setType(TypeTransaction.TONTINER);
-
+            
+            if(tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE){
+            	transaction.setType(TypeTransaction.TONTINER);
+            } else if(tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE){
+            	transaction.setType(TypeTransaction.EPARGNER);
+            }
             System.out.println("Transaction:" + transaction);
 
 

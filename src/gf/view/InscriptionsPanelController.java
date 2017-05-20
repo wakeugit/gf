@@ -81,7 +81,12 @@ public class InscriptionsPanelController {
 
 
         Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
-        if (response1.getBody() != null) {
+        Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
+        if (response1.getBody() != null || response2.getBody() != null ) {
+        	
+        	for (Cotisation cotisation : response2.getBody()) {
+                listeCotisations.add(new CotisationFx(cotisation));
+            }
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisations.add(new CotisationFx(cotisation));
             }
@@ -216,6 +221,11 @@ public class InscriptionsPanelController {
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
                 if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));

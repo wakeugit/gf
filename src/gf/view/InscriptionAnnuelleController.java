@@ -82,7 +82,7 @@ public class InscriptionAnnuelleController {
                     setText("");
                 } else {
                     setText(item.getAnnee());
-                    mCotisation = new Cotisation(item);
+                    //mCotisation = new Cotisation(item);
 
                 }
             }
@@ -121,7 +121,7 @@ public class InscriptionAnnuelleController {
                     setText("");
                 } else {
                     setText(item.getNom()+" "+item.getPrenom());
-                    mMembre = new Membre(item);
+                    //mMembre = new Membre(item);
 
                 }
             }
@@ -175,6 +175,8 @@ public class InscriptionAnnuelleController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
+        	mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem());
+            mCotisation = new Cotisation(cotisation.getSelectionModel().getSelectedItem());
             InscriptionAnnuelle ic = new InscriptionAnnuelle(mCotisation,
                     mMembre,
                     DateUtil.format(dateInscription.getValue()),

@@ -389,6 +389,7 @@ public class TontinePanelController {
              if (selectedIndex >= 0) {
                  InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
                  EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+                 EffectuerCotisationController.tmpMembre=incriptCotisationFx;
              }
              // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();

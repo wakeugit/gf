@@ -152,6 +152,9 @@ public class EpargnePanelController {
             //Todo Display error message
             System.out.println("An error occured - Tontine");
         }
+        
+         
+        
     }
 
 
@@ -348,7 +351,7 @@ public class EpargnePanelController {
     @FXML
     private void actionOnClickValiderEpargner() {
         if (mCotisation != null) {
-
+        	 
             EffectuerCotisationController.tmpCotisation = mCotisation;
 
             Response<InscriptionCotisation[]> response;
@@ -448,6 +451,8 @@ public class EpargnePanelController {
              if (selectedIndex >= 0) {
                  InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
                  EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+                 EffectuerCotisationController.tmpMembre=incriptCotisationFx;
+                 
              }
              // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
