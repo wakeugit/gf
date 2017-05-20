@@ -114,6 +114,8 @@ public class TontinePanelController {
 
     public TontinePanelController() {
 
+//        comboBeneficiaire.setVisible(false);
+
         Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {

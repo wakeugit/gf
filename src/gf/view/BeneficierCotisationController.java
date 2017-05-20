@@ -14,11 +14,17 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class BeneficierCotisationController {
 
 
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
-	
+    private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
+
     @FXML
     private ComboBox<InscriptionCotisationFx> nomMembre;
     @FXML
@@ -40,6 +46,7 @@ public class BeneficierCotisationController {
 
     public static Cotisation tmpCotisation;
     private Membre mMembre;
+    private Cotisation mCotisation;
 
     @FXML
     private void initialize() {
@@ -81,13 +88,27 @@ public class BeneficierCotisationController {
     				}
 
     			});
+
+            cotisation.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
+            });
         }
     	nomMembre.setItems(listeMembresInscrits);
-    	
-    	new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
-		
-	
-    	 
+
+        cotisation.setItems(listeCotisation);
+
+        new ComboBoxAutoComplete<>(nomMembre);
+
+
     }
 
     public BeneficierCotisationController() {
@@ -109,7 +130,9 @@ public class BeneficierCotisationController {
                 System.out.println("An error occured - ValiderCotisation");
             }
 
-//            listeCotisation.add(new CotisationFx(tmpCotisation));
+//            cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
+
+            listeCotisation.add(new CotisationFx(tmpCotisation));
         }
 	
     	        
@@ -128,18 +151,38 @@ public class BeneficierCotisationController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-//        	inscriptionCotisationFx = new InscriptionCotisationFx(
-//        			new InscriptionCotisation( new Cotisation(
-//        					cotisation.getSelectionModel().getSelectedItem()),
-//        					new Membre(nomMembre.getSelectionModel().getSelectedItem()),
-//        					DateUtil.format(date.getValue()),
-//        					Integer.parseInt(montant.getText())));
-//
-//        	if (valider.getText().equals("Valider")) {
-//        		tontinePanelController.getListMembreInscritsCotisation().add(inscriptionCotisationFx);
-//    		} else {
-//    			tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
-//    		}
+            LocalDate localDate = date.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+
+            long dateOp = Date.from(instant).getTime();
+
+            double montantOp = Double.parseDouble(montant.getCharacters().toString());
+            System.out.println("Montant = " + montantOp);
+
+            Transaction transaction = new Transaction();
+            transaction.setMembre(mMembre);
+            transaction.setCotisation(mCotisation);
+            transaction.setDateOperation(dateOp);
+            transaction.setMontantOperation(Double.valueOf(montant.getText()));
+            transaction.setType(TypeTransaction.BENEFICIER);
+
+            System.out.println("Transaction:" + transaction);
+
+
+            Response<Transaction> response;
+
+            if (valider.getText().equals("Valider")) {
+                response = BackendInterface.createTransaction(transaction);
+                if (response.getBody() != null) {
+//                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
+                    System.out.println(mMembre.getNom() + " a beneficié!");
+
+                } else {
+                    // Todo Display error message
+                }
+            } else {
+                //tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+            }
 
             validerClicked = true;
             dialogStage.close();
@@ -152,6 +195,7 @@ public class BeneficierCotisationController {
         cotisation.getSelectionModel().select(null);
         date.setValue(null);
         montant.setText("");
+        dialogStage.close();
     }
     
 
@@ -168,6 +212,7 @@ public class BeneficierCotisationController {
             errorMessage += "Date Inscription invalide!\n";
         } 
 
+        /*
         if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
             errorMessage += "Numero tirage invalide!\n";
         } else {
@@ -177,7 +222,7 @@ public class BeneficierCotisationController {
             } catch (NumberFormatException e) {
                 errorMessage += "Numero tirage invalide (ne doit contenir que des chiffres)!\n";
             }
-        }
+        }*/
 
         if (errorMessage.length() == 0) {
             return true;
