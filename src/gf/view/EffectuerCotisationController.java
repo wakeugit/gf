@@ -260,13 +260,13 @@ public class EffectuerCotisationController {
         }
 
         if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
-            errorMessage += "Numero tirage invalide!\n";
+            errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(montant.getText());
+                Double.parseDouble(montant.getText());
             } catch (NumberFormatException e) {
-                errorMessage += "Numero tirage invalide (ne doit contenir que des chiffres)!\n";
+                errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
         }
 

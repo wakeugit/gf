@@ -14,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -136,32 +137,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation());
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
                     }
                 }
             });
-/*
+
             comboEffectuer.setCellFactory(
-                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
 
-                        @Override
-                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-                                @Override
-                                protected void updateItem(CotisationFx item, boolean empty) {
-                                    super.updateItem(item, empty);
-                                    if (empty) {
-                                        setText("");
-                                    } else {
-                                        setText(item.getnomCotisation());
-                                    }
-                                }
-                            };
-                            return cell;
-                        }
-
-
-                    });*/
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
             comboEffectuer.setItems(listeTontines);
         }
 
@@ -173,10 +173,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation());
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
                     }
                 }
             });
+            
+            comboTontineur.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
 
             comboTontineur.setItems(listeTontines);
         }
@@ -189,10 +210,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation());
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
                     }
                 }
             });
+            
+            comboBeneficiaire.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
 
             comboBeneficiaire.setItems(listeTontines);
         }

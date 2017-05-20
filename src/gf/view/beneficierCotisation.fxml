@@ -8,12 +8,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.BeneficierCotisationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.BeneficierCotisationController">
    <center>
-      <GridPane maxWidth="-Infinity" prefHeight="202.0" prefWidth="340.0" BorderPane.alignment="CENTER_LEFT">
+      <GridPane maxWidth="-Infinity" prefHeight="202.0" prefWidth="380.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="107.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="233.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="240.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="0.0" prefWidth="46.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -31,14 +32,19 @@
             <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Date" GridPane.rowIndex="2" />
             <Label text="Montant placé" GridPane.rowIndex="3" />
-            <DatePicker fx:id="date" prefHeight="25.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="date" prefHeight="25.0" prefWidth="360.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Nom membre" />
-            <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="nomMembre" prefHeight="39.0" prefWidth="254.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Interêt" GridPane.rowIndex="4" />
             <Label text="Montant retenu" GridPane.rowIndex="5" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ImageView fx:id="loading" fitHeight="38.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@default.gif" />
+               </image>
+            </ImageView>
          </children>
          <padding>
             <Insets top="5.0" />
