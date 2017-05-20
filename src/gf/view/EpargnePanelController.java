@@ -2,23 +2,19 @@ package gf.view;
 
 import gf.backend.BackendInterface;
 import gf.backend.Response;
-import gf.model.EffectuerFx;
-import gf.model.InscriptionAnnuelleFx;
-import gf.model.InscriptionCotisationFx;
-import gf.model.Membre;
-import gf.model.MembreFx;
+import gf.model.*;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,7 +24,9 @@ public class EpargnePanelController {
     private MainAppGF mainAppGF;
     // pour effectuer cotisation
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
-    
+    private ObservableList<InscriptionCotisationFx> listeEpargnants = FXCollections.observableArrayList();
+    private ObservableList<CotisationFx> listeEpargnes = FXCollections.observableArrayList();
+
     @FXML
     private TableView<InscriptionCotisationFx> inscritsCotisationTable;
     @FXML
@@ -41,61 +39,423 @@ public class EpargnePanelController {
     private TableColumn<InscriptionCotisationFx, String> cotisationCol1;
     @FXML
     private TableColumn<InscriptionCotisationFx, String> anneeCol1;
-    @FXML
-    private TableColumn<InscriptionCotisationFx, Integer> numTirageCol;
 
- // pour Beneficier cotisation
-    private ObservableList<EffectuerFx> listesTontines_Membres = FXCollections.observableArrayList();
+    // pour Etat Epargne Individuelle
+    
+    private ObservableList<TransactionFx> listeEpargneIndividuelle = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<TransactionFx> etatEpargneIndividuelle;
+    @FXML
+    private TableColumn<TransactionFx, Long> idCol;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCol;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomCol;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateCol;
+    @FXML
+    private TableColumn<TransactionFx, String> cotisationCol;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeCotisationEtatIndividuel;
+    @FXML
+    private TableColumn<TransactionFx, Double> montantCol;
+    /*@FXML
+    private TableColumn<TransactionFx, Integer> DureeCol;
+    @FXML
+    private TableColumn<TransactionFx, Integer> NombreCol;
+    */
+
+
+    // pour Etat Epargne General
+    
+    private ObservableList<TransactionFx> listeEpargneGenerale = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<TransactionFx> etatEpargneGenerale;
+
+    @FXML
+    private TableColumn<TransactionFx, String> nomMembre;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomMembre;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeEtat;
+    @FXML
+    private TableColumn<TransactionFx, String> nomCotisation;
+    @FXML
+    private TableColumn<TransactionFx, Double> totalEpargne;
+   /* @FXML
+    private TableColumn<TransactionFx, Double> totalNombre;
+    */
+    
+    // pour Suivi des Epargnes
+    private ObservableList<TransactionFx> listeEpargneSuivi = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<TransactionFx> suiviEpargne;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateSuivi;
+    @FXML
+    private TableColumn<TransactionFx, String> cotisationSuivi;
+    @FXML
+    private TableColumn<TransactionFx, String> anneeSuivi;
+    @FXML
+    private TableColumn<TransactionFx, Double> EpargneJour;
+    /*@FXML
+    private TableColumn<TransactionFx, Integer> DureeCol;
+    @FXML
+    private TableColumn<TransactionFx, Integer> NombreCol;
+	*/
+
+    @FXML
+    private ComboBox<CotisationFx> comboCotisationEpargner;
     
     @FXML
-    private TableView<EffectuerFx> Cotisations;
+    private ComboBox<InscriptionCotisationFx> comboMembreEtatIndividuel;
+    
     @FXML
-    private TableColumn<EffectuerFx, Long> idCol;
+    private ComboBox<CotisationFx> comboCotisationEtatIndividuel;
+    
     @FXML
-    private TableColumn<EffectuerFx, LocalDate> dateCol;
+    private ComboBox<CotisationFx> comboCotisationEtatGeneral;
+    
     @FXML
-    private TableColumn<EffectuerFx, String> cotisationCol;
-    @FXML
-    private TableColumn<EffectuerFx, String> typeCol;
-    @FXML
-    private TableColumn<EffectuerFx, String> anneeCol;
-    @FXML
-    private TableColumn<EffectuerFx, Integer> montantCol;
+    private ComboBox<CotisationFx> comboCotisationSuivi;
+
    
-    
+    @FXML
+    private Button validerEpargne;
+
+    @FXML
+    private Button validerEtatIndividuel;
+
+    @FXML
+    private Button validerEtatGeneral;
+
+    @FXML
+    private Button validerSuivi;
+
+    private Cotisation mCotisation;
+    private Membre mMembre;
+
+    private long dateRequest;
+
+
     public EpargnePanelController() {
 
-     /*   Response<Membre[]> response = BackendInterface.getMembres();
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
         if (response.getBody() != null) {
-            for (Membre membre : response.getBody()) {
-                listeMembres.add(new MembreFx(membre));
+            for (Cotisation cotisation : response.getBody()) {
+                listeEpargnes.add(new CotisationFx(cotisation));
             }
         } else {
             //Todo Display error message
+            System.out.println("An error occured - Tontine");
         }
-        */
+        
+         
+        
     }
 
 
     @FXML
     private void initialize() {
-        // Effectuer cotisation.
+        if (comboCotisationEpargner != null) {
+            comboCotisationEpargner.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                    }
+                }
+            });
+            
+            comboCotisationEpargner.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
+
+            comboCotisationEpargner.setItems(listeEpargnes);
+        }
+
+        if (comboMembreEtatIndividuel != null) {
+        	comboMembreEtatIndividuel.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+                @Override
+                protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mMembre = new Membre(item.getMembreFx());
+                        setText(item.getMembreFx().getNom()+" "+item.getMembreFx().getPrenom());
+                    }
+                }
+            });
+        	
+        	
+        	comboMembreEtatIndividuel.setCellFactory(
+        			new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<InscriptionCotisationFx> call(ListView<InscriptionCotisationFx> arg0) {
+    	                ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                        	setText(item.getMembreFx().getNom()+" "+item.getMembreFx().getPrenom());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
+
+        	comboMembreEtatIndividuel.setItems(listeEpargnants);
+        }
+
+        if (comboCotisationEtatGeneral != null) {
+        	comboCotisationEtatGeneral.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                    }
+                }
+            });
+        	
+        	comboCotisationEtatGeneral.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
+
+        	comboCotisationEtatGeneral.setItems(listeEpargnes);
+        }
+        
+        if (comboCotisationSuivi != null) {
+        	comboCotisationSuivi.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        setText("");
+                        mCotisation = new Cotisation(item);
+                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                    }
+                }
+            });
+        	
+        	comboCotisationSuivi.setCellFactory(
+        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+              
+
+    			@Override
+    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+    	                    @Override
+    	                    protected void updateItem(CotisationFx item, boolean empty) {
+    	                        super.updateItem(item, empty);
+    	                        if (empty) {
+    	                            setText("");
+    	                        } else {
+    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
+    	                        }
+    	                    }
+    	                };
+    	                return cell;
+    			}
+        	});
+
+        	comboCotisationSuivi.setItems(listeEpargnes);
+        }
+
+
+        // Epargner cotisation.
         idCol1.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         cotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        
-     
+ 
         inscritsCotisationTable.setItems(listeInscritsCotisation);
+
+        //Etat individuel epargne
+        idCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getIdProperty().asObject());
+        nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        anneeCotisationEtatIndividuel.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+
+        etatEpargneIndividuelle.setItems(listeEpargneIndividuelle);
         
+       
+        nomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        nomCotisation.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeEtat.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        totalEpargne.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+
+        etatEpargneGenerale.setItems(listeEpargneGenerale);
+        
+        dateSuivi.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());;
+        cotisationSuivi.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeSuivi.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        EpargneJour.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        
+        suiviEpargne.setItems(listeEpargneSuivi);
+      
+    }
+
+    @FXML
+    private void actionOnClickValiderEpargner() {
+        if (mCotisation != null) {
+        	 
+            EffectuerCotisationController.tmpCotisation = mCotisation;
+
+            Response<InscriptionCotisation[]> response;
+
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+    }
+
+
+    @FXML
+    private void actionOnClickValiderEtatIndividuel() {
+        /*if (mMembre != null && dateEtatIndividuel != null) {
+            LocalDate dateFilter = dateEtatIndividuel.getValue();
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
+
+            if (dateRequest != -1) {
+
+
+                Response<Transaction[]> response;
+
+                /*response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.TONTINER);
+                if (response.getBody() != null) {
+                    listeDesTontineur.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeDesTontineur.add(new TransactionFx(transaction));
+                    }
+
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
+               
+            }
+        }
+         */
+    }
+
+    @FXML
+    private void actionOnClickValiderEtatGeneral() {
+        if (mCotisation != null) {
+           
+
+        
+
+
+                // TODO: 27/04/2017 Update the view according the request result.
+
+//            Response<InscriptionCotisation[]> response;
+//
+//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
+//            if (response.getBody() != null) {
+//                if (mCotisation.getType() == Type.TONTINE) {
+//                    listeInscritsCotisation.clear();
+//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+//                    }
+//                }
+//
+//            } else {
+//                // Todo Display error message
+//                System.out.println("An error occured - ValiderCotisation");
+//            }
+            
+        }
+    }
+
+
+    @FXML
+    private void actionOnClickValiderSuivi() {
+        
+    	//TODO:
+    	
+    	
+    	
+    	
+    	
+    	
     }
 
 
     @FXML
     private void actionOnclickNouvelleCotisation() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
+        	 int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+             if (selectedIndex >= 0) {
+                 InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
+                 EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+                 EffectuerCotisationController.tmpMembre=incriptCotisationFx;
+                 
+             }
+             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
             BorderPane page = (BorderPane) loader.load();
@@ -125,17 +485,19 @@ public class EpargnePanelController {
         }
     }
 
-    
 
-   
+    @FXML
+    private void actionOnclickNouveauBeneficiaire() {
+        
+    }
 
     @FXML
     private void actionOnclickModifierCotisation() {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-        	InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
+            InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -154,9 +516,9 @@ public class EpargnePanelController {
                 EffectuerCotisationController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
                 controller.setEpargnePanelController(this);
-              //  controller.setInscriptionCotisation(mbreInscritFx);
+                //  controller.setInscriptionCotisation(mbreInscritFx);
                 controller.setKeyInArray(keyInArrayList);
-              
+
 
                 // Show the dialog and wait until the user closes it
 
@@ -200,7 +562,7 @@ public class EpargnePanelController {
         }
     }
 
-    
+
     public MainAppGF getMainAppGF() {
         return mainAppGF;
     }
@@ -209,7 +571,6 @@ public class EpargnePanelController {
         this.mainAppGF = mainAppGF;
     }
 
-    
 
     public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {
         return listeInscritsCotisation;

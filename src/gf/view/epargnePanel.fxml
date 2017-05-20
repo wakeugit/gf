@@ -74,8 +74,8 @@
                            </BorderPane.margin>
                            <children>
                               <Label text="Sélectionner une épargne :" />
-                              <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Button fx:id="validerEpargne" mnemonicParsing="false" onAction="#actionOnClickValiderEpargner" text="Valider" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="comboCotisationEpargner" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </top>
@@ -86,14 +86,17 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="etatEpargneIndividuelle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn fx:id="nomMembre" prefWidth="118.0" text="Nom du membre" />
-                              <TableColumn fx:id="prenomMembre" prefWidth="132.0" text="Prenom du membre" />
-                              <TableColumn fx:id="telephone" maxWidth="253.0" minWidth="12.0" prefWidth="83.0" text="Date " />
-                              <TableColumn fx:id="cni" prefWidth="104.0" text="Montant" />
-                              <TableColumn minWidth="0.0" prefWidth="103.0" text="Duree" />
-                              <TableColumn prefWidth="108.0" text="Nombre" />
+                              <TableColumn fx:id="idCol" editable="false" prefWidth="75.0" sortable="false" text="Id" visible="false" />
+                            <TableColumn fx:id="nomCol" prefWidth="79.0" text="Nom " />
+                              <TableColumn fx:id="prenomCol" prefWidth="95.0" text="Prenom " />
+                              <TableColumn fx:id="cotisationCol" prefWidth="92.0" text="Cotisation" />
+                              <TableColumn fx:id="anneeCotisationEtatIndividuel" prefWidth="75.0" text="Annee" />
+                              <TableColumn fx:id="dateCol" maxWidth="253.0" minWidth="12.0" prefWidth="63.0" text="Date " />
+                              <TableColumn fx:id="montantCol" prefWidth="85.0" text="Montant" />
+                              <TableColumn minWidth="0.0" prefWidth="63.0" text="Duree" />
+                              <TableColumn prefWidth="105.0" text="Nombre" />
                           </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -149,14 +152,14 @@
                                       </items>
                                     </ContextMenu>
                                  </contextMenu></Label>
-                              <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <Label text="Selectionner une cotisation" GridPane.columnIndex="2" />
+                              <Button fx:id="validerEtatIndividuel" mnemonicParsing="false" onAction="#actionOnClickValiderEtatIndividuel" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboMembreEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboCotisationEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="3" />
                            </children>
                         </GridPane>
                      </top>
@@ -167,13 +170,13 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="etatEpargneGenerale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
-                              <TableColumn fx:id="nomMembre2" prefWidth="144.0" text="Nom du membre" />
-                              <TableColumn fx:id="prenomMembre2" prefWidth="118.0" text="Prenom du membre" />
-                              <TableColumn fx:id="cni2" prefWidth="122.0" text="Nom cotisation" />
-                              <TableColumn prefWidth="71.0" text="Année" />
-                              <TableColumn prefWidth="101.0" text="Total épargné" />
+                              <TableColumn fx:id="nomMembre" prefWidth="144.0" text="Nom du membre" />
+                              <TableColumn fx:id="prenomMembre" prefWidth="118.0" text="Prenom du membre" />
+                              <TableColumn fx:id="nomCotisation" prefWidth="122.0" text="Nom cotisation" />
+                              <TableColumn fx:id="anneeEtat" prefWidth="71.0" text="Année" />
+                              <TableColumn fx:id="totalEpargne" prefWidth="101.0" text="Total épargné" />
                               <TableColumn prefWidth="93.0" text="Total Nbre" />
                            </columns>
                            <opaqueInsets>
@@ -221,8 +224,8 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="105.0" text="Choisir une année :" />
-                              <Button mnemonicParsing="false" text="Valider" GridPane.columnIndex="2" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Button fx:id="validerEtatGeneral" mnemonicParsing="false" onAction="#actionOnClickValiderEtatGeneral" text="Valider" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="comboCotisationEtatGeneral" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </top>
@@ -233,12 +236,12 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="suiviEpargne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
-                              <TableColumn fx:id="telephone21" maxWidth="157.0" minWidth="49.0" prefWidth="113.0" text="Date" />
-                              <TableColumn fx:id="Adresse21" minWidth="0.0" prefWidth="238.0" text="Nom cotisation" />
-                              <TableColumn fx:id="cni21" prefWidth="163.0" text="Année" />
-                              <TableColumn prefWidth="133.0" text="Epargne du jour" />
+                              <TableColumn fx:id="dateSuivi" maxWidth="157.0" minWidth="49.0" prefWidth="113.0" text="Date" />
+                              <TableColumn fx:id="cotisationSuivi" minWidth="0.0" prefWidth="238.0" text="Nom cotisation" />
+                              <TableColumn fx:id="anneeSuivi" prefWidth="163.0" text="Année" />
+                              <TableColumn fx:id="EpargneJour" prefWidth="133.0" text="Epargne du jour" />
                            </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -282,18 +285,12 @@
                            </rowConstraints>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une année :" />
-                              <MenuButton fx:id="anneeIns1" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Action 1" />
-                                    <MenuItem mnemonicParsing="false" text="Action 2" />
-                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                                 </items>
-                              </MenuButton>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="2">
+                              <Button fx:id="validerSuivi" mnemonicParsing="false" onAction="#actionOnClickValiderSuivi" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
+                              <ComboBox fx:id="comboCotisationSuivi" prefWidth="150.0" GridPane.columnIndex="1" />
                            </children>
                            <BorderPane.margin>
                               <Insets left="210.0" right="240.0" top="10.0" />

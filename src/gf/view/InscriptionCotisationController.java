@@ -54,7 +54,7 @@ public class InscriptionCotisationController {
                     setText("");
                 } else {
                     setText(item.getnomCotisation() + " " + item.getAnnee());
-                    mCotisation = new Cotisation(item);
+                    //mCotisation = new Cotisation(item);
                 }
             }
         });
@@ -106,7 +106,7 @@ public class InscriptionCotisationController {
                     setText("");
                 } else {
                     setText(item.getNom()+" "+item.getPrenom());
-                    mMembre = new Membre(item);
+                    //mMembre = new Membre(item);
                 }
             }
         });
@@ -174,10 +174,17 @@ public class InscriptionCotisationController {
         }
 
         Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
-        if (response1.getBody() != null) {
-            for (Cotisation cotisation : response1.getBody()) {
+        Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
+        if (response1.getBody() != null || response2.getBody() != null ) {
+        	
+        	for (Cotisation cotisation : response2.getBody()) {
                 listeCotisation.add(new CotisationFx(cotisation));
             }
+        	
+        	for (Cotisation cotisation : response1.getBody()) {
+                listeCotisation.add(new CotisationFx(cotisation));
+            }
+            
             
         } else {
             //Todo Display error message
@@ -201,6 +208,9 @@ public class InscriptionCotisationController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
+        	
+        	mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem());
+            mCotisation = new Cotisation(cotisation.getSelectionModel().getSelectedItem());
 
             InscriptionCotisation ic = new InscriptionCotisation(mCotisation,
                     mMembre,

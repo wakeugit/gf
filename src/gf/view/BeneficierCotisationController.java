@@ -1,5 +1,13 @@
 package gf.view;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.sun.prism.Image;
+
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
@@ -7,9 +15,12 @@ import gf.util.ComboBoxAutoComplete;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -111,7 +122,10 @@ public class BeneficierCotisationController {
 
     }
 
+    
     public BeneficierCotisationController() {
+    	
+    	
     	if (tmpCotisation != null ) {
             Response<InscriptionCotisation[]> response;
 
@@ -214,13 +228,13 @@ public class BeneficierCotisationController {
 
         /*
         if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
-            errorMessage += "Numero tirage invalide!\n";
+            errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(montant.getText());
+                Double.parseDouble(montant.getText());
             } catch (NumberFormatException e) {
-                errorMessage += "Numero tirage invalide (ne doit contenir que des chiffres)!\n";
+                errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
         }*/
 
