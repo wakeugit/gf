@@ -502,9 +502,9 @@ public class BackendInterface {
             if (typeTransaction == TypeTransaction.TONTINER) {
                 request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.BENEFICIER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/beneficier/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.EMPRUNTER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/emprunter/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.REMBOURSER) {
                 request = Unirest.get(APP_URL + "/transaction/rembourser/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.EPARGNER) {

@@ -246,6 +246,14 @@ public class EffectuerCotisationController {
 //                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
                     System.out.println(mMembre.getNom() + " a tontine!");
 
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.initOwner(dialogStage);
+                    alert.setTitle("Tontine");
+                    alert.setHeaderText("Effectué !!");
+                    alert.setContentText(mMembre.getNom() + " a tontine!");
+
+                    alert.showAndWait();
+
                 } else {
                     // Todo Display error message
                 }

@@ -30,11 +30,15 @@ public class BeneficierCotisationController {
     @FXML
     private DatePicker date;
     @FXML
-    private TextField montant;
+    private TextField montantPlace;
+    @FXML
+    private TextField interet;
+    @FXML
+    private TextField montantRetenu;
     @FXML
     private Button valider;
-    
-    private int keyInArray=0;
+
+    private int keyInArray = 0;
     private TontinePanelController tontinePanelController;
     private Stage dialogStage;
     private InscriptionCotisation inscriptionCotisation;
@@ -48,44 +52,44 @@ public class BeneficierCotisationController {
 
     @FXML
     private void initialize() {
-        if(nomMembre!=null){
-        nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
-    		@Override
-    		protected void updateItem(InscriptionCotisationFx item,
-    				boolean empty) {
-    			super.updateItem(item, empty);
-    			if (empty) {
-    				setText("");
-    			} else {
-    				setText(item.getMembreFx().getNom() + " "
-    						+ item.getMembreFx().getPrenom());
-    				mMembre = new Membre(item.getMembreFx());
-    			}
-    		}
-    	});
+        if (nomMembre != null) {
+            nomMembre.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+                @Override
+                protected void updateItem(InscriptionCotisationFx item,
+                                          boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getMembreFx().getNom() + " "
+                                + item.getMembreFx().getPrenom());
+                        mMembre = new Membre(item.getMembreFx());
+                    }
+                }
+            });
 
-    	nomMembre.setCellFactory(new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+            nomMembre.setCellFactory(new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
 
-    				@Override
-    				public ListCell<InscriptionCotisationFx> call(
-    						ListView<InscriptionCotisationFx> arg0) {
-    					ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
-    						@Override
-    						protected void updateItem(
-    								InscriptionCotisationFx item, boolean empty) {
-    							super.updateItem(item, empty);
-    							if (empty) {
-    								setText("");
-    							} else {
-    								setText(item.getMembreFx().getNom() + " "
-    										+ item.getMembreFx().getPrenom());
-    							}
-    						}
-    					};
-    					return cell;
-    				}
+                @Override
+                public ListCell<InscriptionCotisationFx> call(
+                        ListView<InscriptionCotisationFx> arg0) {
+                    ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+                        @Override
+                        protected void updateItem(
+                                InscriptionCotisationFx item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setText("");
+                            } else {
+                                setText(item.getMembreFx().getNom() + " "
+                                        + item.getMembreFx().getPrenom());
+                            }
+                        }
+                    };
+                    return cell;
+                }
 
-    			});
+            });
 
             cotisation.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
@@ -100,7 +104,7 @@ public class BeneficierCotisationController {
                 }
             });
         }
-    	nomMembre.setItems(listeMembresInscrits);
+        nomMembre.setItems(listeMembresInscrits);
 
         cotisation.setItems(listeCotisation);
 
@@ -109,11 +113,11 @@ public class BeneficierCotisationController {
 
     }
 
-    
+
     public BeneficierCotisationController() {
-    	
-    	
-    	if (tmpCotisation != null ) {
+
+
+        if (tmpCotisation != null) {
             Response<InscriptionCotisation[]> response;
 
 
@@ -135,11 +139,11 @@ public class BeneficierCotisationController {
 
             listeCotisation.add(new CotisationFx(tmpCotisation));
         }
-	
-    	        
+
+
     }
 
-    
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -157,15 +161,20 @@ public class BeneficierCotisationController {
 
             long dateOp = Date.from(instant).getTime();
 
-            double montantOp = Double.parseDouble(montant.getCharacters().toString());
+            double montantOp = Double.parseDouble(montantPlace.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
 
             Transaction transaction = new Transaction();
             transaction.setMembre(mMembre);
             transaction.setCotisation(mCotisation);
             transaction.setDateOperation(dateOp);
-            transaction.setMontantOperation(Double.valueOf(montant.getText()));
+            transaction.setMontantOperation(Double.valueOf(montantPlace.getText()));
             transaction.setType(TypeTransaction.BENEFICIER);
+            transaction.setMontantPlace(Double.valueOf(montantPlace.getText()));
+            transaction.setMontantRetenu(Double.valueOf(montantRetenu.getText()));
+            transaction.setTauxInteret(Double.valueOf(interet.getText()));
+            transaction.setMontantInteret((Double.valueOf(montantPlace.getText()) * Double.valueOf(interet.getText())) / 100);
+            transaction.setMontantBeneficie(Math.abs(Double.valueOf(montantPlace.getText()) - Double.valueOf(montantRetenu.getText())));
 
             System.out.println("Transaction:" + transaction);
 
@@ -178,6 +187,14 @@ public class BeneficierCotisationController {
 //                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
                     System.out.println(mMembre.getNom() + " a beneficié!");
 
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.initOwner(dialogStage);
+                    alert.setTitle("Tontine");
+                    alert.setHeaderText("Effectué !!");
+                    alert.setContentText(mMembre.getNom() + " a beneficié!");
+
+                    alert.showAndWait();
+
                 } else {
                     // Todo Display error message
                 }
@@ -189,16 +206,16 @@ public class BeneficierCotisationController {
             dialogStage.close();
         }
     }
-    
+
     @FXML
     private void actionOnClickAnnuler() {
         nomMembre.getSelectionModel().select(null);
         cotisation.getSelectionModel().select(null);
         date.setValue(null);
-        montant.setText("");
+        montantPlace.setText("");
         dialogStage.close();
     }
-    
+
 
     private boolean isInputValid() {
         String errorMessage = "";
@@ -209,21 +226,43 @@ public class BeneficierCotisationController {
         if (cotisation.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Cotisation invalide!\n";
         }
-        if (date.getValue() == null ) {
+        if (date.getValue() == null) {
             errorMessage += "Date Inscription invalide!\n";
-        } 
+        }
 
-        /*
-        if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
-            errorMessage += "Montant invalide!\n";
+
+        if (montantPlace.getText() == null || montantPlace.getText().length() == 0 || montantPlace.getText().length() > 9) {
+            errorMessage += "Montant Place invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Double.parseDouble(montant.getText());
+                Double.parseDouble(montantPlace.getText());
             } catch (NumberFormatException e) {
-                errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
+                errorMessage += "Montant Placé invalide (ne doit contenir que des chiffres)!\n";
             }
-        }*/
+        }
+
+        if (montantRetenu.getText() == null || montantRetenu.getText().length() == 0 || montantRetenu.getText().length() > 9) {
+            errorMessage += "Montant Retenu invalide!\n";
+        } else {
+            // try to parse the telephone number into an int.
+            try {
+                Double.parseDouble(montantPlace.getText());
+            } catch (NumberFormatException e) {
+                errorMessage += "Montant Retenu invalide (ne doit contenir que des chiffres)!\n";
+            }
+        }
+
+        if (interet.getText() == null || interet.getText().length() == 0 || interet.getText().length() > 5) {
+            errorMessage += "Interet invalide!\n";
+        } else {
+            // try to parse the telephone number into an int.
+            try {
+                Double.parseDouble(montantPlace.getText());
+            } catch (NumberFormatException e) {
+                errorMessage += "Montant Retenu invalide (ne doit contenir que des chiffres)!\n";
+            }
+        }
 
         if (errorMessage.length() == 0) {
             return true;
@@ -232,7 +271,7 @@ public class BeneficierCotisationController {
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Champs invalides");
-            alert.setHeaderText("SVP corrigez les champs inavlides");
+            alert.setHeaderText("SVP corrigez les champs invalides");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();
@@ -254,27 +293,32 @@ public class BeneficierCotisationController {
     }
 
     public void setEffectuerCotisation(InscriptionCotisationFx inscriptionCotisationFx) {
-    	initialize();
+        initialize();
         valider.setText("Modifier");
-//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
-        cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
+//        nomMembre.getSelectionModel().select(inscriptionCotisationFx);
+//        cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
         date.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
-        montant.setText("" + inscriptionCotisationFx.getNumeroTirage());
+        montantPlace.setText("" + inscriptionCotisationFx.getNumeroTirage());
+
+
     }
 
     public void setCotisationFx(TransactionFx transactionFx) {
-    	initialize();
-//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
+        initialize();
+//        nomMembre.getSelectionModel().select(inscriptionCotisationFx);
         cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
         date.setValue(transactionFx.getDateOperation());
-        montant.setText("" + transactionFx.montantOperationProperty().getValue());
+        montantPlace.setText("" + transactionFx.montantOperationProperty().getValue());
+
+        mCotisation = new Cotisation(transactionFx.getCotisationFx());
+        mMembre = new Membre(transactionFx.getMembreFx());
     }
 
-	public int getKeyInArray() {
-		return keyInArray;
-	}
+    public int getKeyInArray() {
+        return keyInArray;
+    }
 
-	public void setKeyInArray(int keyInArray) {
-		this.keyInArray = keyInArray;
-	}
+    public void setKeyInArray(int keyInArray) {
+        this.keyInArray = keyInArray;
+    }
 }

@@ -297,9 +297,9 @@ public class TontinePanelController {
         nomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         dateOpBen.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantAttenduProperty().asObject());
-        montantRetenu.setCellValueFactory(cellData -> cellData.getValue().montantAttenduProperty().asObject());
-        montantBeneficie.setCellValueFactory(cellData -> cellData.getValue().montantAvanceProperty().asObject());
+        montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantPlaceProperty().asObject());
+        montantRetenu.setCellValueFactory(cellData -> cellData.getValue().montantRetenuProperty().asObject());
+        montantBeneficie.setCellValueFactory(cellData -> cellData.getValue().montantBeneficieProperty().asObject());
         interet.setCellValueFactory(cellData -> cellData.getValue().tauxInteretsProperty().asObject());
 
         tableBeneficiaire.setItems(listeDesBeneficiares);
@@ -361,7 +361,7 @@ public class TontinePanelController {
     @FXML
     private void actionOnClickValiderBeneficiaire() {
         if (mCotisation != null && dateTontineur != null) {
-            LocalDate dateFilter = dateTontineur.getValue();
+            LocalDate dateFilter = dateBeneficiaire.getValue();
             dateRequest = DateUtil.parseToLong(dateFilter);
             System.out.println("date request=" + dateRequest);
 
@@ -372,9 +372,9 @@ public class TontinePanelController {
 
                 response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.BENEFICIER);
                 if (response.getBody() != null) {
-                    listeDesTontineur.clear();
+                    listeDesBeneficiares.clear();
                     for (Transaction transaction : response.getBody()) {
-                        listeDesTontineur.add(new TransactionFx(transaction));
+                        listeDesBeneficiares.add(new TransactionFx(transaction));
                     }
 
                 } else {
