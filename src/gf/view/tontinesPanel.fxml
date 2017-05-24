@@ -222,15 +222,18 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableBeneficiaire" maxHeight="-Infinity" maxWidth="-Infinity"
+                                   minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0"
+                                   tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
                               <TableColumn fx:id="nomMembre21" prefWidth="109.0" text="Nom du membre" />
                               <TableColumn fx:id="prenomMembre21" prefWidth="124.0" text="Prenom du membre" />
-                              <TableColumn fx:id="telephone21" maxWidth="157.0" minWidth="49.0" prefWidth="54.0" text="Date" />
-                              <TableColumn fx:id="Adresse21" minWidth="0.0" prefWidth="96.0" text="Montant placé" />
-                              <TableColumn fx:id="cni21" prefWidth="56.0" text="Intérêts" />
-                              <TableColumn prefWidth="98.0" text="Montant retenu" />
-                              <TableColumn prefWidth="112.0" text="Montant bénŕficié" />
+                              <TableColumn fx:id="dateOpBen" maxWidth="157.0" minWidth="49.0" prefWidth="54.0"
+                                           text="Date"/>
+                              <TableColumn fx:id="montantPlace" minWidth="0.0" prefWidth="96.0" text="Montant placé"/>
+                              <TableColumn fx:id="interet" prefWidth="56.0" text="Intérêts"/>
+                              <TableColumn fx:id="montantRetenu" prefWidth="98.0" text="Montant retenu"/>
+                              <TableColumn fx:id="montantBeneficie" prefWidth="112.0" text="Montant bénŕficié"/>
                            </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

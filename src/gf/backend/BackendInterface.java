@@ -506,7 +506,9 @@ public class BackendInterface {
             } else if (typeTransaction == TypeTransaction.EMPRUNTER) {
                 request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.REMBOURSER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/rembourser/" + mCotisation.getId() + "/" + date);
+            } else if (typeTransaction == TypeTransaction.EPARGNER) {
+                request = Unirest.get(APP_URL + "/transaction/epargner/" + mCotisation.getId() + "/" + date);
             }
 
             HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);

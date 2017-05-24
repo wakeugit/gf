@@ -3,7 +3,6 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -326,7 +325,7 @@ public class EpargnePanelController {
         cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         anneeCotisationEtatIndividuel.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
 
         etatEpargneIndividuelle.setItems(listeEpargneIndividuelle);
         
@@ -335,14 +334,14 @@ public class EpargnePanelController {
         prenomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisation.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeEtat.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        totalEpargne.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        totalEpargne.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
 
         etatEpargneGenerale.setItems(listeEpargneGenerale);
         
         dateSuivi.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());;
         cotisationSuivi.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuivi.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        EpargneJour.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        EpargneJour.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
         
         suiviEpargne.setItems(listeEpargneSuivi);
       

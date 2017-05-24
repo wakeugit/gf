@@ -21,13 +21,25 @@ public class Transaction {
 
     private double montantOperation;
 
+    private int duree;
+
+    private double nombre; // Durée * Montant
+
     private double montantAttendu;
 
     private double montantAvance;
 
     private double tauxInteret;
 
+    private double montantInteret;
+
     private double montantPenalites;
+
+    private double montantBeneficie;
+
+    private double montantRetenu;
+
+    private double montantPlace;
 
     private Membre avaliseur1;
 
@@ -39,36 +51,7 @@ public class Transaction {
 
     private Cotisation cotisation;
 
-	/*
-    public Transaction(Cotisation cotisation, Membre membre, String dateModif, String date, int montantEmprunte, float tauxInterets, int montantInterets, int penalites, String dateRemb, Membre avaliseur1,String avaliseur2, TypeTransaction type){
-		this.cotisation=cotisation;
-		this.membre = membre;
-		this.dateModif=dateModif;
-		this.date = date;
-		this.montant = montantEmprunte;
-		this.tauxInterets= tauxInterets;
-		this.montantInterets=montantInterets;
-		this.penalites=penalites;
-		this.dateRemb=dateRemb;
-		this.avaliseur1=avaliseur1;
-		this.avaliseur2=avaliseur2;
-		this.type=type;
-	}
 
-	public Transaction(int id, Cotisation cotisation, Membre membre, String dateModif, String date, int montantEmprunte, int penalites, float tauxInterets, int montantInterets, String dateRemb, Membre avaliseur1,String avaliseur2, TypeTransaction type){
-		this.cotisation=cotisation;
-		this.membre = membre;
-		this.dateModif=dateModif;
-		this.date = date;
-		this.montant = montantEmprunte;
-		this.tauxInterets= tauxInterets;
-		this.montantInterets=montantInterets;
-		this.dateRemb=dateRemb;
-		this.avaliseur1=avaliseur1;
-		this.avaliseur2=avaliseur2;
-		this.type=type;
-		this.id=id;
-	}*/
 
     public Transaction() {
     }
@@ -81,15 +64,21 @@ public class Transaction {
         this.dateOperation = DateUtil.parseToLong(transactionFx.dateOperationProperty().getValue());
         this.dateDerniereModification = DateUtil.parseToLong(transactionFx.dateDerniereModificationProperty().getValue());
         this.dateRemboursement = DateUtil.parseToLong(transactionFx.dateRemboursementProperty().getValue());
-        this.montantOperation = transactionFx.getMontantEmprunte().get();
-        this.tauxInteret = transactionFx.getTauxInterets().get();
-        this.montantAttendu = transactionFx.getMontantInterets().get();
+        this.montantOperation = transactionFx.getMontantOperation();
+        this.tauxInteret = transactionFx.getTauxInterets();
+        this.montantAttendu = transactionFx.getMontantAttendu();
         this.montantAvance = transactionFx.getMontantAvance();
         this.montantPenalites = transactionFx.getMontantPenalites();
+        this.montantPlace = transactionFx.getMontantPlace();
+        this.montantRetenu = transactionFx.getMontantRetenu();
+        this.montantBeneficie = transactionFx.getMontantBeneficie();
+        this.montantInteret = transactionFx.getMontantInterets();
+        this.nombre = transactionFx.getNombre();
+        this.duree = transactionFx.getDuree();
         this.avaliseur1 = new Membre(transactionFx.getAvaliseur1());
         this.avaliseur2 = transactionFx.getAvaliseur2();
-        this.type = TypeTransaction.valueOf(transactionFx.getType().getName());
-        id = transactionFx.getId();
+        this.type = TypeTransaction.valueOf(transactionFx.getType());
+        this.id = transactionFx.getId();
     }
 
 }

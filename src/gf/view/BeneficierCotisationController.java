@@ -1,29 +1,16 @@
 package gf.view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import com.sun.prism.Image;
-
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -280,7 +267,7 @@ public class BeneficierCotisationController {
 //        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
         cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
         date.setValue(transactionFx.getDateOperation());
-        montant.setText("" + transactionFx.getMontantProperty().getValue());
+        montant.setText("" + transactionFx.montantOperationProperty().getValue());
     }
 
 	public int getKeyInArray() {
