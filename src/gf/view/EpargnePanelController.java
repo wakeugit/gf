@@ -60,11 +60,11 @@ public class EpargnePanelController {
     private TableColumn<TransactionFx, String> anneeCotisationEtatIndividuel;
     @FXML
     private TableColumn<TransactionFx, Double> montantCol;
-    /*@FXML
+    @FXML
     private TableColumn<TransactionFx, Integer> DureeCol;
     @FXML
     private TableColumn<TransactionFx, Integer> NombreCol;
-    */
+    
 
 
     // pour Etat Epargne General
@@ -84,9 +84,9 @@ public class EpargnePanelController {
     private TableColumn<TransactionFx, String> nomCotisation;
     @FXML
     private TableColumn<TransactionFx, Double> totalEpargne;
-   /* @FXML
+    @FXML
     private TableColumn<TransactionFx, Double> totalNombre;
-    */
+    
     
     // pour Suivi des Epargnes
     private ObservableList<TransactionFx> listeEpargneSuivi = FXCollections.observableArrayList();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
@@ -64,9 +65,10 @@
                      <top>
                         <GridPane BorderPane.alignment="CENTER">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="181.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="163.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="78.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="150.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="168.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="59.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="69.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -75,9 +77,14 @@
                               <Insets bottom="10.0" left="180.0" right="200.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label prefHeight="21.0" prefWidth="183.0" text="Sélectionner une tontine :" />
-                              <ComboBox prefHeight="31.0" prefWidth="156.0" fx:id="comboEffectuer" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" text="Valider" fx:id="validerEffectuer" onAction="#actionOnClickValiderEffectuer" GridPane.columnIndex="2" />
+                              <Label prefHeight="21.0" prefWidth="183.0" text="Choisir une tontine " />
+                              <ComboBox fx:id="comboEffectuer" prefHeight="31.0" prefWidth="156.0" GridPane.columnIndex="1" />
+                              <Button fx:id="validerEffectuer" mnemonicParsing="false" onAction="#actionOnClickValiderEffectuer" prefHeight="39.0" prefWidth="68.0" text="Valider" GridPane.columnIndex="3" />
+                              <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </top>
@@ -127,9 +134,10 @@
                      <top>
                         <GridPane BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="173.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="120.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="41.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="149.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="135.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="44.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="46.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="122.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="97.0" />
                           </columnConstraints>
@@ -137,18 +145,23 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <BorderPane.margin>
-                              <Insets bottom="10.0" left="100.0" right="150.0" top="10.0" />
+                              <Insets bottom="10.0" left="90.0" right="120.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une tontine :" />
-                              <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker GridPane.columnIndex="3" fx:id="dateTontineur"/>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" fx:id="validerTontineur" onAction="#actionOnClickValiderTontineur" text="Valider" GridPane.columnIndex="4">
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une tontine" />
+                              <Label text="Date" GridPane.columnIndex="3" />
+                              <DatePicker fx:id="dateTontineur" GridPane.columnIndex="4" />
+                              <Button fx:id="validerTontineur" mnemonicParsing="false" onAction="#actionOnClickValiderTontineur" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="5">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
-                              <ComboBox prefHeight="25.0" prefWidth="136.0" fx:id="comboTontineur" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboTontineur" prefHeight="25.0" prefWidth="136.0" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </top>
@@ -208,10 +221,9 @@
                               <Insets bottom="10.0" left="200.0" right="250.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date :" />
-                              <DatePicker GridPane.columnIndex="1" fx:id="dateBeneficier"/>
-                              <Button mnemonicParsing="false" fx:id="validerBeneficier" text="Valider"
-                                      GridPane.columnIndex="2" onAction="#actionOnClickValiderBeneficer"/>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date" />
+                              <DatePicker fx:id="dateBeneficier" prefHeight="39.0" prefWidth="187.0" GridPane.columnIndex="1" />
+                              <Button fx:id="validerBeneficier" mnemonicParsing="false" onAction="#actionOnClickValiderBeneficer" text="Valider" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                      </top>
@@ -267,7 +279,8 @@
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="144.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="145.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="44.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="50.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="127.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
@@ -275,18 +288,23 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une tontine :" />
-                              <Label text="Date :" GridPane.columnIndex="2" />
-                              <DatePicker GridPane.columnIndex="3" fx:id="dateBeneficiaire"/>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" fx:id="validerBeneficiaire" text="Valider" GridPane.columnIndex="4" onAction="#actionOnClickValiderBeneficiaire">
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une tontine" />
+                              <Label text="Date" GridPane.columnIndex="3" />
+                              <DatePicker fx:id="dateBeneficiaire" GridPane.columnIndex="4" />
+                              <Button fx:id="validerBeneficiaire" mnemonicParsing="false" onAction="#actionOnClickValiderBeneficiaire" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="5">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Button>
-                              <ComboBox prefHeight="25.0" prefWidth="132.0" fx:id="comboBeneficiaire" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboBeneficiaire" prefHeight="25.0" prefWidth="132.0" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
                            </children>
                            <BorderPane.margin>
-                              <Insets left="110.0" right="150.0" top="10.0" />
+                              <Insets left="90.0" right="120.0" top="10.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </top>

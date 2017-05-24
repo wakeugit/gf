@@ -67,9 +67,9 @@
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="33.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="207.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="21.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="203.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.0" minWidth="10.0" prefWidth="238.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="22.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="184.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -79,8 +79,8 @@
                </BorderPane.margin>
                <children>
                   <Label text="De :" />
-                  <Label text="À" GridPane.columnIndex="2" />
-                  <DatePicker GridPane.columnIndex="1" />
+                  <Label prefHeight="27.0" prefWidth="38.0" text="À :" GridPane.columnIndex="2" />
+                  <DatePicker prefHeight="39.0" prefWidth="214.0" GridPane.columnIndex="1" />
                   <DatePicker GridPane.columnIndex="3" />
                </children>
             </GridPane>
