@@ -186,17 +186,17 @@ public class EffectuerCotisationController {
         cotisation.setItems(listeCotisation);
         nomMembre.setItems(listeMembresInscrits);
         //set default value of combox cotisation
-        if (tmpCotisation!=null){
-        	cotisation.getSelectionModel().select(new CotisationFx(tmpCotisation));
+        if (tmpCotisation != null) {
+            cotisation.getSelectionModel().select(new CotisationFx(tmpCotisation));
         }
-      //set default value of combox membre
-        if (tmpMembre!=null){
-        	//nomMembre.setValue(tmpMembre);
-        	nomMembre.getSelectionModel().select(tmpMembre);
+        //set default value of combox membre
+        if (tmpMembre != null) {
+            //nomMembre.setValue(tmpMembre);
+            nomMembre.getSelectionModel().select(tmpMembre);
         }
-        
+
         date.setValue(LocalDate.now());
-        
+
         new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
     }
 
@@ -220,20 +220,20 @@ public class EffectuerCotisationController {
 
             double montantOp = Double.parseDouble(montant.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
-            
+
             mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
             mCotisation = new Cotisation(cotisation.getSelectionModel().getSelectedItem());
-            
+
             Transaction transaction = new Transaction();
             transaction.setMembre(mMembre);
             transaction.setCotisation(mCotisation);
             transaction.setDateOperation(dateOp);
             transaction.setMontantOperation(montantOp);
-            
-            if(tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE){
-            	transaction.setType(TypeTransaction.TONTINER);
-            } else if(tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE){
-            	transaction.setType(TypeTransaction.EPARGNER);
+
+            if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                transaction.setType(TypeTransaction.TONTINER);
+            } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                transaction.setType(TypeTransaction.EPARGNER);
             }
             System.out.println("Transaction:" + transaction);
 
@@ -248,9 +248,9 @@ public class EffectuerCotisationController {
 
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.initOwner(dialogStage);
-                    alert.setTitle("Tontine");
-                    alert.setHeaderText("Effectué !!");
-                    alert.setContentText(mMembre.getNom() + " a tontine!");
+                    alert.setTitle(response.getBody().getCotisation().getTypeCotisation().name());
+                    alert.setHeaderText("Operation Effectuée !!");
+                    alert.setContentText(mMembre.getNom());
 
                     alert.showAndWait();
 

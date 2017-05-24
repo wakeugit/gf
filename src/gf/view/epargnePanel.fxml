@@ -95,8 +95,8 @@
                               <TableColumn fx:id="anneeCotisationEtatIndividuel" prefWidth="75.0" text="Annee" />
                               <TableColumn fx:id="dateCol" maxWidth="253.0" minWidth="12.0" prefWidth="63.0" text="Date " />
                               <TableColumn fx:id="montantCol" prefWidth="85.0" text="Montant" />
-                              <TableColumn minWidth="0.0" prefWidth="63.0" text="Duree" />
-                              <TableColumn prefWidth="105.0" text="Nombre" />
+                              <TableColumn fx:id="dureeCol" minWidth="0.0" prefWidth="63.0" text="Duree"/>
+                              <TableColumn fx:id="nombreCol" prefWidth="105.0" text="Nombre"/>
                           </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -159,7 +159,9 @@
                                  </GridPane.margin>
                               </Button>
                               <ComboBox fx:id="comboMembreEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="comboCotisationEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="3" />
+                               <ComboBox fx:id="comboCotisationEtatIndividuel"
+                                         onAction="#actionOnDragDroppedEtatIndividuel" prefWidth="150.0"
+                                         GridPane.columnIndex="3"/>
                            </children>
                         </GridPane>
                      </top>

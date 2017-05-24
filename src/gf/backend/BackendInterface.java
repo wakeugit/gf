@@ -526,6 +526,72 @@ public class BackendInterface {
         }
     }
 
+    public static Response<Transaction[]> getTransactionEpargneByCotisationAndMembre(Cotisation mCotisation, Membre membre) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/" + mCotisation.getId() + "/" + membre.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionEpargneByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/" + mCotisation.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getSuiviTransactionEpargneByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/suivi/" + mCotisation.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
     public static Response<Transaction[]> getTransactionByCotisation(Cotisation mCotisation) {
         Response<Transaction[]> response = new Response<>();
         try {
