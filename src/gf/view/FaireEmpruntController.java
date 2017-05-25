@@ -1,11 +1,5 @@
 package gf.view;
 
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
@@ -14,20 +8,23 @@ import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class FaireEmpruntController {
 
+
+    public static Cotisation tmpCotisation;
+    public static InscriptionCotisationFx tmpMembre;
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 
@@ -36,22 +33,30 @@ public class FaireEmpruntController {
     @FXML
     private ComboBox<CotisationFx> cotisation;
     @FXML
-    private DatePicker dateInscription;
+    private DatePicker dateOperation;
     @FXML
-    private TextField montant;
+    private TextField montantEmprunt;
+    @FXML
+    private TextField tauxInterets;
+    @FXML
+    private TextField montantInterets;
+    @FXML
+    private DatePicker dateRemb;
+    @FXML
+    private ComboBox<InscriptionCotisationFx> avalyseur1;
+    @FXML
+    private TextField avalyseur2;
     @FXML
     private Button valider;
 
     private int keyInArray = 0;
-    private MembrePanelController membrePanelController;
-    private PretsEtRembPanelController pretsEtRembController;
+    private PretsEtRembPanelController pretsEtRembPanelController;
     private Stage dialogStage;
-    private Transaction transaction;
-    private TransactionFx transactionFx;
+    private InscriptionCotisation inscriptionCotisation;
+    private InscriptionCotisationFx inscriptionCotisationFx;
     private boolean validerClicked = false;
     private Membre mMembre;
     private Cotisation mCotisation;
-    public static Cotisation tmpCotisation;
 
     public FaireEmpruntController() {
 
@@ -61,6 +66,11 @@ public class FaireEmpruntController {
             response = BackendInterface.getInscriptionCotisation(tmpCotisation);
             if (response.getBody() != null) {
                 if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
                     listeMembresInscrits.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
@@ -187,14 +197,73 @@ public class FaireEmpruntController {
             nomMembre.setItems(listeMembresInscrits);
 
 
-            dateInscription.setValue(LocalDate.now());
+            dateRemb.setValue(LocalDate.now());
 
             //new ComboBoxAutoComplete<MembreFx>(nomMembre);
 
         }
 
 
+
+        
+        avalyseur1.setConverter(new StringConverter<InscriptionCotisationFx>() {
+            @Override
+            public String toString(InscriptionCotisationFx item) {
+                if (item == null) {
+                    return null;
+                } else {
+                    return item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom();
+                }
+            }
+
+            @Override
+            public InscriptionCotisationFx fromString(String item) {
+                return null;
+            }
+        });
+
+        avalyseur1.setCellFactory(
+                new Callback<ListView<InscriptionCotisationFx>, ListCell<InscriptionCotisationFx>>() {
+
+
+                    @Override
+                    public ListCell<InscriptionCotisationFx> call(ListView<InscriptionCotisationFx> arg0) {
+                        ListCell<InscriptionCotisationFx> cell = new ListCell<InscriptionCotisationFx>() {
+                            @Override
+                            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText("");
+                                } else {
+                                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+
+
+                });
+        
+        cotisation.setItems(listeCotisation);
+        nomMembre.setItems(listeMembresInscrits);
+        avalyseur1.setItems(listeMembresInscrits);
+        //set default value of combox cotisation
+        if (tmpCotisation != null) {
+            cotisation.getSelectionModel().select(new CotisationFx(tmpCotisation));
+        }
+        //set default value of combox membre
+        if (tmpMembre != null) {
+            //nomMembre.setValue(tmpMembre);
+            nomMembre.getSelectionModel().select(tmpMembre);
+        }
+
+        dateOperation.setValue(LocalDate.now());
+        dateRemb.setValue(LocalDate.now());
+
+        new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
     }
+
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -208,12 +277,12 @@ public class FaireEmpruntController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-            LocalDate localDate = dateInscription.getValue();
+            LocalDate localDate = dateOperation.getValue();
             Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 
             long dateOp = Date.from(instant).getTime();
 
-            double montantOp = Double.parseDouble(montant.getCharacters().toString());
+            double montantOp = Double.parseDouble(montantEmprunt.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
 
             mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
@@ -249,20 +318,20 @@ public class FaireEmpruntController {
                     // Todo Display error message
                 }
             } else {
-                //tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+                //pretsEtRembPanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
             }
+
             validerClicked = true;
             dialogStage.close();
         }
     }
 
-
     @FXML
     private void actionOnClickAnnuler() {
         nomMembre.getSelectionModel().select(null);
         cotisation.getSelectionModel().select(null);
-        dateInscription.setValue(null);
-        montant.setText("");
+        dateOperation.setValue(null);
+        montantEmprunt.setText("");
         dialogStage.close();
     }
 
@@ -274,18 +343,18 @@ public class FaireEmpruntController {
             errorMessage += "Membre invalide!\n";
         }
         if (cotisation.getSelectionModel().getSelectedItem() == null) {
-            errorMessage += "Annee invalide!\n";
+            errorMessage += "Cotisation invalide!\n";
         }
-        if (dateInscription.getValue() == null) {
+        if (dateOperation.getValue() == null) {
             errorMessage += "Date Inscription invalide!\n";
         }
 
-        if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
+        if (montantEmprunt.getText() == null || montantEmprunt.getText().length() == 0 || montantEmprunt.getText().length() > 9) {
             errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(montant.getText());
+                Double.parseDouble(montantEmprunt.getText());
             } catch (NumberFormatException e) {
                 errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
@@ -308,25 +377,29 @@ public class FaireEmpruntController {
     }
 
     public PretsEtRembPanelController getPretsEtRembPanelController() {
-        return pretsEtRembController;
+        return pretsEtRembPanelController;
     }
 
-    public void setInscriptionsPanelController(PretsEtRembPanelController PretsEtRembController) {
-        this.pretsEtRembController = PretsEtRembController;
+   
+
+    public void setPretsEtRembPanelController(PretsEtRembPanelController pretsEtRembPanelController) {
+        this.pretsEtRembPanelController = pretsEtRembPanelController;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+
+    public InscriptionCotisation getInscriptionCotisation() {
+        return inscriptionCotisation;
     }
 
-    public void setTransaction(TransactionFx transactionFx) {
+    public void setEffectuerCotisation(InscriptionCotisationFx inscriptionCotisationFx) {
+        initialize();
         valider.setText("Modifier");
-        //nomMembre.getSelectionModel().select(inscriptionAnnuelleFx.getMembreFx());
-        //cotisation.getSelectionModel().select(inscriptionAnnuelleFx.getAnneeFx());
-        //dateInscription.setValue(inscriptionAnnuelleFx.getDateInscrptionProperty().getValue());
-        //montant.setText("" + inscriptionAnnuelleFx.getMontantOperation());
-        //this.transactionFx = transactionFx;
+//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
+        cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
+        dateOperation.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
+        montantEmprunt.setText("" + inscriptionCotisationFx.getNumeroTirage());
     }
+
 
     public int getKeyInArray() {
         return keyInArray;
@@ -334,5 +407,9 @@ public class FaireEmpruntController {
 
     public void setKeyInArray(int keyInArray) {
         this.keyInArray = keyInArray;
+    }
+
+    public void setCotisation(Cotisation cotisation) {
+        this.tmpCotisation = cotisation;
     }
 }

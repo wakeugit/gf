@@ -175,7 +175,11 @@ public class PretsEtRembPanelController {
 
 
         Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
-        if (response1.getBody() != null) {
+        Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
+        if (response1.getBody() != null || response2.getBody() != null) {
+            for (Cotisation cotisation : response2.getBody()) {
+                listeCotisations.add(new CotisationFx(cotisation));
+            }
             for (Cotisation cotisation : response1.getBody()) {
                 listeCotisations.add(new CotisationFx(cotisation));
             }
@@ -368,9 +372,9 @@ public class PretsEtRembPanelController {
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-//            FaireEmpruntController controller = loader.getController();
-//            controller.setDialogStage(dialogStage);
-//            controller.setPretsEtRembController(this);
+            FaireEmpruntController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setPretsEtRembPanelController(this);
 
             // Show the dialog and wait until the user closes it
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
@@ -67,7 +68,8 @@
                         <GridPane prefHeight="30.0" prefWidth="459.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="205.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="75.0" prefWidth="149.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="75.0" prefWidth="151.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="44.0" prefWidth="44.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="59.0" prefWidth="83.0" />
                           </columnConstraints>
                           <rowConstraints>
@@ -77,11 +79,14 @@
                               <Insets bottom="10.0" left="170.0" right="200.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Selectionner une cotisation :" />
+                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une cotisation" />
                               <ComboBox fx:id="annee" prefHeight="39.0" prefWidth="127.0" GridPane.columnIndex="1" />
-                               <Button fx:id="validerAnnuelCotisation" mnemonicParsing="false" prefHeight="39.0"
-                                       prefWidth="88.0" onAction="#actionOnClickValiderAnnuelle" text="Valider"
-                                       GridPane.columnIndex="2"/>
+                               <Button fx:id="validerAnnuelCotisation" mnemonicParsing="false" onAction="#actionOnClickValiderAnnuelle" prefHeight="39.0" prefWidth="88.0" text="Valider" GridPane.columnIndex="3" />
+                              <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </top>
@@ -135,8 +140,9 @@
                      <top>
                         <GridPane prefHeight="30.0" prefWidth="543.0" BorderPane.alignment="CENTER">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="231.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="151.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="171.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="166.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="72.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="87.0" />
                            </columnConstraints>
                            <rowConstraints>
@@ -146,11 +152,14 @@
                               <Insets bottom="10.0" left="150.0" right="180.0" top="10.0" />
                            </BorderPane.margin>
                            <children>
-                              <Label text="Sélectionner une cotisation" />
-                              <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="135.0" GridPane.columnIndex="1" />
-                               <Button mnemonicParsing="false" fx:id="validerCotisation" prefHeight="39.0"
-                                       prefWidth="85.0" text="Valider" onAction="#actionOnClickValiderCotisation"
-                                       GridPane.columnIndex="2"/>
+                              <Label text="Choisir une cotisation" />
+                              <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="152.0" GridPane.columnIndex="1" />
+                               <Button fx:id="validerCotisation" mnemonicParsing="false" onAction="#actionOnClickValiderCotisation" prefHeight="39.0" prefWidth="85.0" text="Valider" GridPane.columnIndex="3" />
+                              <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </top>
