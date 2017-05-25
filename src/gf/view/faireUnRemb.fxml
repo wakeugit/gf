@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EffectuerCotisationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.FaireRemboursementController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="440.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -33,15 +33,15 @@
             <Label text="Cotisation" GridPane.rowIndex="1" />
             <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date de remboursement" GridPane.rowIndex="2" />
-            <DatePicker fx:id="date" prefHeight="39.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dateOperation" prefHeight="39.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Montant attendu" GridPane.rowIndex="3" />
-            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="montantAttendu" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Montant avancé" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="montantAvance" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Reste" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="reste" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Total des penalités" GridPane.rowIndex="6" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="penalites" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
          <padding>
             <Insets top="5.0" />

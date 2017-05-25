@@ -478,9 +478,9 @@ public class PretsEtRembPanelController {
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            //InscriptionCotisationController controller = loader.getController();
-            //controller.setDialogStage(dialogStage);
-            //controller.setInscriptionsPanelController(this);
+            FaireRemboursementController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setPretsEtRembPanelController(this);
 
             // Show the dialog and wait until the user closes it
 

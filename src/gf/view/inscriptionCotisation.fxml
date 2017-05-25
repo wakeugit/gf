@@ -32,7 +32,7 @@
             <Label text="Date inscription" GridPane.rowIndex="2" />
             <DatePicker fx:id="dateInscription" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Numero tirage" GridPane.rowIndex="3" />
-            <TextField fx:id="numeroTirage" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="numeroTirage" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <padding>
             <Insets top="5.0" />

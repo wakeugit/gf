@@ -37,11 +37,11 @@
             <Label text="Date" GridPane.rowIndex="2" />
             <DatePicker fx:id="dateOperation" prefHeight="39.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Montant emprunté" GridPane.rowIndex="3" />
-            <TextField fx:id="montantEmprunt" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="montantEmprunt" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Taux d'interets" GridPane.rowIndex="4" />
-            <TextField fx:id="tauxInterets" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="tauxInterets" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Montant interets" GridPane.rowIndex="5" />
-            <TextField fx:id="montantInterets" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="montantInterets" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Date de remboursement" GridPane.rowIndex="6" />
             <DatePicker fx:id="dateRemb" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Avaliseur" GridPane.rowIndex="7" />
