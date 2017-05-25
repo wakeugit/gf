@@ -272,7 +272,7 @@ public class EffectuerCotisationController {
         cotisation.getSelectionModel().select(null);
         date.setValue(null);
         montant.setText("");
-        this.dialogStage.close();
+        dialogStage.close();
     }
 
 

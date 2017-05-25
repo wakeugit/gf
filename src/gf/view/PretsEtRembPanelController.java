@@ -303,7 +303,7 @@ public class PretsEtRembPanelController {
     private void actionOnClickValiderPreter() {
         if (mCotisation != null) {
 
-//            EffectuerCotisationController.tmpCotisation = mCotisation;
+            FaireEmpruntController.tmpCotisation = mCotisation;
 
             Response<InscriptionCotisation[]> response;
 
@@ -368,9 +368,9 @@ public class PretsEtRembPanelController {
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            //FaireEmpruntController controller = loader.getController();
-            //controller.setDialogStage(dialogStage);
-           // controller.setPretsEtRembController(this);
+//            FaireEmpruntController controller = loader.getController();
+//            controller.setDialogStage(dialogStage);
+//            controller.setPretsEtRembController(this);
 
             // Show the dialog and wait until the user closes it
 
