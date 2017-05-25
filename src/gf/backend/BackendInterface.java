@@ -502,12 +502,80 @@ public class BackendInterface {
             if (typeTransaction == TypeTransaction.TONTINER) {
                 request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.BENEFICIER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/beneficier/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.EMPRUNTER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/emprunter/" + mCotisation.getId() + "/" + date);
             } else if (typeTransaction == TypeTransaction.REMBOURSER) {
-                request = Unirest.get(APP_URL + "/transaction/tontiner/" + mCotisation.getId() + "/" + date);
+                request = Unirest.get(APP_URL + "/transaction/rembourser/" + mCotisation.getId() + "/" + date);
+            } else if (typeTransaction == TypeTransaction.EPARGNER) {
+                request = Unirest.get(APP_URL + "/transaction/epargner/" + mCotisation.getId() + "/" + date);
             }
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionEpargneByCotisationAndMembre(Cotisation mCotisation, Membre membre) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/" + mCotisation.getId() + "/" + membre.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionEpargneByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/" + mCotisation.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getSuiviTransactionEpargneByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/epargnes/suivi/" + mCotisation.getId());
 
             HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
 

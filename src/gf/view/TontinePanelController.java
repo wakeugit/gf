@@ -78,6 +78,27 @@ public class TontinePanelController {
     private TableColumn<TransactionFx, Double> montantTontineur;
 
 
+    // pour Beneficiaire
+    private ObservableList<TransactionFx> listeDesBeneficiares = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<TransactionFx> tableBeneficiaire;
+    @FXML
+    private TableColumn<TransactionFx, String> nomMembre21;
+    @FXML
+    private TableColumn<TransactionFx, String> prenomMembre21;
+    @FXML
+    private TableColumn<TransactionFx, LocalDate> dateOpBen;
+    @FXML
+    private TableColumn<TransactionFx, Double> montantPlace;
+    @FXML
+    private TableColumn<TransactionFx, Double> montantRetenu;
+    @FXML
+    private TableColumn<TransactionFx, Double> interet;
+    @FXML
+    private TableColumn<TransactionFx, Double> montantBeneficie;
+
+
     @FXML
     private ComboBox<CotisationFx> comboEffectuer;
 
@@ -115,6 +136,8 @@ public class TontinePanelController {
 
     public TontinePanelController() {
 
+//        comboBeneficiaire.setVisible(false);
+
         Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         if (response.getBody() != null) {
             for (Cotisation cotisation : response.getBody()) {
@@ -137,31 +160,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
                     }
                 }
             });
 
             comboEffectuer.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-              
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
 
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
-        	});
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    });
             comboEffectuer.setItems(listeTontines);
         }
 
@@ -173,31 +196,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
                     }
                 }
             });
-            
-            comboTontineur.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-              
 
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
-        	});
+            comboTontineur.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    });
 
             comboTontineur.setItems(listeTontines);
         }
@@ -210,31 +233,31 @@ public class TontinePanelController {
                     if (!empty) {
                         setText("");
                         mCotisation = new Cotisation(item);
-                        setText(item.getnomCotisation()+" "+item.getAnnee());
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
                     }
                 }
             });
-            
-            comboBeneficiaire.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-              
 
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getnomCotisation()+" "+item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
-        	});
+            comboBeneficiaire.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    });
 
             comboBeneficiaire.setItems(listeTontines);
         }
@@ -256,19 +279,30 @@ public class TontinePanelController {
         dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
 
 
         cotisations.setItems(listeTontinesBeneficiables);
 
         //Tontineur
-        idTontineur.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        idTontineur.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         dateOperationTontineur.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantTontineur.setCellValueFactory(cellData -> cellData.getValue().getMontantProperty().asObject());
+        montantTontineur.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
         nomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
 
         tontineurs.setItems(listeDesTontineur);
+
+        //Beneficiare
+        nomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        dateOpBen.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantPlaceProperty().asObject());
+        montantRetenu.setCellValueFactory(cellData -> cellData.getValue().montantRetenuProperty().asObject());
+        montantBeneficie.setCellValueFactory(cellData -> cellData.getValue().montantBeneficieProperty().asObject());
+        interet.setCellValueFactory(cellData -> cellData.getValue().tauxInteretsProperty().asObject());
+
+        tableBeneficiaire.setItems(listeDesBeneficiares);
 
     }
 
@@ -326,7 +360,7 @@ public class TontinePanelController {
 
     @FXML
     private void actionOnClickValiderBeneficiaire() {
-        if (mCotisation != null && dateBeneficiaire != null) {
+        if (mCotisation != null && dateTontineur != null) {
             LocalDate dateFilter = dateBeneficiaire.getValue();
             dateRequest = DateUtil.parseToLong(dateFilter);
             System.out.println("date request=" + dateRequest);
@@ -334,23 +368,19 @@ public class TontinePanelController {
             if (dateRequest != -1) {
 
 
-                // TODO: 27/04/2017 Update the view according the request result.
+                Response<Transaction[]> response;
 
-//            Response<InscriptionCotisation[]> response;
-//
-//            response = BackendInterface.getTransactionByCotisationAndDate(mCotisation, dateRequest);
-//            if (response.getBody() != null) {
-//                if (mCotisation.getType() == Type.TONTINE) {
-//                    listeInscritsCotisation.clear();
-//                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-//                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-//                    }
-//                }
-//
-//            } else {
-//                // Todo Display error message
-//                System.out.println("An error occured - ValiderCotisation");
-//            }
+                response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.BENEFICIER);
+                if (response.getBody() != null) {
+                    listeDesBeneficiares.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeDesBeneficiares.add(new TransactionFx(transaction));
+                    }
+
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
             }
         }
     }
@@ -385,13 +415,13 @@ public class TontinePanelController {
     @FXML
     private void actionOnclickNouvelleCotisation() {
         try {
-        	 int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
-             if (selectedIndex >= 0) {
-                 InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
-                 EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
-                 EffectuerCotisationController.tmpMembre=incriptCotisationFx;
-             }
-             // Load the fxml file and create a new stage for the popup dialog.
+            int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                InscriptionCotisationFx incriptCotisationFx = inscritsCotisationTable.getItems().get(selectedIndex);
+                EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+                EffectuerCotisationController.tmpMembre = incriptCotisationFx;
+            }
+            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
             BorderPane page = (BorderPane) loader.load();

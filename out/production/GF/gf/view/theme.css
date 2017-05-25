@@ -26,30 +26,16 @@
 .table-view {
     -fx-base: #D3D3D3;
     -fx-control-inner-background: #D3D3D3;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
+    -fx-table-cell-border-color: #1d1d1d;
+    -fx-table-header-border-color: #1d1d1d;
     -fx-padding: 5;
     
 }
 
-.table-view .column-header-background {
-    -fx-background-color: transparent;
-}
-
-.table-view .column-header, .table-view .filler {
-    -fx-size: 12;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-border-color: 
-        transparent
-        transparent
-        derive(-fx-base, 80%) 
-        transparent;
-    -fx-border-insets: 0 10 1 0;
-}
 
 .table-view .column-header .label {
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
+    -fx-font-weight:bolder;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #1d1d1d;
     -fx-alignment: center-left;

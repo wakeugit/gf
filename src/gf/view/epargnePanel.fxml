@@ -102,8 +102,10 @@
                               <TableColumn fx:id="anneeCotisationEtatIndividuel" prefWidth="75.0" text="Annee" />
                               <TableColumn fx:id="dateCol" maxWidth="253.0" minWidth="12.0" prefWidth="63.0" text="Date " />
                               <TableColumn fx:id="montantCol" prefWidth="85.0" text="Montant" />
-                              <TableColumn fx:id="DureeCol" minWidth="0.0" prefWidth="63.0" text="Duree" />
-                              <TableColumn fx:id="NombreCol" prefWidth="105.0" text="Nombre" />
+
+                              <TableColumn fx:id="dureeCol" minWidth="0.0" prefWidth="63.0" text="Duree"/>
+                              <TableColumn fx:id="nombreCol" prefWidth="105.0" text="Nombre"/>
+
                           </columns>
                            <opaqueInsets>
                               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -166,8 +168,9 @@
                                     <Insets />
                                  </GridPane.margin>
                               </Button>
+
                               <ComboBox fx:id="comboMembreEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="4" />
-                              <ComboBox fx:id="comboCotisationEtatIndividuel" prefWidth="163.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboCotisationEtatIndividuel" prefWidth="163.0" GridPane.columnIndex="1" onAction="#actionOnDragDroppedEtatIndividuel"/>
                               <Label text="Choisir une épargne" />
                               <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
@@ -179,6 +182,8 @@
                                     <Image url="@default.gif" />
                                  </image>
                               </ImageView>
+
+
                            </children>
                         </GridPane>
                      </top>
