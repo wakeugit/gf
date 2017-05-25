@@ -30,7 +30,7 @@
             <Label text="Cotisation" GridPane.rowIndex="1" />
             <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date" GridPane.rowIndex="2" />
-            <TextField fx:id="montant" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="montant" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Montant" GridPane.rowIndex="3" />
             <DatePicker fx:id="date" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
