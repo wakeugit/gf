@@ -167,8 +167,8 @@ public class BeneficierCotisationController {
             Transaction transaction = new Transaction();
             transaction.setMembre(mMembre);
             transaction.setCotisation(mCotisation);
-            transaction.setDateOperation(dateOp);
-            transaction.setMontantOperation(Double.valueOf(montantPlace.getText()));
+            transaction.setDateTransaction(dateOp);
+            transaction.setMontantTransaction(Double.valueOf(montantPlace.getText()));
             transaction.setType(TypeTransaction.BENEFICIER);
             transaction.setMontantPlace(Double.valueOf(montantPlace.getText()));
             transaction.setMontantRetenu(Double.valueOf(montantRetenu.getText()));
@@ -308,7 +308,7 @@ public class BeneficierCotisationController {
 //        nomMembre.getSelectionModel().select(inscriptionCotisationFx);
         cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
         date.setValue(transactionFx.getDateOperation());
-        montantPlace.setText("" + transactionFx.montantOperationProperty().getValue());
+        montantPlace.setText("" + transactionFx.montantTransactionProperty().getValue());
 
         mCotisation = new Cotisation(transactionFx.getCotisationFx());
         mMembre = new Membre(transactionFx.getMembreFx());

@@ -278,8 +278,8 @@ public class FaireEmpruntController {
             Transaction transaction = new Transaction();
             transaction.setMembre(mMembre);
             transaction.setCotisation(mCotisation);
-            transaction.setDateOperation(dateOp);
-            transaction.setMontantOperation(montantOp);
+            transaction.setDateTransaction(dateOp);
+            transaction.setMontantTransaction(montantOp);
 
             if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
                 transaction.setType(TypeTransaction.TONTINER);

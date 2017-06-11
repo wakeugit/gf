@@ -15,11 +15,11 @@ public class Transaction {
 
     private long dateDerniereModification;
 
-    private long dateOperation;
+    private long dateTransaction;
 
     private long dateRemboursement;
 
-    private double montantOperation;
+    private double montantTransaction;
 
     private int duree;
 
@@ -61,10 +61,10 @@ public class Transaction {
         this.cotisation = new Cotisation(transactionFx.getCotisationFx());
         this.membre = new Membre(transactionFx.getMembreFx());
         this.dateCreation = DateUtil.parseToLong(transactionFx.dateCreationProperty().getValue());
-        this.dateOperation = DateUtil.parseToLong(transactionFx.dateOperationProperty().getValue());
+        this.dateTransaction = DateUtil.parseToLong(transactionFx.dateTransactionProperty().getValue());
         this.dateDerniereModification = DateUtil.parseToLong(transactionFx.dateDerniereModificationProperty().getValue());
         this.dateRemboursement = DateUtil.parseToLong(transactionFx.dateRemboursementProperty().getValue());
-        this.montantOperation = transactionFx.getMontantOperation();
+        this.montantTransaction = transactionFx.getMontantTransaction();
         this.tauxInteret = transactionFx.getTauxInterets();
         this.montantAttendu = transactionFx.getMontantAttendu();
         this.montantAvance = transactionFx.getMontantAvance();

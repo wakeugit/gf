@@ -276,18 +276,18 @@ public class TontinePanelController {
         //Beneficier cotisation
         idCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getIdProperty().asObject());
         cotisationCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
         anneeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
         typeCol.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getTypeProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
 
 
         cotisations.setItems(listeTontinesBeneficiables);
 
         //Tontineur
         idTontineur.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        dateOperationTontineur.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantTontineur.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        dateOperationTontineur.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
+        montantTontineur.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
         nomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembreTontineur.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
 
@@ -296,7 +296,7 @@ public class TontinePanelController {
         //Beneficiare
         nomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembre21.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
-        dateOpBen.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        dateOpBen.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
         montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantPlaceProperty().asObject());
         montantRetenu.setCellValueFactory(cellData -> cellData.getValue().montantRetenuProperty().asObject());
         montantBeneficie.setCellValueFactory(cellData -> cellData.getValue().montantBeneficieProperty().asObject());
