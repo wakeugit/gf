@@ -51,6 +51,8 @@ public class Transaction {
 
     private Cotisation cotisation;
 
+    private long idTransactionOrigine;
+
 
 
     public Transaction() {
@@ -79,6 +81,7 @@ public class Transaction {
         this.avaliseur2 = transactionFx.getAvaliseur2();
         this.type = TypeTransaction.valueOf(transactionFx.getType());
         this.id = transactionFx.getId();
+        this.idTransactionOrigine = transactionFx.getId();
     }
 
 }

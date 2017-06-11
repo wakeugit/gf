@@ -157,7 +157,7 @@
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une tontine " />
                               <Label text="Date :" GridPane.columnIndex="2" />
                               <DatePicker fx:id="dateListePret" GridPane.columnIndex="3" />
-                              <Button fx:id="validerListePrets" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <Button fx:id="validerListePrets" onAction="#actionOnClickValiderListePret" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
@@ -226,7 +226,7 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="Choisir une cotisation" />
-                              <Button fx:id="validerSuiviPrets" mnemonicParsing="false" text="Valider" GridPane.columnIndex="3" />
+                              <Button fx:id="validerSuiviPrets" onAction="#actionOnClickValiderSuvi" mnemonicParsing="false" text="Valider" GridPane.columnIndex="3" />
                               <ComboBox fx:id="comboCotisationSuiviPret" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
@@ -295,7 +295,7 @@
                            </rowConstraints>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une cotisation" />
-                              <Button fx:id="validerRemb" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="3">
+                              <Button fx:id="validerRemb" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" onAction="#actionOnClickValiderRembourser" GridPane.columnIndex="3">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>

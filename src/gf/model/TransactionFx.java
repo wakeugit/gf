@@ -31,6 +31,7 @@ public class TransactionFx {
     private SimpleStringProperty avaliseur2;
     private SimpleStringProperty type;
     private final SimpleLongProperty id;
+    private final SimpleLongProperty idTransactionOrigine;
 
     public TransactionFx() {
         this(null);
@@ -60,6 +61,7 @@ public class TransactionFx {
         this.avaliseur2 = new SimpleStringProperty(transaction.getAvaliseur2());
         this.type = new SimpleStringProperty(transaction.getType().name());
         this.id = new SimpleLongProperty(transaction.getId());
+        this.idTransactionOrigine = new SimpleLongProperty(transaction.getIdTransactionOrigine());
     }
 
     public CotisationFx getCotisationFx() {

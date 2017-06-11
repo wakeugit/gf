@@ -57,6 +57,7 @@ public class FaireEmpruntController {
     private boolean validerClicked = false;
     private Membre mMembre;
     private Cotisation mCotisation;
+    private Membre mAvalyseur = null;
 
     public FaireEmpruntController() {
 
@@ -205,6 +206,18 @@ public class FaireEmpruntController {
 
 
 
+        avalyseur1.setButtonCell(new ListCell<InscriptionCotisationFx>() {
+            @Override
+            protected void updateItem(InscriptionCotisationFx item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText("");
+                } else {
+                    setText(item.getMembreFx().getNom() + " " + item.getMembreFx().getPrenom());
+                    mAvalyseur = new Membre(item.getMembreFx());
+                }
+            }
+        });
         
         avalyseur1.setConverter(new StringConverter<InscriptionCotisationFx>() {
             @Override
@@ -278,9 +291,13 @@ public class FaireEmpruntController {
     private void actionOnClickValider() {
         if (isInputValid()) {
             LocalDate localDate = dateOperation.getValue();
+            LocalDate dateR = dateRemb.getValue();
             Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 
             long dateOp = Date.from(instant).getTime();
+            instant = Instant.from(dateR.atStartOfDay(ZoneId.systemDefault()));
+            long dataRemb = Date.from(instant).getTime();
+
 
             double montantOp = Double.parseDouble(montantEmprunt.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
@@ -293,8 +310,18 @@ public class FaireEmpruntController {
             transaction.setCotisation(mCotisation);
             transaction.setDateOperation(dateOp);
             transaction.setMontantOperation(montantOp);
-
             transaction.setType(TypeTransaction.EMPRUNTER);
+            transaction.setDateRemboursement(dataRemb);
+            transaction.setAvaliseur1(mAvalyseur);
+            transaction.setMontantOperation(Double.valueOf(montantEmprunt.getText().trim()));
+            transaction.setMontantInteret(Double.valueOf(montantInterets.getText().trim()));
+            transaction.setTauxInteret(Double.valueOf(tauxInterets.getText().trim()));
+
+
+
+
+
+
             System.out.println("Transaction:" + transaction);
 
 

@@ -343,7 +343,7 @@ public class TontinePanelController {
 
                 Response<Transaction[]> response;
 
-                response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.TONTINER);
+                response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.TONTINER);
                 if (response.getBody() != null) {
                     listeDesTontineur.clear();
                     for (Transaction transaction : response.getBody()) {
@@ -370,7 +370,7 @@ public class TontinePanelController {
 
                 Response<Transaction[]> response;
 
-                response = BackendInterface.getTransactionByCotisationAndDateandType(mCotisation, dateRequest, TypeTransaction.BENEFICIER);
+                response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.BENEFICIER);
                 if (response.getBody() != null) {
                     listeDesBeneficiares.clear();
                     for (Transaction transaction : response.getBody()) {

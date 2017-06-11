@@ -24,6 +24,7 @@ public class FaireRemboursementController {
 
 
     public static Cotisation tmpCotisation;
+    public static TransactionFx initialTransaction;
     public static InscriptionCotisationFx tmpMembre;
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
@@ -57,30 +58,26 @@ public class FaireRemboursementController {
 
     public FaireRemboursementController() {
 
-        if (tmpCotisation != null) {
+        if (initialTransaction != null) {
             Response<InscriptionCotisation[]> response;
 
-            response = BackendInterface.getInscriptionCotisation(tmpCotisation);
+            response = BackendInterface.getInscriptionCotisation(new Cotisation(initialTransaction.getCotisationFx()));
             if (response.getBody() != null) {
-                if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
                     listeMembresInscrits.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        if (inscriptionCotisation.getMembre().getId()!=initialTransaction.getMembreFx().getId())
+                            continue;
                         listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
                     }
-                } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
-                    listeMembresInscrits.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }
-
             } else {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
             }
 
-            listeCotisation.add(new CotisationFx(tmpCotisation));
+            listeCotisation.add(initialTransaction.getCotisationFx());
         }
+
+
     }
 
     @FXML

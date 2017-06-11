@@ -494,7 +494,7 @@ public class BackendInterface {
     }
 
 
-    public static Response<Transaction[]> getTransactionByCotisationAndDateandType(Cotisation mCotisation, long date, TypeTransaction typeTransaction) {
+    public static Response<Transaction[]> getTransactionByCotisationAndDateAndType(Cotisation mCotisation, long date, TypeTransaction typeTransaction) {
         Response<Transaction[]> response = new Response<>();
         try {
             GetRequest request = null;
@@ -526,12 +526,80 @@ public class BackendInterface {
         }
     }
 
+    public static Response<Transaction[]> getTransactionByCotisationAndType(Cotisation mCotisation, TypeTransaction typeTransaction) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest request = null;
+
+            if (typeTransaction == TypeTransaction.EMPRUNTER) {
+                request = Unirest.get(APP_URL + "/transaction/prets/suivi/" + mCotisation.getId());
+            } else if (typeTransaction == TypeTransaction.REMBOURSER) {
+                request = Unirest.get(APP_URL + "/transaction/remboursement/suivi/" + mCotisation.getId());
+            }
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionRemboursementByCotisation(Cotisation mCotisation) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest request = Unirest.get(APP_URL + "/transaction/prets/remboursement/" + mCotisation.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
     public static Response<Transaction[]> getTransactionEpargneByCotisationAndMembre(Cotisation mCotisation, Membre membre) {
         Response<Transaction[]> response = new Response<>();
         try {
             GetRequest
 
                     request = Unirest.get(APP_URL + "/transaction/epargnes/" + mCotisation.getId() + "/" + membre.getId());
+
+            HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Transaction[]> getTransactionPretsByCotisationAndDate(Cotisation mCotisation, long date) {
+        Response<Transaction[]> response = new Response<>();
+        try {
+            GetRequest
+
+                    request = Unirest.get(APP_URL + "/transaction/prets/" + mCotisation.getId() + "/" + date);
 
             HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
 
