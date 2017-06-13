@@ -13,10 +13,10 @@ public class TransactionFx {
     private CotisationFx cotisationFx;
     private MembreFx membreFx;
     private final ObjectProperty<LocalDate> dateDerniereModification;
-    private final ObjectProperty<LocalDate> dateOperation;
+    private final ObjectProperty<LocalDate> dateTransaction;
     private final ObjectProperty<LocalDate> dateCreation;
     private final ObjectProperty<LocalDate> dateRemboursement;
-    private final SimpleDoubleProperty montantOperation;
+    private final SimpleDoubleProperty montantTransaction;
     private final SimpleDoubleProperty montantAttendu;
     private final SimpleDoubleProperty montantAvance;
     private final SimpleDoubleProperty tauxInterets;
@@ -45,8 +45,8 @@ public class TransactionFx {
         this.dateCreation = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateCreation())));
         this.dateDerniereModification = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateDerniereModification())));
         this.dateRemboursement = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateRemboursement())));
-        this.dateOperation = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateOperation())));
-        this.montantOperation = new SimpleDoubleProperty(transaction.getMontantOperation());
+        this.dateTransaction = new SimpleObjectProperty<>(DateUtil.parse(new Date(transaction.getDateTransaction())));
+        this.montantTransaction = new SimpleDoubleProperty(transaction.getMontantTransaction());
         this.tauxInterets = new SimpleDoubleProperty(transaction.getTauxInteret());
         this.montantInterets = new SimpleDoubleProperty(transaction.getMontantInteret());
         this.montantPenalites = new SimpleDoubleProperty(transaction.getMontantPenalites());
@@ -93,15 +93,15 @@ public class TransactionFx {
     }
 
     public LocalDate getDateOperation() {
-        return dateOperation.get();
+        return dateTransaction.get();
     }
 
-    public ObjectProperty<LocalDate> dateOperationProperty() {
-        return dateOperation;
+    public ObjectProperty<LocalDate> dateTransactionProperty() {
+        return dateTransaction;
     }
 
-    public void setDateOperation(LocalDate dateOperation) {
-        this.dateOperation.set(dateOperation);
+    public void setDateTransaction(LocalDate dateOperation) {
+        this.dateTransaction.set(dateOperation);
     }
 
     public LocalDate getDateCreation() {
@@ -128,16 +128,16 @@ public class TransactionFx {
         this.dateRemboursement.set(dateRemboursement);
     }
 
-    public double getMontantOperation() {
-        return montantOperation.get();
+    public double getMontantTransaction() {
+        return montantTransaction.get();
     }
 
-    public SimpleDoubleProperty montantOperationProperty() {
-        return montantOperation;
+    public SimpleDoubleProperty montantTransactionProperty() {
+        return montantTransaction;
     }
 
-    public void setMontantOperation(double montantOperation) {
-        this.montantOperation.set(montantOperation);
+    public void setMontantTransaction(double montantTransaction) {
+        this.montantTransaction.set(montantTransaction);
     }
 
     public double getMontantAttendu() {

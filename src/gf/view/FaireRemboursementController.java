@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +24,6 @@ public class FaireRemboursementController {
 
 
     public static Cotisation tmpCotisation;
-    public static TransactionFx initialTransaction;
     public static InscriptionCotisationFx tmpMembre;
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
@@ -45,10 +42,8 @@ public class FaireRemboursementController {
     private TextField reste;
     @FXML
     private TextField penalites;
-
-    NumberFormat numberFormat;
-
-    @FXML
+   
+   
     private Button valider;
 
     private int keyInArray = 0;
@@ -62,31 +57,30 @@ public class FaireRemboursementController {
 
     public FaireRemboursementController() {
 
-        if (initialTransaction != null) {
+        if (tmpCotisation != null) {
             Response<InscriptionCotisation[]> response;
 
-            response = BackendInterface.getInscriptionCotisation(new Cotisation(initialTransaction.getCotisationFx()));
+            response = BackendInterface.getInscriptionCotisation(tmpCotisation);
             if (response.getBody() != null) {
-                listeMembresInscrits.clear();
-                for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                    if (inscriptionCotisation.getMembre().getId() != initialTransaction.getMembreFx().getId())
-                        continue;
-                    listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    listeMembresInscrits.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
                 }
+
             } else {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
             }
 
-            listeCotisation.add(initialTransaction.getCotisationFx());
-
-            numberFormat = NumberFormat.getNumberInstance();
-            numberFormat.setMaximumFractionDigits(0);
-
-
+            listeCotisation.add(new CotisationFx(tmpCotisation));
         }
-
-
     }
 
     @FXML
@@ -195,11 +189,11 @@ public class FaireRemboursementController {
 
 
                 });
-
-
+        
+        
         cotisation.setItems(listeCotisation);
         nomMembre.setItems(listeMembresInscrits);
-
+       
         //set default value of combox cotisation
         if (tmpCotisation != null) {
             cotisation.getSelectionModel().select(new CotisationFx(tmpCotisation));
@@ -213,35 +207,6 @@ public class FaireRemboursementController {
         dateOperation.setValue(LocalDate.now());
 
         new ComboBoxAutoComplete<InscriptionCotisationFx>(nomMembre);
-
-        if (initialTransaction != null && montantAttendu != null) {
-
-            montantAttendu.setText(numberFormat.format(initialTransaction.getMontantOperation()));
-            reste.setText(numberFormat.format(initialTransaction.getMontantOperation()));
-            penalites.setText("0");
-
-            montantAttendu.setEditable(false);
-            reste.setEditable(false);
-        }
-
-        if (initialTransaction != null && montantAvance != null) {
-            montantAvance.textProperty().addListener((observable, oldValue, newValue) -> {
-
-                if (!newValue.isEmpty()) {
-                    double valueReste = Double.valueOf(initialTransaction.getMontantOperation()) - Double.valueOf(newValue);
-                    if (valueReste < 0) {
-                        valider.setDisable(true);
-                        reste.setText("Error");
-                    } else {
-                        valider.setDisable(false);
-                        reste.setText(numberFormat.format(valueReste));
-                    }
-                } else
-                    reste.setText(numberFormat.format(initialTransaction.getMontantOperation()));
-
-
-            });
-        }
     }
 
 
@@ -262,8 +227,7 @@ public class FaireRemboursementController {
 
             long dateOp = Date.from(instant).getTime();
 
-            double montantOp = Double.parseDouble(montantAvance.getCharacters().toString());
-            double montantPe = Double.parseDouble(penalites.getCharacters().toString());
+            double montantOp = Double.parseDouble(montantAttendu.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
 
             mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
@@ -274,10 +238,12 @@ public class FaireRemboursementController {
             transaction.setCotisation(mCotisation);
             transaction.setDateOperation(dateOp);
             transaction.setMontantOperation(montantOp);
-            transaction.setMontantPenalites(montantPe);
-            transaction.setType(TypeTransaction.REMBOURSER);
-            transaction.setIdTransactionOrigine(initialTransaction.getId());
 
+            if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                transaction.setType(TypeTransaction.TONTINER);
+            } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                transaction.setType(TypeTransaction.EPARGNER);
+            }
             System.out.println("Transaction:" + transaction);
 
 
@@ -287,11 +253,11 @@ public class FaireRemboursementController {
                 response = BackendInterface.createTransaction(transaction);
                 if (response.getBody() != null) {
 //                    pretsEtRembPanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a remboursé!");
+                    System.out.println(mMembre.getNom() + " a tontine!");
 
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.initOwner(dialogStage);
-                    alert.setTitle("Remboursement");
+                    alert.setTitle(response.getBody().getCotisation().getTypeCotisation().name());
                     alert.setHeaderText("Operation Effectuée !!");
                     alert.setContentText(mMembre.getNom());
 
@@ -332,13 +298,13 @@ public class FaireRemboursementController {
             errorMessage += "Date Inscription invalide!\n";
         }
 
-        if (montantAvance.getText() == null || montantAvance.getText().length() == 0 || montantAvance.getText().length() > 9) {
+        if (montantAttendu.getText() == null || montantAttendu.getText().length() == 0 || montantAttendu.getText().length() > 9) {
             errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                numberFormat.parse(montantAvance.getText());
-            } catch (ParseException e) {
+                Double.parseDouble(montantAttendu.getText());
+            } catch (NumberFormatException e) {
                 errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
         }
@@ -363,6 +329,7 @@ public class FaireRemboursementController {
         return pretsEtRembPanelController;
     }
 
+   
 
     public void setPretsEtRembPanelController(PretsEtRembPanelController pretsEtRembPanelController) {
         this.pretsEtRembPanelController = pretsEtRembPanelController;
