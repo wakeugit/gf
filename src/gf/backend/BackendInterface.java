@@ -534,7 +534,7 @@ public class BackendInterface {
             if (typeTransaction == TypeTransaction.EMPRUNTER) {
                 request = Unirest.get(APP_URL + "/transaction/prets/suivi/" + mCotisation.getId());
             } else if (typeTransaction == TypeTransaction.REMBOURSER) {
-                request = Unirest.get(APP_URL + "/transaction/remboursement/suivi/" + mCotisation.getId());
+                request = Unirest.get(APP_URL + "/transaction/remboursements/suivi/" + mCotisation.getId());
             }
 
             HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
@@ -552,7 +552,7 @@ public class BackendInterface {
         }
     }
 
-    public static Response<Transaction[]> getTransactionRemboursementByCotisation(Cotisation mCotisation) {
+    public static Response<Transaction[]> getTransactionsToRemboursementByCotisation(Cotisation mCotisation) {
         Response<Transaction[]> response = new Response<>();
         try {
             GetRequest request = Unirest.get(APP_URL + "/transaction/prets/remboursement/" + mCotisation.getId());

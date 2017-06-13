@@ -145,10 +145,13 @@ public class PretsEtRembPanelController {
     private ComboBox<CotisationFx> comboCotisationListePret;
     @FXML
     private DatePicker dateListePret;
+
     @FXML
     private ComboBox<CotisationFx> comboCotisationSuiviPret;
     @FXML
     private ComboBox<CotisationFx> comboCotisationRemb;
+    @FXML
+    private DatePicker dateRemboursement;
     @FXML
     private ComboBox<CotisationFx> comboCotisationListeRemb;
     @FXML
@@ -300,22 +303,45 @@ public class PretsEtRembPanelController {
 
                 comboCotisationRemb.setItems(listeCotisations);
 
-                if (comboCotisationRemb != null) {
-                    comboCotisationRemb.setButtonCell(new ListCell<CotisationFx>() {
-                        @Override
-                        protected void updateItem(CotisationFx item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (empty) {
-                                setText("");
-                            } else {
-                                setText(item.getnomCotisation() + " " + item.getAnnee());
-                                mCotisation = new Cotisation(item);
-                            }
-                        }
-                    });
 
-                    comboCotisationRemb.setItems(listeCotisations);
-                }
+            }
+
+            if (comboCotisationListeRemb != null) {
+                comboCotisationListeRemb.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
+
+                comboCotisationListeRemb.setItems(listeCotisations);
+
+
+            }
+
+            if (comboCotisationSuiviRemb != null) {
+                comboCotisationSuiviRemb.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
+
+                comboCotisationSuiviRemb.setItems(listeCotisations);
+
+
             }
 
             idInscription.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
@@ -728,10 +754,23 @@ public class PretsEtRembPanelController {
     public void actionOnClickValiderRembourser() {
         if (mCotisation != null) {
 
-            Response<Transaction[]> response;
+            Response<Transaction[]> response = null;
 
-            response = BackendInterface.getTransactionByCotisationAndType(mCotisation, TypeTransaction.EMPRUNTER);
-            if (response.getBody() != null) {
+
+            if (dateRemboursement != null && dateRemboursement.getValue() != null) {
+                LocalDate dateFilter = dateRemboursement.getValue();
+                dateRequest = DateUtil.parseToLong(dateFilter);
+                System.out.println("date request=" + dateRequest);
+
+                if (dateRequest != -1)
+                    response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.EMPRUNTER);
+
+            } else {
+                response = BackendInterface.getTransactionsToRemboursementByCotisation(mCotisation);
+
+            }
+
+            if (response != null && response.getBody() != null) {
                 listePrets.clear();
                 for (Transaction transaction : response.getBody()) {
                     listePrets.add(new TransactionFx(transaction));
@@ -739,8 +778,61 @@ public class PretsEtRembPanelController {
 
             } else {
                 // Todo Display error message
+                System.out.println("An error occured - ValiderRembourser");
+            }
+
+
+        }
+
+
+    }
+
+    public void actionOnClickValiderListeRemboursement() {
+        if (mCotisation != null && dateListeRemb != null) {
+            LocalDate dateFilter = dateListeRemb.getValue();
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
+
+
+            if (dateRequest != -1) {
+
+                Response<Transaction[]> response;
+
+                response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.REMBOURSER);
+                if (response.getBody() != null) {
+                    listeRemboursements.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeRemboursements.add(new TransactionFx(transaction));
+                    }
+
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
+            }
+        }
+
+
+    }
+
+    public void actionOnClickValiderSuiviRemboursement() {
+        if (mCotisation != null) {
+
+            Response<Transaction[]> response;
+
+            response = BackendInterface.getTransactionByCotisationAndType(mCotisation, TypeTransaction.REMBOURSER);
+            if (response.getBody() != null) {
+                suiviRemboursements.clear();
+                for (Transaction transaction : response.getBody()) {
+                    suiviRemboursements.add(new TransactionFx(transaction));
+                }
+
+            } else {
+                // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
             }
         }
+
+
     }
 }
