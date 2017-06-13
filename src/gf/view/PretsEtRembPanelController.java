@@ -698,8 +698,8 @@ public class PretsEtRembPanelController {
             Response<Transaction[]> response = null;
 
 
-            if (dateRemboursement != null && dateRemboursement.getValue() != null) {
-                LocalDate dateFilter = dateRemboursement.getValue();
+            if (dateDuPret != null && dateDuPret.getValue() != null) {
+                LocalDate dateFilter = dateDuPret.getValue();
                 dateRequest = DateUtil.parseToLong(dateFilter);
                 System.out.println("date request=" + dateRequest);
 
