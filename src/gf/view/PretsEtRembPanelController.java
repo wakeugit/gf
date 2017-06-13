@@ -3,6 +3,7 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -154,7 +155,9 @@ public class PretsEtRembPanelController {
     private DatePicker dateListeRemb;
     @FXML
     private ComboBox<CotisationFx> comboCotisationSuiviRemb;
-    
+    @FXML
+    private DatePicker dateRemboursement;
+
     @FXML
     private Button validerPret;
     @FXML
@@ -167,7 +170,8 @@ public class PretsEtRembPanelController {
     private Button validerListeRemb;
     @FXML
     private Button validerSuiviRemb;
-    
+
+    private long dateRequest;
 
     private Cotisation mCotisation;
 
@@ -193,61 +197,152 @@ public class PretsEtRembPanelController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-    	
-    	if(comboCotisationPret != null){
-    		comboCotisationPret.setButtonCell( new ListCell<CotisationFx>() {
-            @Override
-            protected void updateItem(CotisationFx item, boolean empty) {
-                super.updateItem(item, empty); 
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(item.getnomCotisation() + " " + item.getAnnee());
-                    mCotisation = new Cotisation(item);
+
+        if (comboCotisationPret != null) {
+            comboCotisationPret.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
                 }
+            });
+
+            comboCotisationPret.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+
+            comboCotisationPret.setConverter(new StringConverter<CotisationFx>() {
+                @Override
+                public String toString(CotisationFx item) {
+                    if (item == null) {
+                        return null;
+                    } else {
+                        return item.getnomCotisation() + " " + item.getAnnee();
+                    }
+                }
+
+                @Override
+                public CotisationFx fromString(String item) {
+                    return null;
+                }
+            });
+            comboCotisationPret.setItems(listeCotisations);
+        }
+
+        if (comboCotisationListePret != null) {
+            comboCotisationListePret.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
+            });
+
+            comboCotisationListePret.setItems(listeCotisations);
+
+            if (comboCotisationSuiviPret != null) {
+                comboCotisationSuiviPret.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
+
+                comboCotisationSuiviPret.setItems(listeCotisations);
             }
-        });
-    	
-    	comboCotisationPret.setCellFactory( 
-    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-          
 
-			@Override
-			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-	                    @Override
-	                    protected void updateItem(CotisationFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getnomCotisation() + " " + item.getAnnee());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
+            if (comboCotisationRemb != null) {
+                comboCotisationRemb.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
 
-			
-        });
-    	
-    	comboCotisationPret.setConverter(new StringConverter<CotisationFx>() {
-            @Override
-            public String toString(CotisationFx item) {
-              if (item == null){
-                return null;
-              } else {
-                return item.getnomCotisation() + " " + item.getAnnee();
-              }
+                comboCotisationRemb.setItems(listeCotisations);
+
+
             }
 
-            @Override
-            public CotisationFx fromString(String item) {
-              return null;
-          }
-        });
-    	comboCotisationPret.setItems(listeCotisations);
-    	}
+            if (comboCotisationListeRemb != null) {
+                comboCotisationListeRemb.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
+
+                comboCotisationListeRemb.setItems(listeCotisations);
+
+
+            }
+
+            if (comboCotisationSuiviRemb != null) {
+                comboCotisationSuiviRemb.setButtonCell(new ListCell<CotisationFx>() {
+                    @Override
+                    protected void updateItem(CotisationFx item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText("");
+                        } else {
+                            setText(item.getnomCotisation() + " " + item.getAnnee());
+                            mCotisation = new Cotisation(item);
+                        }
+                    }
+                });
+
+                comboCotisationSuiviRemb.setItems(listeCotisations);
+
+
+            }
+        }
 
         idInscription.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomInscription.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -261,16 +356,16 @@ public class PretsEtRembPanelController {
         prenomPret.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneePret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        datePret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantPret.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        datePret.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
+        montantPret.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
         dateRembPret.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxPret.setCellValueFactory(cellData -> cellData.getValue().tauxInteretsProperty().asObject());
         avaliseurPret.setCellValueFactory(cellData -> cellData.getValue().getAvaliseur1().nomProperty());
 
-        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        datePretSuiviPret.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
         nomCotisationSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviPret.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        montantPlace.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
 
 
         idCol1.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
@@ -278,15 +373,27 @@ public class PretsEtRembPanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         nomCotisationCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeCol1.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        dateCol.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
+        montantCol.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
         dateRembCol.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
         tauxCol.setCellValueFactory(cellData -> cellData.getValue().tauxInteretsProperty().asObject());
 
-        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
+        dateRembSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
         nomCotisationSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
         anneeSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
-        montantSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        montantSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
+        penalitesSuiviRemb.setCellValueFactory(cellData -> cellData.getValue().montantPenalitesProperty().asObject());
+
+
+        idRemb.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        nomRemb.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
+        prenomRemb.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
+        nomCotisationRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getNomCotisation());
+        anneeRemb.setCellValueFactory(cellData -> cellData.getValue().getCotisationFx().getAnneeProperty());
+        dateRembRemb.setCellValueFactory(cellData -> cellData.getValue().dateTransactionProperty());
+        montantRemb.setCellValueFactory(cellData -> cellData.getValue().montantTransactionProperty().asObject());
+        montantAvRemb.setCellValueFactory(cellData -> cellData.getValue().montantAvanceProperty().asObject());
+        typeRemb.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         penalitesRemb.setCellValueFactory(cellData -> cellData.getValue().montantPenalitesProperty().asObject());
         
         //cotisationPret;cotisationListePret;dateListePret;cotisationSuiviPret;cotisationRemb; cotisationListeRemb;dateListeRemb; cotisationSuiviRemb;
@@ -358,11 +465,12 @@ public class PretsEtRembPanelController {
     private void actionOnclickPreter() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
-        	
+            FaireEmpruntController.tmpCotisation = mCotisation;
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnEmprunt.fxml"));
             BorderPane page = (BorderPane) loader.load();
-            
+
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Faire un emprunt");
@@ -463,34 +571,50 @@ public class PretsEtRembPanelController {
 
     @FXML
     private void actionOnclickRembourser() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnRemb.fxml"));
-            BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Faire remboursement");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+        int selectedIndex = pretsTable1.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            try {
+                FaireRemboursementController.initialTransaction = pretsTable1.getItems().get(selectedIndex);
 
-            // Set the Member into the controller.
-            FaireRemboursementController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setPretsEtRembPanelController(this);
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnRemb.fxml"));
+                BorderPane page = (BorderPane) loader.load();
 
-            // Show the dialog and wait until the user closes it
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Faire remboursement");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
 
-            dialogStage.showAndWait();
+                // Set the Member into the controller.
+                FaireRemboursementController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setPretsEtRembPanelController(this);
 
-            // return controller.isOkClicked();
+                // Show the dialog and wait until the user closes it
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                dialogStage.showAndWait();
 
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Transaction Selected");
+            alert.setContentText("Please select a transaction in the table.");
+
+            alert.showAndWait();
         }
     }
 
@@ -565,6 +689,143 @@ public class PretsEtRembPanelController {
         }
     }
 
+    @FXML
+    public void actionOnClickValiderRembourser() {
+        if (mCotisation != null) {
+
+            Response<Transaction[]> response = null;
+
+
+            if (dateRemboursement != null && dateRemboursement.getValue() != null) {
+                LocalDate dateFilter = dateRemboursement.getValue();
+                dateRequest = DateUtil.parseToLong(dateFilter);
+                System.out.println("date request=" + dateRequest);
+
+                if (dateRequest != -1)
+                    response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.EMPRUNTER);
+
+            } else {
+                response = BackendInterface.getTransactionsToRemboursementByCotisation(mCotisation);
+
+            }
+
+            if (response != null && response.getBody() != null) {
+                listePrets.clear();
+                for (Transaction transaction : response.getBody()) {
+                    listePrets.add(new TransactionFx(transaction));
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderRembourser");
+            }
+
+
+        }
+
+
+    }
+
+    @FXML
+    public void actionOnClickValiderListeRemboursement() {
+        if (mCotisation != null && dateListeRemb != null) {
+            LocalDate dateFilter = dateListeRemb.getValue();
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
+
+
+            if (dateRequest != -1) {
+
+                Response<Transaction[]> response;
+
+                response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.REMBOURSER);
+                if (response.getBody() != null) {
+                    listeRemboursements.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listeRemboursements.add(new TransactionFx(transaction));
+                    }
+
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
+            }
+        }
+
+
+    }
+
+    @FXML
+    public void actionOnClickValiderSuiviRemboursement() {
+        if (mCotisation != null) {
+
+            Response<Transaction[]> response;
+
+            response = BackendInterface.getTransactionByCotisationAndType(mCotisation, TypeTransaction.REMBOURSER);
+            if (response.getBody() != null) {
+                suiviRemboursements.clear();
+                for (Transaction transaction : response.getBody()) {
+                    suiviRemboursements.add(new TransactionFx(transaction));
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+
+    @FXML
+    public void actionOnClickValiderSuvi() {
+        if (mCotisation != null) {
+
+            Response<Transaction[]> response;
+
+            response = BackendInterface.getTransactionByCotisationAndType(mCotisation, TypeTransaction.EMPRUNTER);
+            if (response.getBody() != null) {
+                suiviPrets.clear();
+                for (Transaction transaction : response.getBody()) {
+                    suiviPrets.add(new TransactionFx(transaction));
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+    }
+
+    @FXML
+    public void actionOnClickValiderListePret() {
+        if (mCotisation != null && dateListePret != null) {
+            LocalDate dateFilter = dateListePret.getValue();
+            dateRequest = DateUtil.parseToLong(dateFilter);
+            System.out.println("date request=" + dateRequest);
+
+            // todo Update Combo Remboursement accordingly
+//            comboCotisationRemb.setSelectionModel();
+
+            if (dateRequest != -1) {
+
+                Response<Transaction[]> response;
+
+                response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.EMPRUNTER);
+                if (response.getBody() != null) {
+                    listePrets.clear();
+                    for (Transaction transaction : response.getBody()) {
+                        listePrets.add(new TransactionFx(transaction));
+                    }
+
+                } else {
+                    // Todo Display error message
+                    System.out.println("An error occured - ValiderCotisation");
+                }
+            }
+        }
+    }
+
     public MainAppGF getMainAppGF() {
         return mainAppGF;
     }
@@ -580,5 +841,6 @@ public class PretsEtRembPanelController {
     public ObservableList<InscriptionCotisationFx> getListMembreInscritsCotisation() {
         return listeInscritsCotisation;
     }
+
 
 }
