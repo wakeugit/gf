@@ -157,7 +157,7 @@
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une tontine " />
                               <Label text="Date :" GridPane.columnIndex="2" />
                               <DatePicker fx:id="dateListePret" GridPane.columnIndex="3" />
-                              <Button fx:id="validerListePrets" onAction="#actionOnClickValiderListePret" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
+                              <Button fx:id="validerListePrets" mnemonicParsing="false" onAction="#actionOnClickValiderListePret" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="4">
                                  <GridPane.margin>
                                     <Insets left="20.0" />
                                  </GridPane.margin>
@@ -226,7 +226,7 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="Choisir une cotisation" />
-                              <Button fx:id="validerSuiviPrets" onAction="#actionOnClickValiderSuvi" mnemonicParsing="false" text="Valider" GridPane.columnIndex="3" />
+                              <Button fx:id="validerSuiviPrets" mnemonicParsing="false" onAction="#actionOnClickValiderSuvi" text="Valider" GridPane.columnIndex="3" />
                               <ComboBox fx:id="comboCotisationSuiviPret" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
@@ -288,17 +288,19 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="144.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="148.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="53.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="72.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="127.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="89.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une cotisation" />
-                              <Button fx:id="validerRemb" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Valider" onAction="#actionOnClickValiderRembourser" GridPane.columnIndex="3">
-                                 <DatePicker fx:id="dateRemboursement" GridPane.columnIndex="3"/>
+                              <Button fx:id="validerRemb" mnemonicParsing="false" onAction="#actionOnClickValiderRembourser" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="5">
+                                 <DatePicker fx:id="dateRemboursement" GridPane.columnIndex="3" />
                                  <GridPane.margin>
-                                    <Insets left="20.0" />
+                                    <Insets left="10.0" />
                                  </GridPane.margin>
                               </Button>
                               <ComboBox fx:id="comboCotisationRemb" prefWidth="150.0" GridPane.columnIndex="1" />
@@ -307,9 +309,11 @@
                                     <Image url="@default.gif" />
                                  </image>
                               </ImageView>
+                              <DatePicker fx:id="dateDuPret" prefHeight="39.0" prefWidth="123.0" GridPane.columnIndex="4" />
+                              <Label text="Date Prêt" GridPane.columnIndex="3" />
                            </children>
                            <BorderPane.margin>
-                              <Insets left="180.0" right="220.0" top="10.0" />
+                              <Insets left="80.0" right="100.0" top="10.0" />
                            </BorderPane.margin>
                         </GridPane>
                      </top>
@@ -382,8 +386,7 @@
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date" GridPane.columnIndex="3" />
                               <DatePicker fx:id="dateListeRemb" prefHeight="39.0" prefWidth="160.0" GridPane.columnIndex="4" />
-                              <Button fx:id="validerListeRemb" mnemonicParsing="false" text="Valider"
-                                      onAction="#actionOnClickValiderListeRemboursement" GridPane.columnIndex="5"/>
+                              <Button fx:id="validerListeRemb" mnemonicParsing="false" onAction="#actionOnClickValiderListeRemboursement" text="Valider" GridPane.columnIndex="5" />
                               <ComboBox fx:id="comboCotisationListeRemb" prefHeight="39.0" prefWidth="135.0" GridPane.columnIndex="1" />
                               <Label text="Choisir une cotisation " />
                               <ImageView fitHeight="36.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
@@ -455,8 +458,7 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="152.0" text="Choisir une cotisation" />
-                              <Button fx:id="validerSuiviRemb" mnemonicParsing="false" text="Valider"
-                                      onAction="#actionOnClickValiderSuiviRemboursement" GridPane.columnIndex="3"/>
+                              <Button fx:id="validerSuiviRemb" mnemonicParsing="false" onAction="#actionOnClickValiderSuiviRemboursement" text="Valider" GridPane.columnIndex="3" />
                               <ComboBox fx:id="comboCotisationSuiviRemb" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>

@@ -157,6 +157,8 @@ public class PretsEtRembPanelController {
     private ComboBox<CotisationFx> comboCotisationSuiviRemb;
     @FXML
     private DatePicker dateRemboursement;
+    @FXML
+    private DatePicker dateDuPret;
 
     @FXML
     private Button validerPret;
