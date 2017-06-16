@@ -1,7 +1,8 @@
 package gf.view;
 
-import gf.model.Sanction;
-import gf.model.SanctionFx;
+import gf.model.Service;
+import gf.model.ServiceFx;
+import gf.model.TypeService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,7 +18,8 @@ public class SanctionDetailsController {
 
 	private SanctionWindowController sanctionWindowController;
 	private Stage dialogStage;
-    private SanctionFx sanctionFx;
+    //private SanctionFx serviceFx;
+	private ServiceFx serviceFx;
     private int keyInArray=0;
     private boolean validerClicked = false;
     
@@ -40,13 +42,13 @@ public class SanctionDetailsController {
 	@FXML
 	private void actionOnClickValider(){
 		  if (isInputValid()) {
-		sanctionFx = new SanctionFx(new Sanction(motif.getText()));
+		serviceFx = new ServiceFx(new Service(motif.getText(), TypeService.SANCTION));
 		
 		
 		if (valider.getText().equals("Valider")) {
-			sanctionWindowController.getListeSanctions().add(sanctionFx); 
+			sanctionWindowController.getListeSanctions().add(serviceFx); 
 		} else {
-			sanctionWindowController.getListeSanctions().set(keyInArray, sanctionFx);
+			sanctionWindowController.getListeSanctions().set(keyInArray, serviceFx);
 		}
 		 validerClicked = true;
       dialogStage.close();
@@ -89,14 +91,14 @@ public class SanctionDetailsController {
 		this.sanctionWindowController = sanctionWindowController;
 	}
 
-	public SanctionFx getSanction() {
-		return sanctionFx;
+	public ServiceFx getService() {
+		return serviceFx;
 	}
 
-	public void setSanction(SanctionFx SanctionFx) {
-		this.sanctionFx = SanctionFx;
+	public void setService(ServiceFx serviceFx) {
+		this.serviceFx = serviceFx;
 		valider.setText("Modifier");
-		motif.setText(SanctionFx.getMotif());
+		motif.setText(serviceFx.getMotif());
 	}
 
 	public int getKeyInArray() {

@@ -1,7 +1,8 @@
 package gf.view;
 
-import gf.model.Sanction;
-import gf.model.SanctionFx;
+import gf.model.Service;
+import gf.model.ServiceFx;
+import gf.model.TypeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,16 +20,16 @@ import java.io.IOException;
 
 public class SanctionWindowController {
 
-    private ObservableList<SanctionFx> listeSanctions = FXCollections.observableArrayList();
+    private ObservableList<ServiceFx> listeSanctions = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<SanctionFx> sanctionTable;
+    private TableView<ServiceFx> ServiceTable;
     @FXML
-    private TableColumn<SanctionFx, String> motif;
+    private TableColumn<ServiceFx, String> motif;
 
     public SanctionWindowController() {
-        listeSanctions.add(new SanctionFx(new Sanction("Absence")));
-        listeSanctions.add(new SanctionFx(new Sanction("Retard")));
+        listeSanctions.add(new ServiceFx(new Service("Absence", TypeService.SANCTION)));
+        listeSanctions.add(new ServiceFx(new Service("Retard", TypeService.SANCTION)));
     }
 
     @FXML
@@ -37,12 +38,12 @@ public class SanctionWindowController {
 
         motif.setCellValueFactory(cellData -> cellData.getValue().getMotifProperty());
 
-        sanctionTable.setItems(listeSanctions);
+        ServiceTable.setItems(listeSanctions);
 
     }
 
     @FXML
-    private void showSanctionsDetails() {
+    private void showServicesDetails() {
 
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -52,7 +53,7 @@ public class SanctionWindowController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle sanction");
+            dialogStage.setTitle("Nouvelle Service");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
@@ -78,11 +79,11 @@ public class SanctionWindowController {
     @FXML
     private void showSanctionsDetailsModifier() {
 
-        int selectedIndex = sanctionTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = ServiceTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            SanctionFx SanctionFx = sanctionTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeSanctions.indexOf(SanctionFx);
+            ServiceFx ServiceFx = ServiceTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeSanctions.indexOf(ServiceFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -91,7 +92,7 @@ public class SanctionWindowController {
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier sanction");
+                dialogStage.setTitle("Modifier Sanction");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
@@ -99,7 +100,7 @@ public class SanctionWindowController {
 
                 SanctionDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setSanction(SanctionFx);
+                controller.setService(ServiceFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setSanctionWindowController(this);
 
@@ -127,11 +128,11 @@ public class SanctionWindowController {
     }
 
 
-    public ObservableList<SanctionFx> getListeSanctions() {
+    public ObservableList<ServiceFx> getListeSanctions() {
         return listeSanctions;
     }
 
-    public void setListeSanctions(ObservableList<SanctionFx> listeSanctions) {
+    public void setListeSanctions(ObservableList<ServiceFx> listeSanctions) {
         this.listeSanctions = listeSanctions;
     }
 
