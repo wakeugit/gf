@@ -164,6 +164,32 @@ public class BackendInterface {
         }
     }
 
+    public static Response<Service> createService(Service service) {
+        initRequest();
+        Response<Service> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/service/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(service)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Service created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Service.class);
+
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
 
     public static Response<Annee> updateAnnee(Annee annee) {
         initRequest();
@@ -191,10 +217,50 @@ public class BackendInterface {
         }
     }
 
+
+    public static Response<Service> updateService(Service annee) {
+        initRequest();
+        Response<Service> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/service/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(annee)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Service created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Service.class);
+
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
     public static void deleteAnnee(long anneeId) {
         initRequest();
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/cotisation/" + anneeId)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteService(long anneeId) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/service/" + anneeId)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .asJson();
