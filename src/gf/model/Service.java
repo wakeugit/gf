@@ -14,9 +14,7 @@ public class Service {
 	private String motif="";
 	private long id = -1;
 	private TypeService typeService;
-	LocalDate localDate = LocalDate.now();
-	Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-	private long dateCreation=Date.from(instant).getTime();
+	private long dateCreation=-1;
 	
 
 		

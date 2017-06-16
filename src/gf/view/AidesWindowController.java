@@ -2,8 +2,9 @@ package gf.view;
 
 import java.io.IOException;
 
-import gf.model.Aide;
-import gf.model.AideFx;
+import gf.model.Service;
+import gf.model.ServiceFx;
+import gf.model.TypeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,16 +20,16 @@ import javafx.stage.Stage;
 
 public class AidesWindowController {
 
-    private ObservableList<AideFx> listeAides = FXCollections.observableArrayList();
+    private ObservableList<ServiceFx> listeAides = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<AideFx> aideTable;
+    private TableView<ServiceFx> aideTable;
     @FXML
-    private TableColumn<AideFx, String> motif;
+    private TableColumn<ServiceFx, String> motif;
 
     public AidesWindowController() {
-        listeAides.add(new AideFx(new Aide("Mort")));
-        listeAides.add(new AideFx(new Aide("Naissance")));
+        listeAides.add(new ServiceFx(new Service("Mort", TypeService.AIDE)));
+        listeAides.add(new ServiceFx(new Service("Naissance", TypeService.AIDE)));
     }
 
     @FXML
@@ -52,7 +53,7 @@ public class AidesWindowController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle AideFx");
+            dialogStage.setTitle("Nouvelle ServiceFx");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
@@ -81,8 +82,8 @@ public class AidesWindowController {
         int selectedIndex = aideTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            AideFx aideFx = aideTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeAides.indexOf(aideFx);
+            ServiceFx ServiceFx = aideTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAides.indexOf(ServiceFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
@@ -91,7 +92,7 @@ public class AidesWindowController {
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier AideFx");
+                dialogStage.setTitle("Modifier ServiceFx");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
@@ -99,7 +100,7 @@ public class AidesWindowController {
 
                 AideDetailsController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setAide(aideFx);
+                controller.setService(ServiceFx);
                 controller.setKeyInArray(keyInArrayList);
                 controller.setAideWindowController(this);
 
@@ -125,11 +126,11 @@ public class AidesWindowController {
     }
 
 
-    public ObservableList<AideFx> getListeAides() {
+    public ObservableList<ServiceFx> getListeAides() {
         return listeAides;
     }
 
-    public void setListeAides(ObservableList<AideFx> listeAides) {
+    public void setListeAides(ObservableList<ServiceFx> listeAides) {
         this.listeAides = listeAides;
     }
 
