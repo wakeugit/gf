@@ -303,8 +303,8 @@ public class MainAppGF extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainAppGF.class.getResource("aidesPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
-//            MembrePanelController controller = loader.getController();
-//            controller.setMainAppGF(this);
+            AidesPanelController controller = loader.getController();
+            controller.setMainAppGF(this);
             rootLayout.setCenter(panel);
         } catch (Exception e) {
             e.printStackTrace();

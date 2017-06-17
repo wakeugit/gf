@@ -343,7 +343,7 @@ public class AidesPanelController {
 
 
     @FXML
-    private void actionOnClickValiderCotisation() {
+    private void actionOnClickValiderDonnerAide() {
 
         if (mCotisation != null) {
             Response<InscriptionCotisation[]> response;
@@ -372,7 +372,65 @@ public class AidesPanelController {
     }
 
     @FXML
-    private void actionOnClickValiderAnnuelle() {
+    private void actionOnClickValiderListeAide() {
+
+        if (mCotisation != null) {
+            Response<InscriptionCotisation[]> response;
+
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+    
+    @FXML
+    private void actionOnClickValiderRembourserAide() {
+
+        if (mCotisation != null) {
+            Response<InscriptionCotisation[]> response;
+
+            response = BackendInterface.getInscriptionCotisation(mCotisation);
+            if (response.getBody() != null) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    listeInscritsCotisation.clear();
+                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
+                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
+                    }
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+    
+    @FXML
+    private void actionOnClickValiderEtatAides() {
 
         if (mCotisation != null) {
             Response<InscriptionAnnuelle[]> response;
@@ -397,26 +455,26 @@ public class AidesPanelController {
     }
 
     @FXML
-    private void actionOnclickNouvelleInscptionAnnuelle() {
+    private void actionOnclickNouvelleAide() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
         	
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
             BorderPane page = (BorderPane) loader.load();
             
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
+            dialogStage.setTitle("Effectuer une aide");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            InscriptionAnnuelleController controller = loader.getController();
+            EffectuerServiceController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            //controller.setInscriptionsPanelController(this);
+            controller.setAidePanelController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -431,7 +489,7 @@ public class AidesPanelController {
     }
 
     @FXML
-    private void actionOnclickModifierInscptionAnnuelle() {
+    private void actionOnclickModifierAide() {
 
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -440,7 +498,7 @@ public class AidesPanelController {
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
@@ -482,7 +540,7 @@ public class AidesPanelController {
 
 
     @FXML
-    private void actionOnclickSupprimerInscptionAnnuelle() {
+    private void actionOnclickSupprimerAide() {
 
        /* int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -504,7 +562,7 @@ public class AidesPanelController {
     
 
     @FXML
-    private void actionOnclickNouvelleInscptionCotisation() {
+    private void actionOnclickNouveauRemboursementAide() {
        /* try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -537,7 +595,7 @@ public class AidesPanelController {
     }
 
     @FXML
-    private void actionOnclickModifierInscptionCotisation() {
+    private void actionOnclickModifierRemboursementAide() {
 
         /*int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -588,7 +646,7 @@ public class AidesPanelController {
 
 
     @FXML
-    private void actionOnclickSupprimerInscptionCotisation() {
+    private void actionOnclickSupprimerRemboursementAide() {
 
        /* int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {

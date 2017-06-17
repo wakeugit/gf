@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EffectuerCotisationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EffectuerServiceController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="297.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -28,7 +28,7 @@
             <Label text="Nom membre" />
             <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
             <Label text="Aide" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cotisation" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="service" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date" GridPane.rowIndex="2" />
             <TextField fx:id="montant" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Montant" GridPane.rowIndex="3" />
