@@ -1,10 +1,5 @@
 package gf.model;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -13,28 +8,30 @@ public class Service {
 
 	private String motif="";
 	private long id = -1;
-	private TypeService typeService;
+	private TypeService type;
 	private long dateCreation=-1;
-	
+	private long dateDerniereModification=-1;
+
 
 		
-	public Service(String motif,  TypeService typeService){
+	public Service(String motif,  TypeService type){
 		this.motif=motif;
-		this.typeService=typeService;
+		this.type = type;
 	}
 
-	public Service(long id, String motif, TypeService typeService, long dateCreation){
+	public Service(long id, String motif, TypeService type, long dateCreation){
 		this.id=id;
 		this.motif=motif;
-		this.typeService=typeService;
+		this.type = type;
 		this.dateCreation=dateCreation;
 	}
 	
 	public Service(ServiceFx serviceFx) {
 		motif = serviceFx.getMotif();
 		id = serviceFx.getId();
-		typeService=TypeService.valueOf(serviceFx.getTypeService());
+		type =TypeService.valueOf(serviceFx.getTypeService());
 		dateCreation=serviceFx.getDateCreation();
+		dateDerniereModification=serviceFx.getDateDerniereModification();
 	}
 	
 	

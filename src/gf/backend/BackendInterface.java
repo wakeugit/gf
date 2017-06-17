@@ -336,6 +336,31 @@ public class BackendInterface {
         return response;
     }
 
+
+    public static Response<Service[]> getServiceByType(TypeService typeService) {
+        initRequest();
+        Response<Service[]> response = new Response<>();
+        try {
+            HttpResponse<Service[]> bookResponse = null;
+
+            if (typeService == TypeService.AIDE)
+                bookResponse = Unirest.get(APP_URL + "/service/aide").asObject(Service[].class);
+            else if (typeService == TypeService.SANCTION)
+                bookResponse = Unirest.get(APP_URL + "/service/sanction").asObject(Service[].class);
+
+            if (bookResponse.getStatus() == 200) {
+                response.setBody(bookResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+            }
+
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+        return response;
+    }
+
     public static Response<Transaction[]> getWinneableTontinesByDate(long date) {
         initRequest();
         Response<Transaction[]> response = new Response<>();

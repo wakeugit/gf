@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Service;
 import gf.model.ServiceFx;
 import gf.model.TypeService;
@@ -23,13 +25,20 @@ public class SanctionWindowController {
     private ObservableList<ServiceFx> listeSanctions = FXCollections.observableArrayList();
 
     @FXML
-    private TableView<ServiceFx> ServiceTable;
+    private TableView<ServiceFx> sanctionTable;
     @FXML
     private TableColumn<ServiceFx, String> motif;
 
     public SanctionWindowController() {
-        listeSanctions.add(new ServiceFx(new Service("Absence", TypeService.SANCTION)));
-        listeSanctions.add(new ServiceFx(new Service("Retard", TypeService.SANCTION)));
+        Response<Service[]> response = BackendInterface.getServiceByType(TypeService.SANCTION);
+        if (response.getBody() != null) {
+            for (Service service : response.getBody()) {
+                listeSanctions.add(new ServiceFx(service));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Service");
+        }
     }
 
     @FXML
@@ -38,12 +47,12 @@ public class SanctionWindowController {
 
         motif.setCellValueFactory(cellData -> cellData.getValue().getMotifProperty());
 
-        ServiceTable.setItems(listeSanctions);
+        sanctionTable.setItems(listeSanctions);
 
     }
 
     @FXML
-    private void showServicesDetails() {
+    private void showSanctionsDetails() {
 
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -79,10 +88,10 @@ public class SanctionWindowController {
     @FXML
     private void showSanctionsDetailsModifier() {
 
-        int selectedIndex = ServiceTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = sanctionTable.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0) {
-            ServiceFx ServiceFx = ServiceTable.getItems().get(selectedIndex);
+            ServiceFx ServiceFx = sanctionTable.getItems().get(selectedIndex);
             int keyInArrayList = listeSanctions.indexOf(ServiceFx);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.

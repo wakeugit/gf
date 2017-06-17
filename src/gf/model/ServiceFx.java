@@ -8,7 +8,8 @@ public class ServiceFx {
 	private final SimpleStringProperty typeService;
 	private final SimpleLongProperty id;
 	private final SimpleLongProperty dateCreation;
-	
+	private final SimpleLongProperty dateDerniereModification;
+
 	
 	public ServiceFx(){
 		this(null);
@@ -17,11 +18,23 @@ public class ServiceFx {
 	public ServiceFx(Service service){
 		this.motif = new SimpleStringProperty(service.getMotif());
 		this.id = new SimpleLongProperty(service.getId());
-		this.typeService=new SimpleStringProperty(service.getTypeService().name());
+		this.typeService=new SimpleStringProperty(service.getType().name());
 		this.dateCreation=new SimpleLongProperty(service.getDateCreation());
+		this.dateDerniereModification=new SimpleLongProperty(service.getDateCreation());
 	}
-	
-	
+
+	public long getDateDerniereModification() {
+		return dateDerniereModification.get();
+	}
+
+	public SimpleLongProperty dateDerniereModificationProperty() {
+		return dateDerniereModification;
+	}
+
+	public void setDateDerniereModification(long dateDerniereModification) {
+		this.dateDerniereModification.set(dateDerniereModification);
+	}
+
 	public String getMotif() {
 		return motif.get();
 	}

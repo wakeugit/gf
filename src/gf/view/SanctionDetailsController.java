@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Service;
 import gf.model.ServiceFx;
 import gf.model.TypeService;
@@ -11,102 +13,121 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class SanctionDetailsController {
-	@FXML
-	private TextField motif;
-	@FXML
-	private Button valider;
-
-	private SanctionWindowController sanctionWindowController;
-	private Stage dialogStage;
-    //private SanctionFx serviceFx;
-	private ServiceFx serviceFx;
-    private int keyInArray=0;
-    private boolean validerClicked = false;
-    
     @FXML
-	private void initialize(){
-		
-	}
-    
-    public SanctionDetailsController(){
-    	
+    private TextField motif;
+    @FXML
+    private Button valider;
+
+    private SanctionWindowController sanctionWindowController;
+    private Stage dialogStage;
+    //private SanctionFx serviceFx;
+    private ServiceFx serviceFx;
+    private int keyInArray = 0;
+    private boolean validerClicked = false;
+
+    @FXML
+    private void initialize() {
+
     }
-	
+
+    public SanctionDetailsController() {
+
+    }
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
- public boolean isValiderClicked() {
+    public boolean isValiderClicked() {
         return validerClicked;
     }
-	@FXML
-	private void actionOnClickValider(){
-		  if (isInputValid()) {
-		serviceFx = new ServiceFx(new Service(motif.getText(), TypeService.SANCTION));
-		
-		
-		if (valider.getText().equals("Valider")) {
-			sanctionWindowController.getListeSanctions().add(serviceFx); 
-		} else {
-			sanctionWindowController.getListeSanctions().set(keyInArray, serviceFx);
-		}
-		 validerClicked = true;
-      dialogStage.close();
-		  }
-	}
-	
-	@FXML
-	private void actionOnClickAnnuler(){
-		motif.setText("");
-	}
 
-	  private boolean isInputValid() {
-	        String errorMessage = "";
+    @FXML
+    private void actionOnClickValider() {
+        if (isInputValid()) {
+            Service service = new Service(motif.getText(), TypeService.SANCTION);
 
-	        if (motif.getText() == null || motif.getText().length() == 0) {
-	            errorMessage += "Motif invalide!\n";
-	        }
-	     
-	        if (errorMessage.length() == 0) {
-	            return true;
-	        } else {
-	            // Show the error message.
-	            Alert alert = new Alert(AlertType.ERROR);
-	            alert.initOwner(dialogStage);
-	            alert.setTitle("Champs invalides");
-	            alert.setHeaderText("SVP corrigez les champs inavlides");
-	            alert.setContentText(errorMessage);
+            Response<Service> response;
 
-	            alert.showAndWait();
+            if (valider.getText().equals("Valider")) {
 
-	            return false;
-	        }
-	    }
+                response = BackendInterface.createService(service);
+                if (response.getBody() != null) {
+                    sanctionWindowController.getListeSanctions().add(new ServiceFx(response.getBody()));
 
-	public SanctionWindowController getSanctionWindowController() {
-		return sanctionWindowController;
-	}
+                } else {
+                    // Todo Display error message
+                }
+            } else {
+                if (service.getId() != -1) {
+//					  service.setId(tontine.getId());
+                    response = BackendInterface.updateService(service);
+                    if (response.getBody() != null) {
+                        sanctionWindowController.getListeSanctions().set(keyInArray, new ServiceFx(response.getBody()));
 
-	public void setSanctionWindowController(SanctionWindowController sanctionWindowController) {
-		this.sanctionWindowController = sanctionWindowController;
-	}
+                    } else {
+                        // Todo Display error message
+                    }
+                }
 
-	public ServiceFx getService() {
-		return serviceFx;
-	}
+            }
+            validerClicked = true;
+            dialogStage.close();
+        }
+    }
 
-	public void setService(ServiceFx serviceFx) {
-		this.serviceFx = serviceFx;
-		valider.setText("Modifier");
-		motif.setText(serviceFx.getMotif());
-	}
+    @FXML
+    private void actionOnClickAnnuler() {
+        motif.setText("");
+    }
 
-	public int getKeyInArray() {
-		return keyInArray;
-	}
+    private boolean isInputValid() {
+        String errorMessage = "";
 
-	public void setKeyInArray(int keyInArray) {
-		this.keyInArray = keyInArray;
-	}
-    
+        if (motif.getText() == null || motif.getText().length() == 0) {
+            errorMessage += "Motif invalide!\n";
+        }
+
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Champs invalides");
+            alert.setHeaderText("SVP corrigez les champs inavlides");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+
+            return false;
+        }
+    }
+
+    public SanctionWindowController getSanctionWindowController() {
+        return sanctionWindowController;
+    }
+
+    public void setSanctionWindowController(SanctionWindowController sanctionWindowController) {
+        this.sanctionWindowController = sanctionWindowController;
+    }
+
+    public ServiceFx getService() {
+        return serviceFx;
+    }
+
+    public void setService(ServiceFx serviceFx) {
+        this.serviceFx = serviceFx;
+        valider.setText("Modifier");
+        motif.setText(serviceFx.getMotif());
+    }
+
+    public int getKeyInArray() {
+        return keyInArray;
+    }
+
+    public void setKeyInArray(int keyInArray) {
+        this.keyInArray = keyInArray;
+    }
+
 }

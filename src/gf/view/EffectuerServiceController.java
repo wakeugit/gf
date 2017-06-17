@@ -1,10 +1,7 @@
 package gf.view;
 
-import gf.backend.BackendInterface;
-import gf.backend.Response;
 import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +13,6 @@ import javafx.util.StringConverter;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -56,12 +52,12 @@ public class EffectuerServiceController {
 
             response = BackendInterface.getInscriptionService(tmpService);
             if (response.getBody() != null) {
-                if (tmpService.getTypeService() == TypeService.TONTINE) {
+                if (tmpService.getType() == TypeService.TONTINE) {
                     listeMembresInscrits.clear();
                     for (InscriptionService inscriptionService : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
                     }
-                } else if (tmpService.getTypeService() == TypeService.EPARGNE) {
+                } else if (tmpService.getType() == TypeService.EPARGNE) {
                     listeMembresInscrits.clear();
                     for (InscriptionService inscriptionService : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
@@ -230,9 +226,9 @@ public class EffectuerServiceController {
             operation.setDateOperation(dateOp);
             operation.setMontantOperation(montantOp);
 
-            if (tmpService.getTypeService() == TypeService.AIDE) {
+            if (tmpService.getType() == TypeService.AIDE) {
                 operation.setType(TypeOperation.AIDER);
-            } else if (tmpService.getTypeService() == TypeService.SANCTION) {
+            } else if (tmpService.getType() == TypeService.SANCTION) {
                 operation.setType(TypeOperation.SANCTIONER);
             }
             System.out.println("Operation:" + operation);
@@ -248,7 +244,7 @@ public class EffectuerServiceController {
 
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.initOwner(dialogStage);
-                    alert.setTitle(response.getBody().getService().getTypeService().name());
+                    alert.setTitle(response.getBody().getService().getType().name());
                     alert.setHeaderText("Operation Effectuée !!");
                     alert.setContentText(mMembre.getNom());
 

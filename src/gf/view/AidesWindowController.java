@@ -2,9 +2,9 @@ package gf.view;
 
 import java.io.IOException;
 
-import gf.model.Service;
-import gf.model.ServiceFx;
-import gf.model.TypeService;
+import gf.backend.BackendInterface;
+import gf.backend.Response;
+import gf.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,8 +28,16 @@ public class AidesWindowController {
     private TableColumn<ServiceFx, String> motif;
 
     public AidesWindowController() {
-        listeAides.add(new ServiceFx(new Service("Mort", TypeService.AIDE)));
-        listeAides.add(new ServiceFx(new Service("Naissance", TypeService.AIDE)));
+
+        Response<Service[]> response = BackendInterface.getServiceByType(TypeService.AIDE);
+        if (response.getBody() != null) {
+            for (Service service : response.getBody()) {
+                listeAides.add(new ServiceFx(service));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Service");
+        }
     }
 
     @FXML
@@ -53,7 +61,7 @@ public class AidesWindowController {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle ServiceFx");
+            dialogStage.setTitle("Nouvelle Aide");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
@@ -117,9 +125,9 @@ public class AidesWindowController {
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());
-            alert.setTitle("Aucune ligne selectionnée");
-            alert.setHeaderText("Aucune ligne selectionnée");
-            alert.setContentText("Svp selectionnez un élement dans la liste.");
+            alert.setTitle("Aucune ligne selectionnï¿½e");
+            alert.setHeaderText("Aucune ligne selectionnï¿½e");
+            alert.setContentText("Svp selectionnez un ï¿½lement dans la liste.");
             alert.showAndWait();
         }
 
