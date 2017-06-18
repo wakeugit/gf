@@ -563,24 +563,24 @@ public class AidesPanelController {
 
     @FXML
     private void actionOnclickNouveauRemboursementAide() {
-       /* try {
+        try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/rembourserService.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
+            dialogStage.setTitle("Nouveau Remboursement");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
             // Set the Member into the controller.
-            InscriptionCotisationController controller = loader.getController();
+           RembourserServiceController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            //controller.setInscriptionsPanelController(this);
+            controller.setAidePanelController(this);
 
             // Show the dialog and wait until the user closes it
 
@@ -591,7 +591,7 @@ public class AidesPanelController {
         } catch (IOException e) {
             e.printStackTrace();
 
-        }*/
+        }
     }
 
     @FXML

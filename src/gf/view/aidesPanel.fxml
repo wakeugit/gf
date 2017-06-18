@@ -201,7 +201,7 @@
                               <Insets bottom="90.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+                              <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouveauRemboursementAide" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
                               <Button fx:id="modifMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
                               <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
                               <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
