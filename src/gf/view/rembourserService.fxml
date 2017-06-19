@@ -30,7 +30,7 @@
          <children>
             <Label text="Nom membre" />
             <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
-            <Label text="Aide" GridPane.rowIndex="1" />
+            <Label fx:id="serviceText" text="Aide" GridPane.rowIndex="1" />
             <ComboBox fx:id="operation" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date" GridPane.rowIndex="2" />
             <TextField fx:id="montantAttendu" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -67,9 +67,9 @@
       </GridPane>
    </bottom>
    <top>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="380.0" BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="label-header" text="Rembourser une aide">
+            <Label fx:id="serviceTitel" styleClass="label-header" text="Rembourser une aide">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

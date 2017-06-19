@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.AidesPanelController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.SanctionPanelController">
    <top>
       <Label text="Sanctions" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
@@ -57,7 +57,7 @@
                               <Insets bottom="90.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouvelleAide" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouveauService" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
                               <Button fx:id="modifMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
                               <Button fx:id="supprimerMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
                               <Button fx:id="imprimerListMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
@@ -81,7 +81,7 @@
                            <children>
                               <Label prefHeight="27.0" prefWidth="147.0" text="Choisir une année" />
                               <ComboBox fx:id="comboAnneeDonner" prefHeight="39.0" prefWidth="195.0" GridPane.columnIndex="1" />
-                              <Button fx:id="validerDonnerAide" mnemonicParsing="false" onAction="#actionOnClickValiderDonnerAide" text="Valider" GridPane.columnIndex="3" />
+                              <Button fx:id="validerDonnerService" mnemonicParsing="false" onAction="#actionOnClickValiderDonnerService" text="Valider" GridPane.columnIndex="3" />
                               <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
                                     <Image url="@default.gif" />
@@ -97,14 +97,14 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="ListeAideTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="listeServiceTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
-                              <TableColumn fx:id="idAide" editable="false" prefWidth="75.0" sortable="false" text="id" visible="false" />
+                              <TableColumn fx:id="idService" editable="false" prefWidth="75.0" sortable="false" text="id" visible="false" />
                               <TableColumn fx:id="nomMembre" prefWidth="137.0" text="Nom du membre" />
                               <TableColumn fx:id="prenomMembre" prefWidth="104.0" text="Prenom du membre" />
-                              <TableColumn fx:id="motifAide" maxWidth="307.0" minWidth="97.0" prefWidth="114.0" text="Motif aide" />
-                              <TableColumn fx:id="dateAide" prefWidth="107.0" text="Date sanction" />
-                              <TableColumn fx:id="montantAide" prefWidth="91.0" text="Montant" />
+                              <TableColumn fx:id="motifService" maxWidth="307.0" minWidth="97.0" prefWidth="114.0" text="Motif sanction" />
+                              <TableColumn fx:id="dateService" prefWidth="107.0" text="Date sanction" />
+                              <TableColumn fx:id="montantService" prefWidth="91.0" text="Montant" />
                               <TableColumn fx:id="dateRemb" prefWidth="91.0" text="Date Remb." />
                            </columns>
                            <opaqueInsets>
@@ -154,7 +154,7 @@
                            <children>
                               <Label prefHeight="27.0" prefWidth="172.0" text="Choisir une année" />
                               <ComboBox fx:id="comboAnneeListe" prefHeight="39.0" prefWidth="190.0" GridPane.columnIndex="1" />
-                              <Button fx:id="validerListeAide" mnemonicParsing="false" onAction="#actionOnClickValiderListeAide" text="Valider" GridPane.columnIndex="3" />
+                              <Button fx:id="validerListeService" mnemonicParsing="false" onAction="#actionOnClickValiderListeService" text="Valider" GridPane.columnIndex="3" />
                               <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
                                     <Image url="@default.gif" />
@@ -201,7 +201,7 @@
                               <Insets bottom="90.0" left="20.0" top="20.0" />
                            </BorderPane.margin>
                            <children>
-                              <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouveauRemboursementAide" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+                              <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouveauRemboursementService" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
                               <Button fx:id="modifMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
                               <Button fx:id="supprimerMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
                               <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="3" />
@@ -228,10 +228,10 @@
                            </BorderPane.margin>
                            <children>
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="127.0" text="Choisir une sanction " GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="comboAideRemb" prefHeight="39.0" prefWidth="131.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="comboServiceRemb" prefHeight="39.0" prefWidth="131.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <Label prefHeight="27.0" prefWidth="147.0" text="Choisir une année" GridPane.rowIndex="1" />
                               <ComboBox fx:id="comboAnneeRemb" prefHeight="39.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="validerRembourserAide" mnemonicParsing="false" onAction="#actionOnClickValiderRembourserAide" prefHeight="39.0" prefWidth="83.0" text="Valider" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                              <Button fx:id="validerRembourserAide" mnemonicParsing="false" onAction="#actionOnClickValiderRembourserService" prefHeight="39.0" prefWidth="83.0" text="Valider" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                               <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <image>
                                     <Image url="@default.gif" />
@@ -252,13 +252,13 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="etatAideTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="etatServiceTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                            <columns>
                               <TableColumn fx:id="idRemb" editable="false" prefWidth="63.0" sortable="false" text="IdRemb" visible="false" />
                               <TableColumn fx:id="nomCol2" prefWidth="126.0" text="Nom du membre" />
                               <TableColumn fx:id="prenomCol2" maxWidth="245.0" minWidth="81.0" prefWidth="99.0" text="Prenom du membre" />
-                              <TableColumn fx:id="aide" minWidth="0.0" prefWidth="69.0" text="Motif Sanction" />
-                              <TableColumn fx:id="montantAide2" prefWidth="115.0" text="Montant aide" />
+                              <TableColumn fx:id="serviceCol" minWidth="0.0" prefWidth="69.0" text="Motif Sanction" />
+                              <TableColumn fx:id="montantService2" prefWidth="115.0" text="Montant aide" />
                               <TableColumn fx:id="dateRemb2" prefWidth="111.0" text="Date remboursement" />
                               <TableColumn fx:id="montantRemb" prefWidth="122.0" text="Montant Remboursé" />
                            </columns>
@@ -313,8 +313,8 @@
                               <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="127.0" text="Choisir une sanction " GridPane.columnIndex="3" />
                               <ComboBox fx:id="comboAnneeEtat" prefHeight="39.0" prefWidth="125.0" GridPane.columnIndex="1" />
                               <Label prefHeight="27.0" prefWidth="147.0" text="Choisir une année" />
-                              <ComboBox fx:id="comboAideEtat" prefHeight="39.0" prefWidth="132.0" GridPane.columnIndex="4" />
-                              <Button fx:id="validerEtatAide" mnemonicParsing="false" onAction="#actionOnClickValiderEtatAides" prefHeight="39.0" prefWidth="83.0" text="Valider" GridPane.columnIndex="6" />
+                              <ComboBox fx:id="comboServiceEtat" prefHeight="39.0" prefWidth="132.0" GridPane.columnIndex="4" />
+                              <Button fx:id="validerEtatAide" mnemonicParsing="false" onAction="#actionOnClickValiderEtatServices" prefHeight="39.0" prefWidth="83.0" text="Valider" GridPane.columnIndex="6" />
                               <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                                  <image>
                                     <Image url="@default.gif" />

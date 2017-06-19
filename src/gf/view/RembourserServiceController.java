@@ -46,10 +46,15 @@ public class RembourserServiceController {
     private TextField penalites;
     @FXML
     private Button valider;
+    
+    @FXML
+    private Label serviceTitel;
+    @FXML
+    private Label serviceText;
 
     private int keyInArray = 0;
     private AidesPanelController aidePanelController;
-    //private SanctionPanelController sanctionPanelController;
+    private SanctionPanelController sanctionPanelController;
     private Stage dialogStage;
     private InscriptionAnnuelle inscriptionAnnuelle;
     private InscriptionAnnuelleFx inscriptionAnnuelleFx;
@@ -59,6 +64,15 @@ public class RembourserServiceController {
     private Operation mOperation;
 
     public RembourserServiceController() {
+    	//modifier les labels sur la vue: tite et le label devant le textField
+    	if(sanctionPanelController!=null){
+    		serviceTitel.setText("Rembourser une sanction");
+    		serviceText.setText("Sanction");
+    	} else {
+    		serviceTitel.setText("Rembourser une aide");
+    		serviceText.setText("Aide");
+    	}
+    	
         /*
         if (tmpOperation != null) {
             Response<InscriptionService[]> response;
@@ -344,17 +358,17 @@ public class RembourserServiceController {
         return aidePanelController;
     }
 
-    /*public SanctionPanelController getSanctionPanelController() {
+    public SanctionPanelController getSanctionPanelController() {
         return sanctionPanelController;
-    }*/
+    }
 
     public void setAidePanelController(AidesPanelController aidePanelController) {
         this.aidePanelController = aidePanelController;
     }
 
-    /*public void setSanctionPanelController(SanctionPanelController sanctionPanelController) {
+    public void setSanctionPanelController(SanctionPanelController sanctionPanelController) {
         this.sanctionPanelController = sanctionPanelController;
-    }*/
+    }
 
 
     public InscriptionAnnuelle getInscriptionAnnuelle() {
