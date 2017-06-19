@@ -22,6 +22,7 @@ public class OperationFx {
     final SimpleDoubleProperty montantPenalites;
     private SimpleStringProperty type;
     private final SimpleLongProperty id;
+    private final SimpleLongProperty idOperationInitiale;
 
     public OperationFx() {
         this(null);
@@ -42,6 +43,24 @@ public class OperationFx {
         this.montantAvance = new SimpleDoubleProperty(operation.getMontantAvance());
         this.type = new SimpleStringProperty(operation.getType().name());
         this.id = new SimpleLongProperty(operation.getId());
+        this.idOperationInitiale = new SimpleLongProperty(operation.getIdOperationInitiale());
+    }
+
+
+    public void setDateOperation(LocalDate dateOperation) {
+        this.dateOperation.set(dateOperation);
+    }
+
+    public long getIdOperationInitiale() {
+        return idOperationInitiale.get();
+    }
+
+    public SimpleLongProperty idOperationInitialeProperty() {
+        return idOperationInitiale;
+    }
+
+    public void setIdOperationInitiale(long idOperationInitiale) {
+        this.idOperationInitiale.set(idOperationInitiale);
     }
 
     public ServiceFx getServiceFx() {

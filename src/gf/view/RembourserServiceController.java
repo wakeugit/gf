@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
 import javafx.collections.FXCollections;
@@ -11,6 +13,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -19,15 +23,17 @@ import java.util.Date;
 public class RembourserServiceController {
 
 
-    public static Service tmpService;
+    public static Operation tmpOperation;
     public static InscriptionAnnuelleFx tmpMembre;
+    public static int effectif;
+    private final NumberFormat numberFormat;
     private ObservableList<ServiceFx> listeService = FXCollections.observableArrayList();
     private ObservableList<InscriptionAnnuelleFx> listeMembresInscrits = FXCollections.observableArrayList();
 
     @FXML
     private ComboBox<InscriptionAnnuelleFx> nomMembre;
     @FXML
-    private ComboBox<ServiceFx> service;
+    private ComboBox<OperationFx> operation;
     @FXML
     private DatePicker date;
     @FXML
@@ -50,20 +56,21 @@ public class RembourserServiceController {
     private boolean validerClicked = false;
     private Membre mMembre;
     private Service mService;
+    private Operation mOperation;
 
     public RembourserServiceController() {
-    	/*
-        if (tmpService != null) {
+        /*
+        if (tmpOperation != null) {
             Response<InscriptionService[]> response;
 
-            response = BackendInterface.getInscriptionService(tmpService);
+            response = BackendInterface.getInscriptionService(tmpOperation);
             if (response.getBody() != null) {
-                if (tmpService.getType() == TypeService.TONTINE) {
+                if (tmpOperation.getType() == TypeService.TONTINE) {
                     listeMembresInscrits.clear();
                     for (InscriptionService inscriptionService : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
                     }
-                } else if (tmpService.getType() == TypeService.EPARGNE) {
+                } else if (tmpOperation.getType() == TypeService.EPARGNE) {
                     listeMembresInscrits.clear();
                     for (InscriptionService inscriptionService : response.getBody()) {
                         listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
@@ -75,40 +82,44 @@ public class RembourserServiceController {
                 System.out.println("An error occured - ValiderService");
             }
 
-            listeService.add(new ServiceFx(tmpService));
+            listeService.add(new ServiceFx(tmpOperation));
         }*/
+
+        numberFormat = NumberFormat.getNumberInstance();
+        numberFormat.setMaximumFractionDigits(0);
     }
 
     @FXML
     private void initialize() {
 
-        service.setButtonCell(new ListCell<ServiceFx>() {
+        operation.setButtonCell(new ListCell<OperationFx>() {
             @Override
-            protected void updateItem(ServiceFx item, boolean empty) {
+            protected void updateItem(OperationFx item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setText("");
                 } else {
-                    setText(item.getMotif());
-                    //mService = new Service(item);
+                    setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
+                    mOperation = new Operation(item);
+
                 }
             }
         });
 
-        service.setCellFactory(
-                new Callback<ListView<ServiceFx>, ListCell<ServiceFx>>() {
+        operation.setCellFactory(
+                new Callback<ListView<OperationFx>, ListCell<OperationFx>>() {
 
 
                     @Override
-                    public ListCell<ServiceFx> call(ListView<ServiceFx> arg0) {
-                        ListCell<ServiceFx> cell = new ListCell<ServiceFx>() {
+                    public ListCell<OperationFx> call(ListView<OperationFx> arg0) {
+                        ListCell<OperationFx> cell = new ListCell<OperationFx>() {
                             @Override
-                            protected void updateItem(ServiceFx item, boolean empty) {
+                            protected void updateItem(OperationFx item, boolean empty) {
                                 super.updateItem(item, empty);
                                 if (empty) {
                                     setText("");
                                 } else {
-                                    setText(item.getMotif());
+                                    setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
                                 }
                             }
                         };
@@ -118,21 +129,6 @@ public class RembourserServiceController {
 
                 });
 
-        service.setConverter(new StringConverter<ServiceFx>() {
-            @Override
-            public String toString(ServiceFx item) {
-                if (item == null) {
-                    return null;
-                } else {
-                    return item.getMotif();
-                }
-            }
-
-            @Override
-            public ServiceFx fromString(String item) {
-                return null;
-            }
-        });
 
         nomMembre.setButtonCell(new ListCell<InscriptionAnnuelleFx>() {
             @Override
@@ -185,16 +181,41 @@ public class RembourserServiceController {
 
 
                 });
-        service.setItems(listeService);
+//        operation.setItems(listeService);
         nomMembre.setItems(listeMembresInscrits);
         //set default value of combox Service
-        if (tmpService != null) {
-            service.getSelectionModel().select(new ServiceFx(tmpService));
+        if (tmpOperation != null) {
+            operation.getSelectionModel().select(new OperationFx(tmpOperation));
         }
         //set default value of combox membre
         if (tmpMembre != null) {
             //nomMembre.setValue(tmpMembre);
             nomMembre.getSelectionModel().select(tmpMembre);
+        }
+
+        if (montantAttendu != null && effectif > 0 && tmpOperation != null) {
+            double ma = tmpOperation.getMontantOperation() / effectif;
+            System.out.println("M A: " + ma);
+            montantAttendu.setText(numberFormat.format(ma));
+            montantAttendu.setEditable(false);
+            reste.setEditable(false);
+
+            montantAvance.textProperty().addListener((observable, oldValue, newValue) -> {
+
+                if (!newValue.isEmpty()) {
+                    double valueReste = ma - Double.valueOf(newValue);
+                    if (valueReste < 0) {
+                        valider.setDisable(true);
+                        reste.setText("Error");
+                    } else {
+                        valider.setDisable(false);
+                        reste.setText(numberFormat.format(valueReste));
+                    }
+                } else
+                    reste.setText(numberFormat.format(ma));
+
+
+            });
         }
 
         date.setValue(LocalDate.now());
@@ -220,37 +241,38 @@ public class RembourserServiceController {
 
             long dateOp = Date.from(instant).getTime();
 
-            double montantOp = Double.parseDouble(montantAttendu.getCharacters().toString());
+            double montantOp = Double.parseDouble(montantAvance.getCharacters().toString());
             System.out.println("Montant = " + montantOp);
 
             mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
-            mService = new Service(service.getSelectionModel().getSelectedItem());
+            mService = tmpOperation.getService();
 
             Operation operation = new Operation();
             operation.setMembre(mMembre);
             operation.setService(mService);
             operation.setDateOperation(dateOp);
             operation.setMontantOperation(montantOp);
+            operation.setIdOperationInitiale(tmpOperation.getId());
 
-            if (tmpService.getType() == TypeService.AIDE) {
-                operation.setType(TypeOperation.AIDER);
-            } else if (tmpService.getType() == TypeService.SANCTION) {
-                operation.setType(TypeOperation.SANCTIONER);
+            if (tmpOperation.getType() == TypeOperation.AIDER) {
+                operation.setType(TypeOperation.REMBOURSER_AIDE);
+            } else if (tmpOperation.getType() == TypeOperation.SANCTIONER) {
+                operation.setType(TypeOperation.REMBOURSER_SANCTION);
             }
             System.out.println("Operation:" + operation);
 
 
-            /*Response<Operation> response;
+            Response<Operation> response;
 
             if (valider.getText().equals("Valider")) {
-                response = BackendInterface.createTransaction(operation);
+                response = BackendInterface.createOperation(operation);
                 if (response.getBody() != null) {
 //                    aidePanelController.getListMembreInscritsService().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a tontine!");
+                    System.out.println(mMembre.getNom() + " a recu une aide.");
 
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.initOwner(dialogStage);
-                    alert.setTitle(response.getBody().getService().getType().name());
+                    alert.setTitle(operation.getType().name());
                     alert.setHeaderText("Operation Effectuée !!");
                     alert.setContentText(mMembre.getNom());
 
@@ -262,7 +284,7 @@ public class RembourserServiceController {
             } else {
                 //aidePanelController.getListMembreInscritsService().set(keyInArray, inscriptionServiceFx);
             }
-*/
+
             validerClicked = true;
             dialogStage.close();
         }
@@ -271,7 +293,7 @@ public class RembourserServiceController {
     @FXML
     private void actionOnClickAnnuler() {
         nomMembre.getSelectionModel().select(null);
-        service.getSelectionModel().select(null);
+        operation.getSelectionModel().select(null);
         date.setValue(null);
         montantAttendu.setText("");
         dialogStage.close();
@@ -284,20 +306,20 @@ public class RembourserServiceController {
         if (nomMembre.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Membre invalide!\n";
         }
-        if (service.getSelectionModel().getSelectedItem() == null) {
+        if (operation.getSelectionModel().getSelectedItem() == null) {
             errorMessage += "Service invalide!\n";
         }
         if (date.getValue() == null) {
             errorMessage += "Date Inscription invalide!\n";
         }
 
-        if (montantAttendu.getText() == null || montantAttendu.getText().length() == 0 || montantAttendu.getText().length() > 9) {
+        if (montantAvance.getText() == null || montantAvance.getText().length() == 0 || montantAvance.getText().length() > 9) {
             errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Double.parseDouble(montantAttendu.getText());
-            } catch (NumberFormatException e) {
+                numberFormat.parse(montantAvance.getText());
+            } catch (ParseException e) {
                 errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
         }
@@ -357,7 +379,7 @@ public class RembourserServiceController {
         this.keyInArray = keyInArray;
     }
 
-    public void setService(Service service) {
-        this.tmpService = service;
+    public void setService(Operation operation) {
+        this.tmpOperation = operation;
     }
 }

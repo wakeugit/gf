@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,7 +26,10 @@ public class AidesPanelController {
     private ObservableList<InscriptionCotisationFx> listeInscritsCotisation = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisations = FXCollections.observableArrayList();
-    
+    private ObservableList<OperationFx> listeOperations = FXCollections.observableArrayList();
+    private ObservableList<OperationFx> listeOperationsRemb = FXCollections.observableArrayList();
+    private ObservableList<ServiceFx> listeServices = FXCollections.observableArrayList();
+
     @FXML
     private TableView<InscriptionAnnuelleFx> inscritsAnnuelTable;
     @FXML
@@ -40,7 +42,7 @@ public class AidesPanelController {
     private TableColumn<InscriptionAnnuelleFx, String> adresseCol;
     @FXML
     private TableColumn<InscriptionAnnuelleFx, Integer> cniCol;
-    
+
     @FXML
     private TableView<OperationFx> listeAideTable;
     @FXML
@@ -57,7 +59,7 @@ public class AidesPanelController {
     private TableColumn<OperationFx, Double> montantAide;
     @FXML
     private TableColumn<OperationFx, LocalDate> dateRemb;
-    
+
     @FXML
     private TableView<InscriptionAnnuelleFx> listeMembresTable;
     @FXML
@@ -70,7 +72,7 @@ public class AidesPanelController {
     private TableColumn<InscriptionAnnuelleFx, String> adresseCol1;
     @FXML
     private TableColumn<InscriptionAnnuelleFx, Integer> cniCol1;
-    
+
     @FXML
     private TableView<OperationFx> etatAideTable;
     @FXML
@@ -87,7 +89,7 @@ public class AidesPanelController {
     private TableColumn<OperationFx, LocalDate> dateRemb2;
     @FXML
     private TableColumn<OperationFx, Double> montantRemb;
-   
+
 
     @FXML
     private ComboBox<CotisationFx> comboAnneeDonner;
@@ -96,11 +98,11 @@ public class AidesPanelController {
     @FXML
     private ComboBox<CotisationFx> comboAnneeRemb;
     @FXML
-    private ComboBox<ServiceFx> comboAideRemb;
+    private ComboBox<OperationFx> comboAideRemb;
     @FXML
     private ComboBox<CotisationFx> comboAnneeEtat;
     @FXML
-    private ComboBox<ServiceFx> comboAideEtat;
+    private ComboBox<OperationFx> comboAideEtat;
     @FXML
     private Button validerDonnerAide;
     @FXML
@@ -111,7 +113,7 @@ public class AidesPanelController {
     private Button validerEtatAide;
 
     private Cotisation mCotisation;
-    private Service mService;
+    private Operation mOperation;
 
     public AidesPanelController() {
 
@@ -124,6 +126,17 @@ public class AidesPanelController {
         } else {
             //Todo Display error message
             System.out.println("An error occured - Annee");
+        }
+
+        Response<Service[]> response1 = BackendInterface.getServiceByType(TypeService.AIDE);
+        if (response1.getBody() != null) {
+            listeServices.clear();
+            for (Service service : response1.getBody()) {
+                listeServices.add(new ServiceFx(service));
+            }
+        } else {
+            // Todo Display error message
+            System.out.println("An error occured - ValiderService");
         }
 
 /*
@@ -148,11 +161,11 @@ public class AidesPanelController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns
-    	if(comboAnneeDonner != null){
-    		comboAnneeDonner.setButtonCell( new ListCell<CotisationFx>() {
+        if (comboAnneeDonner != null) {
+            comboAnneeDonner.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
-                    super.updateItem(item, empty); 
+                    super.updateItem(item, empty);
                     if (empty) {
                         setText("");
                     } else {
@@ -161,145 +174,221 @@ public class AidesPanelController {
                     }
                 }
             });
-        	
-    		comboAnneeDonner.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-              
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
 
-    			
+            comboAnneeDonner.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+            comboAnneeDonner.setItems(listeAnnees);
+        }
+        if (comboAnneeListe != null) {
+            comboAnneeListe.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
             });
-    		comboAnneeDonner.setItems(listeAnnees);
-    	}	
-    		if(comboAnneeListe != null){
-    			comboAnneeListe.setButtonCell( new ListCell<CotisationFx>() {
-                    @Override
-                    protected void updateItem(CotisationFx item, boolean empty) {
-                        super.updateItem(item, empty); 
-                        if (empty) {
-                            setText("");
-                        } else {
-                            setText(item.getAnnee());
-                            mCotisation = new Cotisation(item);
-                        }
-                    }
-                });
-            	
-    			comboAnneeListe.setCellFactory(
-            			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-                  
-        			@Override
-        			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-        	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-        	                    @Override
-        	                    protected void updateItem(CotisationFx item, boolean empty) {
-        	                        super.updateItem(item, empty);
-        	                        if (empty) {
-        	                            setText("");
-        	                        } else {
-        	                            setText(item.getAnnee());
-        	                        }
-        	                    }
-        	                };
-        	                return cell;
-        			}
 
-        			
-                });
-    			comboAnneeListe.setItems(listeAnnees);
-    		}
-    		
-    		if(comboAnneeRemb != null){
-    			comboAnneeRemb.setButtonCell( new ListCell<CotisationFx>() {
-                    @Override
-                    protected void updateItem(CotisationFx item, boolean empty) {
-                        super.updateItem(item, empty); 
-                        if (empty) {
-                            setText("");
-                        } else {
-                            setText(item.getAnnee());
-                            mCotisation = new Cotisation(item);
-                        }
-                    }
-                });
-            	
-    			comboAnneeRemb.setCellFactory(
-            			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-                  
-        			@Override
-        			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-        	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-        	                    @Override
-        	                    protected void updateItem(CotisationFx item, boolean empty) {
-        	                        super.updateItem(item, empty);
-        	                        if (empty) {
-        	                            setText("");
-        	                        } else {
-        	                            setText(item.getAnnee());
-        	                        }
-        	                    }
-        	                };
-        	                return cell;
-        			}
+            comboAnneeListe.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
 
-        			
-                });
-    			comboAnneeRemb.setItems(listeAnnees);
-    		}
-    		
-    		if(comboAnneeEtat != null){
-    			comboAnneeEtat.setButtonCell( new ListCell<CotisationFx>() {
-                    @Override
-                    protected void updateItem(CotisationFx item, boolean empty) {
-                        super.updateItem(item, empty); 
-                        if (empty) {
-                            setText("");
-                        } else {
-                            setText(item.getAnnee());
-                            mCotisation = new Cotisation(item);
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
                         }
-                    }
-                });
-            	
-    			comboAnneeEtat.setCellFactory(
-            			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-                  
-        			@Override
-        			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-        	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-        	                    @Override
-        	                    protected void updateItem(CotisationFx item, boolean empty) {
-        	                        super.updateItem(item, empty);
-        	                        if (empty) {
-        	                            setText("");
-        	                        } else {
-        	                            setText(item.getAnnee());
-        	                        }
-        	                    }
-        	                };
-        	                return cell;
-        			}
 
-        			
-                });
-    			comboAnneeEtat.setItems(listeAnnees);
-    		}
-        	
-    	
+
+                    });
+            comboAnneeListe.setItems(listeAnnees);
+        }
+
+        if (comboAnneeRemb != null) {
+            comboAnneeRemb.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
+            });
+
+            comboAnneeRemb.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+            comboAnneeRemb.setItems(listeAnnees);
+        }
+
+        if (comboAideRemb != null) {
+            comboAideRemb.setButtonCell(new ListCell<OperationFx>() {
+                @Override
+                protected void updateItem(OperationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
+                        mOperation = new Operation(item);
+                    }
+                }
+            });
+
+            comboAideRemb.setCellFactory(
+                    new Callback<ListView<OperationFx>, ListCell<OperationFx>>() {
+
+                        @Override
+                        public ListCell<OperationFx> call(ListView<OperationFx> arg0) {
+                            ListCell<OperationFx> cell = new ListCell<OperationFx>() {
+                                @Override
+                                protected void updateItem(OperationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+            comboAideRemb.setItems(listeOperations);
+        }
+
+        if (comboAnneeEtat != null) {
+            comboAnneeEtat.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
+                }
+            });
+
+            comboAnneeEtat.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+            comboAnneeEtat.setItems(listeAnnees);
+
+        }
+
+        if (comboAideEtat != null) {
+            comboAideEtat.setButtonCell(new ListCell<OperationFx>() {
+                @Override
+                protected void updateItem(OperationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
+                        mOperation = new Operation(item);
+                    }
+                }
+            });
+
+            comboAideEtat.setCellFactory(
+                    new Callback<ListView<OperationFx>, ListCell<OperationFx>>() {
+
+                        @Override
+                        public ListCell<OperationFx> call(ListView<OperationFx> arg0) {
+                            ListCell<OperationFx> cell = new ListCell<OperationFx>() {
+                                @Override
+                                protected void updateItem(OperationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getServiceFx().getMotif() + " - " + item.getMembreFx().getNom() + " - " + item.getMontantOperation());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+
+
+                    });
+            comboAideEtat.setItems(listeOperations);
+        }
+
 
         idCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().idProperty().asObject());
         nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -312,7 +401,7 @@ public class AidesPanelController {
         prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         adresseCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().adresseProperty());
         cniCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().cniProperty().asObject());
-        
+
         idAide.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
@@ -320,23 +409,22 @@ public class AidesPanelController {
         dateAide.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
         montantAide.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
         dateRemb.setCellValueFactory(cellData -> cellData.getValue().dateRemboursementProperty());
-        
+
 
         idRemb.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomCol2.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
         prenomCol2.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
         aide.setCellValueFactory(cellData -> cellData.getValue().getOperation());
         dateRemb2.setCellValueFactory(cellData -> cellData.getValue().dateOperationProperty());
-        montantAide2.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
- 
-       
-        
+        montantRemb.setCellValueFactory(cellData -> cellData.getValue().montantOperationProperty().asObject());
+        montantAide2.setCellValueFactory(cellData -> cellData.getValue().montantAttenduProperty().asObject());
+
+
         inscritsAnnuelTable.setItems(listeInscritsAnnuel);
         listeMembresTable.setItems(listeInscritsAnnuel);
+        listeAideTable.setItems(listeOperations);
         //listeAideTable.setItems();
-        //etatAideTable.setItems();
-        
-        
+        etatAideTable.setItems(listeOperationsRemb);
 
 
     }
@@ -344,93 +432,6 @@ public class AidesPanelController {
 
     @FXML
     private void actionOnClickValiderDonnerAide() {
-
-        if (mCotisation != null) {
-            Response<InscriptionCotisation[]> response;
-
-            response = BackendInterface.getInscriptionCotisation(mCotisation);
-            if (response.getBody() != null) {
-                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }
-
-            } else {
-                // Todo Display error message
-                System.out.println("An error occured - ValiderCotisation");
-            }
-        }
-
-
-    }
-
-    @FXML
-    private void actionOnClickValiderListeAide() {
-
-        if (mCotisation != null) {
-            Response<InscriptionCotisation[]> response;
-
-            response = BackendInterface.getInscriptionCotisation(mCotisation);
-            if (response.getBody() != null) {
-                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }
-
-            } else {
-                // Todo Display error message
-                System.out.println("An error occured - ValiderCotisation");
-            }
-        }
-
-
-    }
-    
-    @FXML
-    private void actionOnClickValiderRembourserAide() {
-
-        if (mCotisation != null) {
-            Response<InscriptionCotisation[]> response;
-
-            response = BackendInterface.getInscriptionCotisation(mCotisation);
-            if (response.getBody() != null) {
-                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
-                    listeInscritsCotisation.clear();
-                    for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
-                        listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
-                    }
-                }
-
-            } else {
-                // Todo Display error message
-                System.out.println("An error occured - ValiderCotisation");
-            }
-        }
-
-
-    }
-    
-    @FXML
-    private void actionOnClickValiderEtatAides() {
 
         if (mCotisation != null) {
             Response<InscriptionAnnuelle[]> response;
@@ -455,30 +456,107 @@ public class AidesPanelController {
     }
 
     @FXML
+    private void actionOnClickValiderListeAide() {
+
+        if (mCotisation != null) {
+            Response<Operation[]> response;
+
+            response = BackendInterface.getOperationsByCotisationAndType(mCotisation, TypeOperation.AIDER);
+            if (response.getBody() != null) {
+                listeOperations.clear();
+                for (Operation operation : response.getBody()) {
+                    listeOperations.add(new OperationFx(operation));
+                }
+
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderListeAide");
+            }
+        }
+
+
+    }
+
+    @FXML
+    private void actionOnClickValiderRembourserAide() {
+
+        if (mCotisation != null) {
+            Response<InscriptionAnnuelle[]> response;
+
+            response = BackendInterface.getMembresPourRemboursementAide(mCotisation, mOperation, TypeOperation.AIDER);
+            if (response.getBody() != null) {
+                listeInscritsAnnuel.clear();
+                for (InscriptionAnnuelle inscriptionAnnuelle : response.getBody()) {
+                    listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionAnnuelle));
+                }
+                RembourserServiceController.effectif = listeInscritsAnnuel.size();
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+    }
+
+    @FXML
+    private void actionOnClickValiderEtatAides() {
+
+        if (mCotisation != null) {
+            Response<Operation[]> response;
+
+            response = BackendInterface.getMembresRembourseurtAide(mCotisation, mOperation, TypeOperation.REMBOURSER_AIDE);
+            if (response.getBody() != null) {
+                listeOperationsRemb.clear();
+                for (Operation operation : response.getBody()) {
+                    listeOperationsRemb.add(new OperationFx(operation));
+                }
+                RembourserServiceController.effectif = listeInscritsAnnuel.size();
+            } else {
+                // Todo Display error message
+                System.out.println("An error occured - ValiderCotisation");
+            }
+        }
+
+
+    }
+
+    @FXML
     private void actionOnclickNouvelleAide() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
-        	
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
-            BorderPane page = (BorderPane) loader.load();
-            
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Effectuer une aide");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            int selected = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
 
-            // Set the Member into the controller.
-            EffectuerServiceController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setAidePanelController(this);
+            if (selected >= 0) {
 
-            // Show the dialog and wait until the user closes it
+                InscriptionAnnuelleFx tmpSelected = inscritsAnnuelTable.getItems().get(selected);
 
-            dialogStage.showAndWait();
+                EffectuerServiceController.tmpMembre = tmpSelected;
+                EffectuerServiceController.typeService = TypeService.AIDE;
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
+                BorderPane page = (BorderPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Effectuer une aide");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                EffectuerServiceController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setAidePanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+            } else {
+                // todo alert no element selected
+
+            }
+
 
             // return controller.isOkClicked();
 
@@ -559,39 +637,51 @@ public class AidesPanelController {
             alert.showAndWait();
         }*/
     }
-    
+
 
     @FXML
     private void actionOnclickNouveauRemboursementAide() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/rembourserService.fxml"));
-            BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouveau Remboursement");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+        int selected = listeMembresTable.getSelectionModel().getSelectedIndex();
+        if (selected >= 0) {
+            try {
+                InscriptionAnnuelleFx annuelle = listeMembresTable.getItems().get(selected);
 
-            // Set the Member into the controller.
-           RembourserServiceController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setAidePanelController(this);
+                RembourserServiceController.tmpMembre = annuelle;
+                RembourserServiceController.tmpOperation = mOperation;
 
-            // Show the dialog and wait until the user closes it
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/rembourserService.fxml"));
+                BorderPane page = (BorderPane) loader.load();
 
-            dialogStage.showAndWait();
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Nouveau Remboursement");
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
 
-            // return controller.isOkClicked();
+                // Set the Member into the controller.
+                RembourserServiceController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setAidePanelController(this);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                // Show the dialog and wait until the user closes it
 
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            //todo alert no element selected
         }
+
     }
 
     @FXML

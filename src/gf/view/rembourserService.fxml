@@ -31,7 +31,7 @@
             <Label text="Nom membre" />
             <ComboBox fx:id="nomMembre" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1" />
             <Label text="Aide" GridPane.rowIndex="1" />
-            <ComboBox fx:id="service" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="operation" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date" GridPane.rowIndex="2" />
             <TextField fx:id="montantAttendu" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Montant Attendu" GridPane.rowIndex="3" />

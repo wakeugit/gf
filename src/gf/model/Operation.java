@@ -33,6 +33,8 @@ public class Operation {
 
     private Service service;
 
+    private long idOperationInitiale ;
+
 
 
     public Operation() {
@@ -52,6 +54,7 @@ public class Operation {
         this.montantPenalites = operationFx.getMontantPenalites();
         this.type = TypeOperation.valueOf(operationFx.getType());
         this.id = operationFx.getId();
+        this.idOperationInitiale = operationFx.getIdOperationInitiale();
     }
 
 }

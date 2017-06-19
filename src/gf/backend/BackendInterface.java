@@ -510,6 +510,33 @@ public class BackendInterface {
         }
     }
 
+    public static Response<Operation> createOperation(Operation operation) {
+        initRequest();
+        Response<Operation> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/operation/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(operation)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Operation created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Operation.class);
+                response.setBody(created);
+            } else {
+                JSONObject jsonObject = nodeHttpResponse.getBody().getObject();
+                String causeMessage = jsonObject.get("exception") + " -- " + jsonObject.get("message");
+                response.getExceptions().add(new RuntimeException(causeMessage));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
     public static Response<InscriptionAnnuelle> updateInscriptionAnnuelle(InscriptionAnnuelle inscriptionCotisation) {
         initRequest();
         Response<InscriptionAnnuelle> response = new Response<>();
@@ -629,6 +656,89 @@ public class BackendInterface {
             }
 
             HttpResponse<Transaction[]> httpResponse = request.asObject(Transaction[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<InscriptionAnnuelle[]> getMembresPourRemboursementAide(Cotisation mCotisation, Operation operation, TypeOperation typeOperation) {
+        Response<InscriptionAnnuelle[]> response = new Response<>();
+        try {
+            GetRequest request = null;
+
+            if (typeOperation == TypeOperation.AIDER) {
+                request = Unirest.get(APP_URL + "/operation/aide/remboursement/" + mCotisation.getId() + "/" + operation.getId());
+            } else if (typeOperation == TypeOperation.REMBOURSER_AIDE) {
+                request = Unirest.get(APP_URL + "/operation/aide/remboursement/etat/" + mCotisation.getId() + "/" + operation.getId());
+            } else if (typeOperation == TypeOperation.SANCTIONER) {
+                request = Unirest.get(APP_URL + "/operation/sanction/" + mCotisation.getId());
+            }
+
+            HttpResponse<InscriptionAnnuelle[]> httpResponse = request.asObject(InscriptionAnnuelle[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Operation[]> getMembresRembourseurtAide(Cotisation mCotisation, Operation operation, TypeOperation typeOperation) {
+        Response<Operation[]> response = new Response<>();
+        try {
+            GetRequest request = null;
+
+            if (typeOperation == TypeOperation.AIDER) {
+                request = Unirest.get(APP_URL + "/operation/aide/remboursement/" + mCotisation.getId() + "/" + operation.getId());
+            } else if (typeOperation == TypeOperation.REMBOURSER_AIDE) {
+                request = Unirest.get(APP_URL + "/operation/aide/remboursement/etat/" + mCotisation.getId() + "/" + operation.getId());
+            } else if (typeOperation == TypeOperation.SANCTIONER) {
+                request = Unirest.get(APP_URL + "/operation/sanction/" + mCotisation.getId());
+            }
+
+            HttpResponse<Operation[]> httpResponse = request.asObject(Operation[].class);
+
+            System.out.println("request = [" + httpResponse.getStatus() + "]");
+            if (httpResponse.getStatus() == 200) {
+                response.setBody(httpResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(httpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+
+    public static Response<Operation[]> getOperationsByCotisationAndType(Cotisation mCotisation, TypeOperation typeOperation) {
+        Response<Operation[]> response = new Response<>();
+        try {
+            GetRequest request = null;
+
+            if (typeOperation == TypeOperation.AIDER) {
+                request = Unirest.get(APP_URL + "/operation/aide/" + mCotisation.getId());
+            } else if (typeOperation == TypeOperation.SANCTIONER) {
+                request = Unirest.get(APP_URL + "/transaction/sanction/" + mCotisation.getId());
+            }
+
+            HttpResponse<Operation[]> httpResponse = request.asObject(Operation[].class);
 
             System.out.println("request = [" + httpResponse.getStatus() + "]");
             if (httpResponse.getStatus() == 200) {

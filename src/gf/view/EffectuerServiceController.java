@@ -1,5 +1,7 @@
 package gf.view;
 
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
 import javafx.collections.FXCollections;
@@ -19,7 +21,7 @@ import java.util.Date;
 public class EffectuerServiceController {
 
 
-    public static Service tmpService;
+    public static TypeService typeService;
     public static InscriptionAnnuelleFx tmpMembre;
     private ObservableList<ServiceFx> listeService = FXCollections.observableArrayList();
     private ObservableList<InscriptionAnnuelleFx> listeMembresInscrits = FXCollections.observableArrayList();
@@ -46,31 +48,26 @@ public class EffectuerServiceController {
     private Service mService;
 
     public EffectuerServiceController() {
-    	/*
-        if (tmpService != null) {
-            Response<InscriptionService[]> response;
 
-            response = BackendInterface.getInscriptionService(tmpService);
+        if (tmpMembre != null) {
+
+            listeMembresInscrits.clear();
+            listeMembresInscrits.add(tmpMembre);
+
+
+            Response<Service[]> response;
+
+            response = BackendInterface.getServiceByType(typeService);
             if (response.getBody() != null) {
-                if (tmpService.getType() == TypeService.TONTINE) {
-                    listeMembresInscrits.clear();
-                    for (InscriptionService inscriptionService : response.getBody()) {
-                        listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
+                listeService.clear();
+                    for (Service service : response.getBody()) {
+                        listeService.add(new ServiceFx(service));
                     }
-                } else if (tmpService.getType() == TypeService.EPARGNE) {
-                    listeMembresInscrits.clear();
-                    for (InscriptionService inscriptionService : response.getBody()) {
-                        listeMembresInscrits.add(new InscriptionServiceFx(inscriptionService));
-                    }
-                }
-
             } else {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderService");
             }
-
-            listeService.add(new ServiceFx(tmpService));
-        }*/
+        }
     }
 
     @FXML
@@ -179,12 +176,14 @@ public class EffectuerServiceController {
 
 
                 });
+
         service.setItems(listeService);
         nomMembre.setItems(listeMembresInscrits);
-        //set default value of combox Service
-        if (tmpService != null) {
-            service.getSelectionModel().select(new ServiceFx(tmpService));
-        }
+
+        //set default value of combox Service NO NEED for service
+//        if (tmpOperation != null) {
+//            service.getSelectionModel().select(new ServiceFx(tmpOperation));
+//        }
         //set default value of combox membre
         if (tmpMembre != null) {
             //nomMembre.setValue(tmpMembre);
@@ -226,25 +225,25 @@ public class EffectuerServiceController {
             operation.setDateOperation(dateOp);
             operation.setMontantOperation(montantOp);
 
-            if (tmpService.getType() == TypeService.AIDE) {
+            if (typeService == TypeService.AIDE) {
                 operation.setType(TypeOperation.AIDER);
-            } else if (tmpService.getType() == TypeService.SANCTION) {
+            } else if (typeService == TypeService.SANCTION) {
                 operation.setType(TypeOperation.SANCTIONER);
             }
             System.out.println("Operation:" + operation);
 
 
-            /*Response<Operation> response;
+            Response<Operation> response;
 
             if (valider.getText().equals("Valider")) {
-                response = BackendInterface.createTransaction(operation);
+                response = BackendInterface.createOperation(operation);
                 if (response.getBody() != null) {
 //                    aidePanelController.getListMembreInscritsService().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a tontine!");
+                    System.out.println(mMembre.getNom() + " a recu une aide.");
 
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.initOwner(dialogStage);
-                    alert.setTitle(response.getBody().getService().getType().name());
+                    alert.setTitle(typeService.name());
                     alert.setHeaderText("Operation Effectuée !!");
                     alert.setContentText(mMembre.getNom());
 
@@ -256,7 +255,7 @@ public class EffectuerServiceController {
             } else {
                 //aidePanelController.getListMembreInscritsService().set(keyInArray, inscriptionServiceFx);
             }
-*/
+
             validerClicked = true;
             dialogStage.close();
         }
@@ -351,7 +350,7 @@ public class EffectuerServiceController {
         this.keyInArray = keyInArray;
     }
 
-    public void setService(Service service) {
-        this.tmpService = service;
+    public void setService(TypeService typeService) {
+        this.typeService = typeService;
     }
 }
