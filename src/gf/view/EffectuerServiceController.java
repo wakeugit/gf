@@ -54,13 +54,8 @@ public class EffectuerServiceController {
 
     public EffectuerServiceController() {
     	//modifier les labels sur la vue: tite et le label devant le textField
-    	if(sanctionPanelController!=null){
-    		serviceTitel.setText("Rembourser une sanction");
-    		serviceText.setText("Sanction");
-    	} else {
-    		serviceTitel.setText("Rembourser une aide");
-    		serviceText.setText("Aide");
-    	}
+
+
 
         if (tmpMembre != null) {
 
@@ -85,6 +80,11 @@ public class EffectuerServiceController {
 
     @FXML
     private void initialize() {
+
+        if(typeService==TypeService.SANCTION){
+            serviceTitel.setText("Sanctionner un membre");
+            serviceText.setText("Sanction");
+        }
 
         service.setButtonCell(new ListCell<ServiceFx>() {
             @Override

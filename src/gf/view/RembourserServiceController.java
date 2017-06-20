@@ -64,14 +64,7 @@ public class RembourserServiceController {
     private Operation mOperation;
 
     public RembourserServiceController() {
-    	//modifier les labels sur la vue: tite et le label devant le textField
-    	if(sanctionPanelController!=null){
-    		serviceTitel.setText("Rembourser une sanction");
-    		serviceText.setText("Sanction");
-    	} else {
-    		serviceTitel.setText("Rembourser une aide");
-    		serviceText.setText("Aide");
-    	}
+
     	
         /*
         if (tmpOperation != null) {
@@ -105,6 +98,12 @@ public class RembourserServiceController {
 
     @FXML
     private void initialize() {
+
+        //modifier les labels sur la vue: tite et le label devant le textField
+        if(tmpOperation!=null && tmpOperation.getType() == TypeOperation.SANCTIONER){
+            serviceTitel.setText("Rembourser une sanction");
+            serviceText.setText("Sanction");
+        }
 
         operation.setButtonCell(new ListCell<OperationFx>() {
             @Override
@@ -207,7 +206,7 @@ public class RembourserServiceController {
             nomMembre.getSelectionModel().select(tmpMembre);
         }
 
-        if (montantAttendu != null && effectif > 0 && tmpOperation != null) {
+        if (montantAttendu != null && tmpOperation != null) {
             double ma = tmpOperation.getMontantOperation() / effectif;
             System.out.println("M A: " + ma);
             montantAttendu.setText(numberFormat.format(ma));
