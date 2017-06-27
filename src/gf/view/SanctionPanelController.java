@@ -527,20 +527,20 @@ public class SanctionPanelController {
             // Load the fxml file and create a new stage for the popup dialog.
             int selected = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
 
-            if (selected >= 0) {
+            if (selected >=0) {
 
                 InscriptionAnnuelleFx tmpSelected = inscritsAnnuelTable.getItems().get(selected);
 
                 EffectuerServiceController.tmpMembre = tmpSelected;
                 EffectuerServiceController.typeService = TypeService.AIDE;
-
+				
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Effectuer une serviceCol");
+                dialogStage.setTitle("Effectuer une sanction");
                 dialogStage.initModality(Modality.WINDOW_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
