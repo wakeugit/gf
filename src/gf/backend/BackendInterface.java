@@ -735,7 +735,9 @@ public class BackendInterface {
             if (typeOperation == TypeOperation.AIDER) {
                 request = Unirest.get(APP_URL + "/operation/aide/" + mCotisation.getId());
             } else if (typeOperation == TypeOperation.SANCTIONER) {
-                request = Unirest.get(APP_URL + "/transaction/sanction/" + mCotisation.getId());
+                request = Unirest.get(APP_URL + "/operation/sanction/" + mCotisation.getId());
+            } else if (typeOperation == TypeOperation.REMBOURSER_SANCTION) {
+                request = Unirest.get(APP_URL + "/operation/sanctionner/" + mCotisation.getId());
             }
 
             HttpResponse<Operation[]> httpResponse = request.asObject(Operation[].class);
@@ -753,7 +755,7 @@ public class BackendInterface {
         }
     }
 
-    public static Response<Transaction[]> getTransactionsToRemboursementByCotisation(Cotisation mCotisation) {
+    public static Response<Transaction[]> getTransactionsForRemboursementByCotisation(Cotisation mCotisation) {
         Response<Transaction[]> response = new Response<>();
         try {
             GetRequest request = Unirest.get(APP_URL + "/transaction/prets/remboursement/" + mCotisation.getId());

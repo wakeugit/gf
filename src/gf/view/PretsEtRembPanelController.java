@@ -707,7 +707,7 @@ public class PretsEtRembPanelController {
                     response = BackendInterface.getTransactionByCotisationAndDateAndType(mCotisation, dateRequest, TypeTransaction.EMPRUNTER);
 
             } else {
-                response = BackendInterface.getTransactionsToRemboursementByCotisation(mCotisation);
+                response = BackendInterface.getTransactionsForRemboursementByCotisation(mCotisation);
 
             }
 

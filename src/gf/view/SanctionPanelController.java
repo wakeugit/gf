@@ -60,18 +60,6 @@ public class SanctionPanelController {
     @FXML
     private TableColumn<OperationFx, LocalDate> dateRemb;
 
-    @FXML
-    private TableView<InscriptionAnnuelleFx> listeMembresTable;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, Long> idCol1;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> nomCol1;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> prenomCol1;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, String> adresseCol1;
-    @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> cniCol1;
 
     @FXML
     private TableView<OperationFx> etatServiceTable;
@@ -398,11 +386,6 @@ public class SanctionPanelController {
         adresseCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().adresseProperty());
         cniCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().cniProperty().asObject());
 
-        idCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().idProperty().asObject());
-        nomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
-        prenomCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().prenomProperty());
-        adresseCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().adresseProperty());
-        cniCol1.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().cniProperty().asObject());
 
         idService.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         nomMembre.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -423,9 +406,7 @@ public class SanctionPanelController {
 
 
         inscritsAnnuelTable.setItems(listeInscritsAnnuel);
-        listeMembresTable.setItems(listeInscritsAnnuel);
-        //listeServiceTable.setItems(listeOperations);
-        //listeServiceTable.setItems();
+        listeServiceTable.setItems(listeOperations);
         etatServiceTable.setItems(listeOperationsRemb);
 
 
@@ -463,7 +444,7 @@ public class SanctionPanelController {
         if (mCotisation != null) {
             Response<Operation[]> response;
 
-            response = BackendInterface.getOperationsByCotisationAndType(mCotisation, TypeOperation.AIDER);
+            response = BackendInterface.getOperationsByCotisationAndType(mCotisation, TypeOperation.SANCTIONER);
             if (response.getBody() != null) {
                 listeOperations.clear();
                 for (Operation operation : response.getBody()) {
@@ -485,7 +466,7 @@ public class SanctionPanelController {
         if (mCotisation != null) {
             Response<InscriptionAnnuelle[]> response;
 
-            response = BackendInterface.getMembresPourRemboursementAide(mCotisation, mOperation, TypeOperation.AIDER);
+            response = BackendInterface.getMembresPourRemboursementAide(mCotisation, mOperation, TypeOperation.SANCTIONER);
             if (response.getBody() != null) {
                 listeInscritsAnnuel.clear();
                 for (InscriptionAnnuelle inscriptionAnnuelle : response.getBody()) {
@@ -505,19 +486,17 @@ public class SanctionPanelController {
         if (mCotisation != null) {
             Response<Operation[]> response;
 
-            response = BackendInterface.getMembresRembourseurtAide(mCotisation, mOperation, TypeOperation.REMBOURSER_AIDE);
+            response = BackendInterface.getOperationsByCotisationAndType(mCotisation, TypeOperation.REMBOURSER_SANCTION);
             if (response.getBody() != null) {
                 listeOperationsRemb.clear();
                 for (Operation operation : response.getBody()) {
                     listeOperationsRemb.add(new OperationFx(operation));
                 }
-                RembourserServiceController.effectif = listeInscritsAnnuel.size();
             } else {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
             }
         }
-
 
     }
 
@@ -532,8 +511,9 @@ public class SanctionPanelController {
                 InscriptionAnnuelleFx tmpSelected = inscritsAnnuelTable.getItems().get(selected);
 
                 EffectuerServiceController.tmpMembre = tmpSelected;
-                EffectuerServiceController.typeService = TypeService.AIDE;
-				
+
+                EffectuerServiceController.typeService = TypeService.SANCTION;
+
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerService.fxml"));
                 BorderPane page = (BorderPane) loader.load();
@@ -644,13 +624,17 @@ public class SanctionPanelController {
     @FXML
     private void actionOnclickNouveauRemboursementService() {
 
-        int selected = listeMembresTable.getSelectionModel().getSelectedIndex();
+        int selected = listeServiceTable.getSelectionModel().getSelectedIndex();
         if (selected >= 0) {
             try {
-                InscriptionAnnuelleFx annuelle = listeMembresTable.getItems().get(selected);
+                OperationFx operationFx = listeServiceTable.getItems().get(selected);
 
-                RembourserServiceController.tmpMembre = annuelle;
-                RembourserServiceController.tmpOperation = mOperation;
+                InscriptionAnnuelleFx inscriptionAnnuelleFx = new InscriptionAnnuelleFx();
+                inscriptionAnnuelleFx.setMembrefx(operationFx.getMembreFx());
+
+                RembourserServiceController.tmpMembre = inscriptionAnnuelleFx;
+                RembourserServiceController.tmpOperation = new Operation(operationFx);
+                RembourserServiceController.effectif = 1;
 
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();

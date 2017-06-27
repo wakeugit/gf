@@ -22,11 +22,18 @@ public class InscriptionAnnuelleFx {
 	}
 	
 	public InscriptionAnnuelleFx(InscriptionAnnuelle inscriptionAnnuelle){
-		this.anneeFx= new CotisationFx(inscriptionAnnuelle.getCotisation());
-		this.membreFx= new MembreFx(inscriptionAnnuelle.getMembre());
-		this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parse(inscriptionAnnuelle.getDateInscription()));
-		this.montant = new SimpleIntegerProperty(inscriptionAnnuelle.getMontant());
-		this.id = new SimpleLongProperty(inscriptionAnnuelle.getId());
+		if (inscriptionAnnuelle != null) {
+			this.anneeFx = new CotisationFx(inscriptionAnnuelle.getCotisation());
+			this.membreFx = new MembreFx(inscriptionAnnuelle.getMembre());
+			this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parse(inscriptionAnnuelle.getDateInscription()));
+			this.montant = new SimpleIntegerProperty(inscriptionAnnuelle.getMontant());
+			this.id = new SimpleLongProperty(inscriptionAnnuelle.getId());
+		} else {
+			this.id = null;
+			this.montant = null;
+			this.dateInscription = null;
+		}
+
 	}
 	
 		
