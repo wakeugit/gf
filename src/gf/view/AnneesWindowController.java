@@ -69,7 +69,7 @@ public class AnneesWindowController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle Annee");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -108,7 +108,7 @@ public class AnneesWindowController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Annee");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);

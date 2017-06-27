@@ -62,7 +62,7 @@ public class AidesWindowController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle Aide");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -101,7 +101,7 @@ public class AidesWindowController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier ServiceFx");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);

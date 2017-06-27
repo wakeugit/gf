@@ -75,7 +75,7 @@ public class TontineWindowController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle tontine");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -114,7 +114,7 @@ public class TontineWindowController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Tontine");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);

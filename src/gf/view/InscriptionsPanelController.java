@@ -278,7 +278,7 @@ public class InscriptionsPanelController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle Inscription");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -316,7 +316,7 @@ public class InscriptionsPanelController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Inscription");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
@@ -384,7 +384,7 @@ public class InscriptionsPanelController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle Inscription");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -422,7 +422,7 @@ public class InscriptionsPanelController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Inscription");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);

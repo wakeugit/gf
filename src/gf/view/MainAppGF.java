@@ -22,6 +22,7 @@ public class MainAppGF extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("GF");
+        //this.primaryStage.setAlwaysOnTop(true);
 
 
         initRootLayout();
@@ -62,8 +63,9 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Aides");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
+       
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
@@ -91,7 +93,7 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Annees");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -120,7 +122,7 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Epargnes");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -149,7 +151,7 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Tontines");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -179,7 +181,7 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Sanctions");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -208,7 +210,7 @@ public class MainAppGF extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Utilisateurs");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(this.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);

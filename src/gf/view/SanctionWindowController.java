@@ -63,7 +63,7 @@ public class SanctionWindowController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouvelle Service");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             //dialogStage.initOwner(getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -102,7 +102,7 @@ public class SanctionWindowController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Sanction");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 //dialogStage.initOwner(getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);

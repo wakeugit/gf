@@ -81,7 +81,7 @@ public class MembrePanelController {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Nouveau Membre");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(mainAppGF.getPrimaryStage());
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -118,7 +118,7 @@ public class MembrePanelController {
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
                 dialogStage.setTitle("Modifier Membre");
-                dialogStage.initModality(Modality.WINDOW_MODAL);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
