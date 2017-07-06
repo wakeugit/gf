@@ -44,11 +44,13 @@ public class AideDetailsController {
     private void actionOnClickValider() {
         if (isInputValid()) {
 
-            Service service = new Service(motif.getText(), TypeService.AIDE);
+            Service service = null;
 
             Response<Service> response;
 
             if (valider.getText().equals("Valider")) {
+
+                service = new Service(motif.getText(), TypeService.AIDE);
 
                 response = BackendInterface.createService(service);
                 if (response.getBody() != null) {
@@ -58,8 +60,11 @@ public class AideDetailsController {
                     // Todo Display error message
                 }
             } else {
+
+                service = new Service(serviceFx);
                 if (service.getId() != -1) {
 //					  service.setId(tontine.getId());
+                    service.setMotif(motif.getText());
                     response = BackendInterface.updateService(service);
                     if (response.getBody() != null) {
                         aideWindowController.getListeAides().set(keyInArray, new ServiceFx(response.getBody()));
@@ -78,7 +83,7 @@ public class AideDetailsController {
 
     @FXML
     private void actionOnClickAnnuler() {
-        motif.setText("");
+        this.dialogStage.close();
     }
 
     private boolean isInputValid() {
