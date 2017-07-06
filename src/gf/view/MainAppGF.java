@@ -243,7 +243,7 @@ public class MainAppGF extends Application {
 
     @FXML
     public void closeWindows(){
-        this.getPrimaryStage().close();
+        System.exit(0);
     }
 
     public void actionOnClickInscription() {
