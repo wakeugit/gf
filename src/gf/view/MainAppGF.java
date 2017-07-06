@@ -241,6 +241,11 @@ public class MainAppGF extends Application {
         }
     }
 
+    @FXML
+    public void closeWindows(){
+        this.getPrimaryStage().close();
+    }
+
     public void actionOnClickInscription() {
         try {
             // Load member pane.
