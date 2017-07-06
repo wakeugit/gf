@@ -40,8 +40,13 @@ public class EpargneWindowController {
 
     public EpargneWindowController() {
 
+        loadData();
+    }
+
+    private void loadData() {
         Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
         if (response.getBody() != null) {
+            listeEpargne.clear();
             for (Cotisation cotisation : response.getBody()) {
                 listeEpargne.add(new CotisationFx(cotisation));
             }
@@ -148,6 +153,29 @@ public class EpargneWindowController {
 
     }
 
+
+    @FXML
+    private void epargneSupprimer() {
+
+        int selectedIndex = epargneTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            CotisationFx cotisationFx = epargneTable.getItems().get(selectedIndex);
+
+            //// TODO: 06/07/2017 ALERT USER BEFORE DELETE ENTRIES
+            BackendInterface.deleteAnnee(cotisationFx.getId());
+            loadData();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionee");
+            alert.setHeaderText("Aucune ligne selectionee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+
+    }
 
     public ObservableList<CotisationFx> getListeCotisations() {
         return listeEpargne;
