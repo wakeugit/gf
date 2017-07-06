@@ -30,8 +30,13 @@ public class SanctionWindowController {
     private TableColumn<ServiceFx, String> motif;
 
     public SanctionWindowController() {
+        loadData();
+    }
+
+    private void loadData() {
         Response<Service[]> response = BackendInterface.getServiceByType(TypeService.SANCTION);
         if (response.getBody() != null) {
+            listeSanctions.clear();
             for (Service service : response.getBody()) {
                 listeSanctions.add(new ServiceFx(service));
             }
@@ -135,6 +140,29 @@ public class SanctionWindowController {
 
 
     }
+
+    @FXML
+    private void sanctionSupprimer() {
+
+        int selectedIndex = sanctionTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            ServiceFx ServiceFx = sanctionTable.getItems().get(selectedIndex);
+
+            //// TODO: 06/07/2017 ALERT THE USER BEFORE DELETE
+            BackendInterface.deleteService(ServiceFx.getId());
+            loadData();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionn�e");
+            alert.setHeaderText("Aucune ligne selectionn�e");
+            alert.setContentText("Svp selectionnez un �lement dans la liste.");
+            alert.showAndWait();
+        }
+
+    }
+
 
 
     public ObservableList<ServiceFx> getListeSanctions() {
