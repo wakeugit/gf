@@ -453,6 +453,60 @@ public class TontinePanelController {
 
 
     @FXML
+    private void actionOnclickModifierCotisation() {
+        int selectedIndex = tontineurs.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+
+            try {
+                TransactionFx incriptCotisationFx = tontineurs.getItems().get(selectedIndex);
+//                EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+//                EffectuerCotisationController.tmpMembre = incriptCotisationFx.getMembreFx();
+
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
+                BorderPane page = (BorderPane) loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Modifier Cotisation");
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                EffectuerCotisationController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setTontinePanelController(this);
+                controller.setTransaction(incriptCotisationFx);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionnee");
+            alert.setHeaderText("Aucune ligne selectionnee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+    }
+
+
+    @FXML
     private void actionOnclickNouveauBeneficiaire() {
         try {
 
@@ -501,65 +555,16 @@ public class TontinePanelController {
         }
     }
 
-    @FXML
-    private void actionOnclickModifierCotisation() {
-
-        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
-            try {
-                // Load the fxml file and create a new stage for the popup dialog.
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
-                BorderPane page = (BorderPane) loader.load();
-
-                // Create the dialog Stage.
-                Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Inscription");
-                dialogStage.initModality(Modality.APPLICATION_MODAL);
-                dialogStage.initOwner(mainAppGF.getPrimaryStage());
-                Scene scene = new Scene(page);
-                dialogStage.setScene(scene);
-
-                // Set the Member into the controller.
-                EffectuerCotisationController controller = loader.getController();
-                controller.setDialogStage(dialogStage);
-                controller.setTontinePanelController(this);
-                //  controller.setInscriptionCotisation(mbreInscritFx);
-                controller.setKeyInArray(keyInArrayList);
-
-
-                // Show the dialog and wait until the user closes it
-
-                dialogStage.showAndWait();
-
-                // return controller.isOkClicked();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainAppGF.getPrimaryStage());
-            alert.setTitle("Aucune ligne selectionnee");
-            alert.setHeaderText("Aucune ligne selectionnee");
-            alert.setContentText("Svp selectionnez un element dans la liste.");
-
-            alert.showAndWait();
-        }
-    }
 
 
     @FXML
     private void actionOnclickSupprimerCotisation() {
 
-        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = tontineurs.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            inscritsCotisationTable.getItems().remove(selectedIndex);
-            //BackendInterface.deleteMembre(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+            // TODO: 10/07/2017 Alert user before delete
+            BackendInterface.deleteTransaction(tontineurs.getItems().get(selectedIndex).getId());
+            actionOnClickValiderTontineur();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);

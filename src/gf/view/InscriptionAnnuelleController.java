@@ -23,7 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class InscriptionAnnuelleController {
-	
+
+    public static Cotisation tmpCotisation;
     private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeAnnees = FXCollections.observableArrayList();
 	
@@ -60,7 +61,7 @@ public class InscriptionAnnuelleController {
        	 System.out.println("An error occured - Membres");
         }
 
-        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
+       /* Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
        if (response1.getBody() != null) {
            for (Cotisation cotisation : response1.getBody()) {
                listeAnnees.add(new CotisationFx(cotisation));
@@ -68,7 +69,9 @@ public class InscriptionAnnuelleController {
        } else {
            //Todo Display error message
            System.out.println("An error occured - Annee");
-       }      
+       }     */
+
+        listeAnnees.add(new CotisationFx(tmpCotisation));
    }
     
     @FXML
@@ -212,12 +215,10 @@ public class InscriptionAnnuelleController {
 
     @FXML
     private void actionOnClickAnnuler() {
-        nomMembre.getSelectionModel().select(null);
-        cotisation.getSelectionModel().select(null);
-        dateInscription.setValue(null);
-        montant.setText("");
+        this.dialogStage.close();
+
     }
-    
+
 
     private boolean isInputValid() {
         String errorMessage = "";

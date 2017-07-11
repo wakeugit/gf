@@ -89,11 +89,7 @@ public class MembreDetailsController {
 
     @FXML
     private void actionOnClickAnnuler() {
-        nomMembre.setText("");
-        prenomMembre.setText("");
-        telephone.setText("");
-        cni.setText("");
-        adresse.setText("");
+        this.dialogStage.close();
     }
 
     private boolean isInputValid() {

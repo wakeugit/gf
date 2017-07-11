@@ -43,14 +43,19 @@ public class MembrePanelController {
 
     public MembrePanelController() {
 
+        loadData();
+    }
+
+    private void loadData() {
         Response<Membre[]> response = BackendInterface.getMembres();
         if (response.getBody() != null) {
+            listeMembres.clear();
             for (Membre membre : response.getBody()) {
                 listeMembres.add(new MembreFx(membre));
             }
         } else {
             //Todo Display error message
-        	System.out.println("An error occured - Membres");
+            System.out.println("An error occured - Membres");
         }
     }
 
@@ -157,8 +162,9 @@ public class MembrePanelController {
 
         int selectedIndex = membreTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            membreTable.getItems().remove(selectedIndex);
+            // TODO: 10/07/2017 ALERT USER BEFORE DELETE
             BackendInterface.deleteMembre(membreTable.getItems().get(selectedIndex).getId());
+            loadData();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
