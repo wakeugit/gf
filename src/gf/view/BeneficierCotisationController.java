@@ -165,16 +165,7 @@ public class BeneficierCotisationController {
             System.out.println("Montant = " + montantOp);
 
             Transaction transaction = new Transaction();
-            transaction.setMembre(mMembre);
-            transaction.setCotisation(mCotisation);
-            transaction.setDateTransaction(dateOp);
-            transaction.setMontantTransaction(Double.valueOf(montantPlace.getText()));
-            transaction.setType(TypeTransaction.BENEFICIER);
-            transaction.setMontantPlace(Double.valueOf(montantPlace.getText()));
-            transaction.setMontantRetenu(Double.valueOf(montantRetenu.getText()));
-            transaction.setTauxInteret(Double.valueOf(interet.getText()));
-            transaction.setMontantInteret((Double.valueOf(montantPlace.getText()) * Double.valueOf(interet.getText())) / 100);
-            transaction.setMontantBeneficie(Math.abs(Double.valueOf(montantPlace.getText()) - Double.valueOf(montantRetenu.getText())));
+
 
             System.out.println("Transaction:" + transaction);
 
@@ -182,24 +173,54 @@ public class BeneficierCotisationController {
             Response<Transaction> response;
 
             if (valider.getText().equals("Valider")) {
+
+                transaction.setMembre(mMembre);
+                transaction.setCotisation(mCotisation);
+                transaction.setDateTransaction(dateOp);
+                transaction.setMontantTransaction(Double.valueOf(montantPlace.getText()));
+                transaction.setType(TypeTransaction.BENEFICIER);
+                transaction.setMontantPlace(Double.valueOf(montantPlace.getText()));
+                transaction.setMontantRetenu(Double.valueOf(montantRetenu.getText()));
+                transaction.setTauxInteret(Double.valueOf(interet.getText()));
+                transaction.setMontantInteret((Double.valueOf(montantPlace.getText()) * Double.valueOf(interet.getText())) / 100);
+                transaction.setMontantBeneficie(Math.abs(Double.valueOf(montantPlace.getText()) - Double.valueOf(montantRetenu.getText())));
+
                 response = BackendInterface.createTransaction(transaction);
-                if (response.getBody() != null) {
-//                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a beneficié!");
 
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.initOwner(dialogStage);
-                    alert.setTitle("Tontine");
-                    alert.setHeaderText("Effectué !!");
-                    alert.setContentText(mMembre.getNom() + " a beneficié!");
-
-                    alert.showAndWait();
-
-                } else {
-                    // Todo Display error message
-                }
             } else {
-                //tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+
+                transaction = new Transaction(transactionFx);
+                transaction.setAvaliseur1(null);
+                transaction.setMembre(mMembre);
+
+                transaction.setDateTransaction(dateOp);
+                transaction.setMontantTransaction(montantOp);
+                transaction.setMontantPlace(Double.valueOf(montantPlace.getText()));
+                transaction.setMontantRetenu(Double.valueOf(montantRetenu.getText()));
+                transaction.setTauxInteret(Double.valueOf(interet.getText()));
+                transaction.setMontantInteret((Double.valueOf(montantPlace.getText()) * Double.valueOf(interet.getText())) / 100);
+                transaction.setMontantBeneficie(Math.abs(Double.valueOf(montantPlace.getText()) - Double.valueOf(montantRetenu.getText())));
+
+                System.out.println("Transaction:" + transaction);
+
+                response = BackendInterface.updateTransaction(transaction);
+
+            }
+
+            if (response.getBody() != null) {
+//                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
+                System.out.println(mMembre.getNom() + " a beneficié!");
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.initOwner(dialogStage);
+                alert.setTitle("Tontine");
+                alert.setHeaderText("Effectué !!");
+                alert.setContentText(mMembre.getNom() + " a beneficié!");
+
+                alert.showAndWait();
+
+            } else {
+                // Todo Display error message
             }
 
             validerClicked = true;
@@ -305,13 +326,26 @@ public class BeneficierCotisationController {
 
     public void setCotisationFx(TransactionFx transactionFx) {
         initialize();
-//        nomMembre.getSelectionModel().select(inscriptionCotisationFx);
+
+        if (transactionFx != null && transactionFx.getMontantBeneficie() > 0) {
+            valider.setText("Modifier");
+
+        }
+        InscriptionCotisationFx inscrit = new InscriptionCotisationFx();
+        inscrit.setMembrefx(transactionFx.getMembreFx());
+        nomMembre.getSelectionModel().select(inscrit);
         cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
         date.setValue(transactionFx.getDateOperation());
         montantPlace.setText("" + transactionFx.montantTransactionProperty().getValue());
+        montantRetenu.setText("" + transactionFx.montantRetenuProperty().getValue());
+        interet.setText("" + transactionFx.montantInteretsProperty().getValue());
 
         mCotisation = new Cotisation(transactionFx.getCotisationFx());
         mMembre = new Membre(transactionFx.getMembreFx());
+
+
+        tmpCotisation = new Cotisation(transactionFx.getCotisationFx());
+        this.transactionFx = transactionFx;
     }
 
     public int getKeyInArray() {

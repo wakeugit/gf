@@ -64,7 +64,7 @@ public class EpargnePanelController {
     private TableColumn<TransactionFx, Integer> DureeCol;
     @FXML
     private TableColumn<TransactionFx, Integer> NombreCol;
-    
+
 
     // pour Etat Epargne General
 
@@ -548,7 +548,7 @@ public class EpargnePanelController {
 
 
     @FXML
-    private void actionOnclickNouvelleCotisation() {
+    private void actionOnclickNouvelleEpargne() {
         try {
             int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
@@ -589,26 +589,24 @@ public class EpargnePanelController {
 
 
     @FXML
-    private void actionOnclickNouveauBeneficiaire() {
+    private void actionOnclickModifierEpargne() {
+        int selectedIndex = etatEpargneIndividuelle.getSelectionModel().getSelectedIndex();
 
-    }
-
-    @FXML
-    private void actionOnclickModifierCotisation() {
-
-        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
-            int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
+
             try {
+                TransactionFx transactionFx = etatEpargneIndividuelle.getItems().get(selectedIndex);
+//                EffectuerCotisationController.tmpCotisation = new Cotisation(incriptCotisationFx.getCotisationFx());
+//                EffectuerCotisationController.tmpMembre = incriptCotisationFx.getMembreFx();
+
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/effectuerCotisation.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Inscription");
+                dialogStage.setTitle("Modifier Epargne");
                 dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
@@ -618,9 +616,7 @@ public class EpargnePanelController {
                 EffectuerCotisationController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
                 controller.setEpargnePanelController(this);
-                //  controller.setInscriptionCotisation(mbreInscritFx);
-                controller.setKeyInArray(keyInArrayList);
-
+                controller.setTransaction(transactionFx);
 
                 // Show the dialog and wait until the user closes it
 
@@ -632,6 +628,7 @@ public class EpargnePanelController {
                 e.printStackTrace();
 
             }
+
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
@@ -646,12 +643,13 @@ public class EpargnePanelController {
 
 
     @FXML
-    private void actionOnclickSupprimerCotisation() {
+    private void actionOnclickSupprimerEpargne() {
 
-        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+        int selectedIndex = etatEpargneIndividuelle.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            inscritsCotisationTable.getItems().remove(selectedIndex);
-            //BackendInterface.deleteMembre(inscritsAnnuelTable.getItems().get(selectedIndex).getId());
+            //// TODO: 11/07/2017 Alert user before delete data
+            BackendInterface.deleteTransaction(etatEpargneIndividuelle.getItems().get(selectedIndex).getId());
+            actionOnClickValiderEtatIndividuel();
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
