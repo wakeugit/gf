@@ -422,7 +422,7 @@ public class PretsEtRembPanelController {
 
             response = BackendInterface.getInscriptionCotisation(mCotisation);
             if (response.getBody() != null) {
-                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                if (mCotisation.getTypeCotisation() == TypeCotisation.TONTINE || mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
