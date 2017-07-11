@@ -499,32 +499,32 @@ public class PretsEtRembPanelController {
     }
 
     @FXML
-    private void actionOnclickModifierInscptionAnnuelle() {
-/*
-        int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
+    private void actionOnclickModifierPret() {
+
+        int selectedIndex = pretsTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            TransactionFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
-            int keyInArrayList = suiviPrets.indexOf(mbreInscritFx);
+            TransactionFx transactionFx = pretsTable.getItems().get(selectedIndex);
             try {
                 // Load the fxml file and create a new stage for the popup dialog.
+                FaireEmpruntController.tmpCotisation = mCotisation;
+
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(MainAppGF.class.getResource("/gf/view/Transaction.fxml"));
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnEmprunt.fxml"));
                 BorderPane page = (BorderPane) loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
-                dialogStage.setTitle("Modifier Inscription");
+                dialogStage.setTitle("Faire un emprunt");
                 dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.initOwner(mainAppGF.getPrimaryStage());
                 Scene scene = new Scene(page);
                 dialogStage.setScene(scene);
 
                 // Set the Member into the controller.
-                TransactionController controller = loader.getController();
+                FaireEmpruntController controller = loader.getController();
                 controller.setDialogStage(dialogStage);
-                controller.setTransaction(mbreInscritFx);
-                controller.setKeyInArray(keyInArrayList);
-                controller.setInscriptionsPanelController(this);
+                controller.setPretsEtRembPanelController(this);
+                controller.setTransactionFx(transactionFx);
 
                 // Show the dialog and wait until the user closes it
 
@@ -545,7 +545,7 @@ public class PretsEtRembPanelController {
             alert.setContentText("Svp selectionnez un element dans la liste.");
 
             alert.showAndWait();
-        }*/
+        }
     }
 
 

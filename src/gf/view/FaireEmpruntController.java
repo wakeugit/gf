@@ -4,6 +4,7 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
 import gf.util.ComboBoxAutoComplete;
+import gf.util.CoreUtil;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,6 +27,7 @@ public class FaireEmpruntController {
 
     public static Cotisation tmpCotisation;
     public static InscriptionCotisationFx tmpMembre;
+    private  NumberFormat numberFormat;
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
     private ObservableList<InscriptionCotisationFx> listeMembresInscrits = FXCollections.observableArrayList();
 
@@ -84,6 +87,9 @@ public class FaireEmpruntController {
             }
 
             listeCotisation.add(new CotisationFx(tmpCotisation));
+
+            numberFormat = NumberFormat.getNumberInstance();
+            numberFormat.setMaximumFractionDigits(0);
         }
     }
 
@@ -201,6 +207,25 @@ public class FaireEmpruntController {
             dateRemb.setValue(LocalDate.now());
 
             //new ComboBoxAutoComplete<MembreFx>(nomMembre);
+            montantInterets.setEditable(false);
+
+            if (tauxInterets != null && montantInterets != null) {
+                tauxInterets.textProperty().addListener((observable, oldValue, newValue) -> {
+
+                    if (!newValue.isEmpty()) {
+                        double montantInt = Double.valueOf(tauxInterets.getText())*Double.valueOf(montantEmprunt.getText()) / 100;
+                        if (montantInt < 0) {
+                            valider.setDisable(true);
+                            montantInterets.setText("Error");
+                        } else {
+                            valider.setDisable(false);
+                            montantInterets.setText(numberFormat.format(montantInt));
+                        }
+                    }
+
+
+                });
+            }
 
         }
 
@@ -312,7 +337,7 @@ public class FaireEmpruntController {
             transaction.setType(TypeTransaction.EMPRUNTER);
             transaction.setDateRemboursement(dataRemb);
             transaction.setAvaliseur1(mAvalyseur);
-            transaction.setMontantInteret(Double.valueOf(montantInterets.getText().trim()));
+            transaction.setMontantInteret(Double.valueOf(CoreUtil.removeSpace(montantInterets.getText().trim())));
             transaction.setTauxInteret(Double.valueOf(tauxInterets.getText().trim()));
 
 
@@ -411,13 +436,16 @@ public class FaireEmpruntController {
         return inscriptionCotisation;
     }
 
-    public void setEffectuerCotisation(InscriptionCotisationFx inscriptionCotisationFx) {
+    public void setTransactionFx(TransactionFx transactionFx) {
         initialize();
         valider.setText("Modifier");
-//        nomMembre.getSelectionModel().select(inscriptionCotisationFx.getMembreFx());
-        cotisation.getSelectionModel().select(inscriptionCotisationFx.getCotisationFx());
-        dateOperation.setValue(inscriptionCotisationFx.getDateInscrptionProperty().getValue());
-        montantEmprunt.setText("" + inscriptionCotisationFx.getNumeroTirage());
+        InscriptionCotisationFx inscrit = new InscriptionCotisationFx();
+        inscrit.setMembrefx(transactionFx.getMembreFx());
+        nomMembre.getSelectionModel().select(inscrit);
+        cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
+        dateOperation.setValue(transactionFx.getDateOperation());
+        montantEmprunt.setText("" + transactionFx.getMontantTransaction());
+
     }
 
 
