@@ -24,7 +24,7 @@
          <children>
             <Button fx:id="nouveau" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
             <Button fx:id="modifierAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-            <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
+            <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" onAction="#epargneSupprimer" text="Supprimer" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </right>

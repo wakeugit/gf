@@ -48,7 +48,6 @@ public class MainAppGF extends Application {
             e.printStackTrace();
         }
     }
-
     /**
      * Shows the members overview inside the root layout.
      */
@@ -98,7 +97,7 @@ public class MainAppGF extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-           
+
             // Show the dialog and wait until the user closes it
 
             dialogStage.showAndWait();
@@ -169,7 +168,6 @@ public class MainAppGF extends Application {
         }
     }
 
-    
     @FXML
     private void showSanctionWindow() {
         try {
@@ -241,6 +239,11 @@ public class MainAppGF extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void closeWindows(){
+        System.exit(0);
     }
 
     public void actionOnClickInscription() {

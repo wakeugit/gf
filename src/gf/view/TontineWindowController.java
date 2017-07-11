@@ -38,15 +38,7 @@ public class TontineWindowController {
 
     public TontineWindowController() {
 
-        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
-        if (response.getBody() != null) {
-            for (Cotisation cotisation : response.getBody()) {
-                listeTontine.add(new CotisationFx(cotisation));
-            }
-        } else {
-            //Todo Display error message
-            System.out.println("An error occured - Tontine");
-        }
+        loadData();
     }
 
     @FXML
@@ -146,6 +138,43 @@ public class TontineWindowController {
         }
 
 
+    }
+
+
+    @FXML
+    private void tontineSupprimer() {
+
+        int selectedIndex = tontineTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            CotisationFx cotisationFx = tontineTable.getItems().get(selectedIndex);
+
+            //// TODO: 06/07/2017 ALERT USER BEFORE DELETE ENTRIES
+            BackendInterface.deleteAnnee(cotisationFx.getId());
+            loadData();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionee");
+            alert.setHeaderText("Aucune ligne selectionee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+
+    }
+
+    private void loadData() {
+        Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
+        if (response.getBody() != null) {
+            listeTontine.clear();
+            for (Cotisation cotisation : response.getBody()) {
+                listeTontine.add(new CotisationFx(cotisation));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Tontine");
+        }
     }
 
 

@@ -29,8 +29,13 @@ public class AidesWindowController {
 
     public AidesWindowController() {
 
+        loadData();
+    }
+
+    private void loadData() {
         Response<Service[]> response = BackendInterface.getServiceByType(TypeService.AIDE);
         if (response.getBody() != null) {
+            listeAides.clear();
             for (Service service : response.getBody()) {
                 listeAides.add(new ServiceFx(service));
             }
@@ -122,6 +127,30 @@ public class AidesWindowController {
                 e.printStackTrace();
 
             }
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionn�e");
+            alert.setHeaderText("Aucune ligne selectionn�e");
+            alert.setContentText("Svp selectionnez un �lement dans la liste.");
+            alert.showAndWait();
+        }
+
+    }
+
+
+    @FXML
+    private void aideSupprimer() {
+
+        int selectedIndex = aideTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            ServiceFx ServiceFx = aideTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAides.indexOf(ServiceFx);
+
+            //// TODO: 06/07/2017 ALERT THE USER BEFORE DELETE
+            BackendInterface.deleteService(ServiceFx.getId());
+            loadData();
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());

@@ -36,8 +36,13 @@ public class AnneesWindowController {
 
     public AnneesWindowController() {
 
+        loadData();
+    }
+
+    void loadData() {
         Response<Cotisation[]> response = BackendInterface.getCotisationsByType(TypeCotisation.ANNEE);
         if (response.getBody() != null) {
+            listeAnnees.clear();
             for (Cotisation annee : response.getBody()) {
                 listeAnnees.add(new CotisationFx(annee));
             }
@@ -129,6 +134,31 @@ public class AnneesWindowController {
                 e.printStackTrace();
 
             }
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionee");
+            alert.setHeaderText("Aucune ligne selectionee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
+        }
+
+    }
+
+
+    @FXML
+    private void anneeSupprimer() {
+
+        int selectedIndex = anneeTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            CotisationFx cotisationFx = anneeTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeAnnees.indexOf(cotisationFx);
+
+            //// TODO: 06/07/2017 ALERT USER BEFORE DELETE ENTRIES
+            BackendInterface.deleteAnnee(cotisationFx.getId());
+            loadData();
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());

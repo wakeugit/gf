@@ -45,11 +45,13 @@ public class SanctionDetailsController {
     @FXML
     private void actionOnClickValider() {
         if (isInputValid()) {
-            Service service = new Service(motif.getText(), TypeService.SANCTION);
+            Service service = null;
 
             Response<Service> response;
 
             if (valider.getText().equals("Valider")) {
+
+                service = new Service(motif.getText(), TypeService.SANCTION);
 
                 response = BackendInterface.createService(service);
                 if (response.getBody() != null) {
@@ -59,8 +61,10 @@ public class SanctionDetailsController {
                     // Todo Display error message
                 }
             } else {
+                service = new Service(serviceFx);
                 if (service.getId() != -1) {
 //					  service.setId(tontine.getId());
+                    service.setMotif(motif.getText());
                     response = BackendInterface.updateService(service);
                     if (response.getBody() != null) {
                         sanctionWindowController.getListeSanctions().set(keyInArray, new ServiceFx(response.getBody()));
@@ -78,7 +82,7 @@ public class SanctionDetailsController {
 
     @FXML
     private void actionOnClickAnnuler() {
-        motif.setText("");
+        this.dialogStage.close();
     }
 
     private boolean isInputValid() {
