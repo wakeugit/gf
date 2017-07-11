@@ -121,6 +121,7 @@ public class BackendInterface {
         }
     }
 
+
     public static Response<Annee[]> getAnnees() {
         initRequest();
         Response<Annee[]> response = new Response<>();
@@ -261,6 +262,18 @@ public class BackendInterface {
         initRequest();
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/service/" + anneeId)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteTransaction(long anneeId) {
+        initRequest();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/transaction/" + anneeId)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .asJson();
@@ -488,6 +501,33 @@ public class BackendInterface {
         Response<Transaction> response = new Response<>();
         try {
             HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/transaction/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(transaction)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Transaction created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Transaction.class);
+                response.setBody(created);
+            } else {
+                JSONObject jsonObject = nodeHttpResponse.getBody().getObject();
+                String causeMessage = jsonObject.get("exception") + " -- " + jsonObject.get("message");
+                response.getExceptions().add(new RuntimeException(causeMessage));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<Transaction> updateTransaction(Transaction transaction) {
+        initRequest();
+        Response<Transaction> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/transaction/")
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
                     .body(transaction)

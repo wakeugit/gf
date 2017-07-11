@@ -18,7 +18,8 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 public class InscriptionCotisationController {
-	
+
+    public static Cotisation tmpCotisation;
     private ObservableList<MembreFx> listeMembres = FXCollections.observableArrayList();
     private ObservableList<CotisationFx> listeCotisation = FXCollections.observableArrayList();
 	
@@ -173,7 +174,7 @@ public class InscriptionCotisationController {
         	System.out.println("An error occured - Membres");
         }
 
-        Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
+        /*Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
         if (response1.getBody() != null || response2.getBody() != null ) {
         	
@@ -189,7 +190,8 @@ public class InscriptionCotisationController {
         } else {
             //Todo Display error message
             System.out.println("An error occured - Cotisation");
-        }
+        }*/
+        listeCotisation.add(new CotisationFx(tmpCotisation));
 
 
         
@@ -249,10 +251,7 @@ public class InscriptionCotisationController {
     
     @FXML
     private void actionOnClickAnnuler() {
-        nomMembre.getSelectionModel().select(null);
-        cotisation.getSelectionModel().select(null);
-        dateInscription.setValue(null);
-        numeroTirage.setText("");
+        this.dialogStage.close();
     }
     
 

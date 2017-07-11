@@ -58,6 +58,20 @@ public class DateUtil {
         }
     }
 
+    /*public static LocalDate parse(long timestamp) {
+        try {
+            if (timestamp != -1) {
+                LocalDate localDate = parse(timestamp);
+
+                return localDate;
+            }
+            else
+                return null;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }*/
+
     public static LocalDate parse(Date date) {
         try {
             if (date != null) {

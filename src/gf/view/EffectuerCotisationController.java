@@ -48,6 +48,7 @@ public class EffectuerCotisationController {
     private boolean validerClicked = false;
     private Membre mMembre;
     private Cotisation mCotisation;
+    private TransactionFx transactionFx;
 
     public EffectuerCotisationController() {
 
@@ -224,41 +225,54 @@ public class EffectuerCotisationController {
             mMembre = new Membre(nomMembre.getSelectionModel().getSelectedItem().getMembreFx());
             mCotisation = new Cotisation(cotisation.getSelectionModel().getSelectedItem());
 
-            Transaction transaction = new Transaction();
-            transaction.setMembre(mMembre);
-            transaction.setCotisation(mCotisation);
-            transaction.setDateTransaction(dateOp);
-            transaction.setMontantTransaction(montantOp);
-
-            if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
-                transaction.setType(TypeTransaction.TONTINER);
-            } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
-                transaction.setType(TypeTransaction.EPARGNER);
-            }
-            System.out.println("Transaction:" + transaction);
+            Transaction transaction ;
 
 
             Response<Transaction> response;
 
             if (valider.getText().equals("Valider")) {
-                response = BackendInterface.createTransaction(transaction);
-                if (response.getBody() != null) {
-//                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
-                    System.out.println(mMembre.getNom() + " a tontine!");
 
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.initOwner(dialogStage);
-                    alert.setTitle(response.getBody().getCotisation().getTypeCotisation().name());
-                    alert.setHeaderText("Operation Effectuée !!");
-                    alert.setContentText(mMembre.getNom());
+                transaction = new Transaction();
+                transaction.setMembre(mMembre);
+                transaction.setCotisation(mCotisation);
+                transaction.setDateTransaction(dateOp);
+                transaction.setMontantTransaction(montantOp);
 
-                    alert.showAndWait();
-
-                } else {
-                    // Todo Display error message
+                if (tmpCotisation.getTypeCotisation() == TypeCotisation.TONTINE) {
+                    transaction.setType(TypeTransaction.TONTINER);
+                } else if (tmpCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                    transaction.setType(TypeTransaction.EPARGNER);
                 }
+
+                System.out.println("Transaction:" + transaction);
+
+
+                response = BackendInterface.createTransaction(transaction);
             } else {
-                //tontinePanelController.getListMembreInscritsCotisation().set(keyInArray, inscriptionCotisationFx);
+                transaction = new Transaction(transactionFx);
+                transaction.setAvaliseur1(null);
+                transaction.setDateTransaction(dateOp);
+                transaction.setMontantTransaction(montantOp);
+
+                System.out.println("Transaction:" + transaction);
+
+                response = BackendInterface.updateTransaction(transaction);
+            }
+
+            if (response != null && response.getBody() != null) {
+//                    tontinePanelController.getListMembreInscritsCotisation().add(new TransactionFx(response.getBody()));
+                System.out.println(mMembre.getNom() + " a tontine!");
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.initOwner(dialogStage);
+                alert.setTitle(response.getBody().getCotisation().getTypeCotisation().name());
+                alert.setHeaderText("Operation Effectuée !!");
+                alert.setContentText(mMembre.getNom());
+
+                alert.showAndWait();
+
+            } else {
+                // Todo Display error message
             }
 
             validerClicked = true;
@@ -357,5 +371,17 @@ public class EffectuerCotisationController {
 
     public void setCotisation(Cotisation cotisation) {
         this.tmpCotisation = cotisation;
+    }
+
+    public void setTransaction(TransactionFx transactionFx) {
+        valider.setText("Modifier");
+        InscriptionCotisationFx inscrit = new InscriptionCotisationFx();
+        inscrit.setMembrefx(transactionFx.getMembreFx());
+        nomMembre.getSelectionModel().select(inscrit);
+        cotisation.getSelectionModel().select(transactionFx.getCotisationFx());
+        date.setValue(transactionFx.getDateOperation());
+        montant.setText("" + transactionFx.getMontantTransaction());
+        tmpCotisation = new Cotisation(transactionFx.getCotisationFx());
+        this.transactionFx = transactionFx;
     }
 }
