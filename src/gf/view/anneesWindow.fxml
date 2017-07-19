@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.AnneesWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.AnneesWindowController">
    <right>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -24,16 +24,17 @@
          <children>
             <Button fx:id="nouveauAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAnneeDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
             <Button fx:id="modifierAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAnneeDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
-            <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" onAction="#anneeSupprimer" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
+            <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#anneeSupprimer" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </right>
    <center>
       <TableView fx:id="anneeTable" prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="anneeFx" prefWidth="123.0" text="Année" />
-            <TableColumn fx:id="dateDebut" prefWidth="106.0" text="Date début" />
-            <TableColumn fx:id="dateFin" prefWidth="125.0" text="Date fin" />
+            <TableColumn fx:id="anneeFx" prefWidth="99.0" text="Année" />
+            <TableColumn fx:id="dateDebut" prefWidth="114.0" text="Date début" />
+            <TableColumn fx:id="dateFin" prefWidth="79.0" text="Date fin" />
+            <TableColumn fx:id="dateFin1" prefWidth="152.0" text="Nbre de seances" />
         </columns>
          <opaqueInsets>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

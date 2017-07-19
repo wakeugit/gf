@@ -266,7 +266,7 @@ public class EffectuerCotisationController {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.initOwner(dialogStage);
                 alert.setTitle(response.getBody().getCotisation().getTypeCotisation().name());
-                alert.setHeaderText("Operation Effectuée !!");
+                alert.setHeaderText("Operation Effectuee !!");
                 alert.setContentText(mMembre.getNom());
 
                 alert.showAndWait();
