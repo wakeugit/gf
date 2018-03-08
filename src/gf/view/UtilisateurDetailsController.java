@@ -3,9 +3,12 @@ package gf.view;
 
 import gf.model.Utilisateur;
 import gf.model.UtilisateurFx;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -14,7 +17,7 @@ public class UtilisateurDetailsController {
 	@FXML
 	private TextField nomUtilisateur;
 	@FXML
-	private TextField niveau;
+	private ComboBox<Integer> niveau;
 	@FXML
 	private TextField nom;
 	@FXML
@@ -23,8 +26,8 @@ public class UtilisateurDetailsController {
 	private TextField poste;
 	@FXML
 	private Button valider;
-
-
+	
+	ObservableList<Integer> niveauUtilisateur = FXCollections.observableArrayList();
 	private UtilisateurWindowController utilisateurWindowController;
 	private Stage dialogStage;
 	private UtilisateurFx utilisateurFx;
@@ -32,7 +35,13 @@ public class UtilisateurDetailsController {
 
 	@FXML
 	private void initialize() {
-
+		niveauUtilisateur.add(1);
+		niveauUtilisateur.add(2);
+		niveauUtilisateur.add(3);
+		niveauUtilisateur.add(4);
+		
+		niveau.setItems(niveauUtilisateur);
+		niveau.getSelectionModel().select(0);
 	}
 
 	public UtilisateurDetailsController() {
@@ -48,7 +57,7 @@ public class UtilisateurDetailsController {
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
-			utilisateurFx = new UtilisateurFx(new Utilisateur(nomUtilisateur.getText(), Integer.parseInt(niveau.getText()),nom.getText(),prenom.getText(), poste.getText()));
+			utilisateurFx = new UtilisateurFx(new Utilisateur(nomUtilisateur.getText(), niveau.getSelectionModel().getSelectedItem(),nom.getText(),prenom.getText(), poste.getText()));
 			if (valider.getText().equals("Valider")) {
 				utilisateurWindowController.getListeUtilisateurs().add(utilisateurFx);
 			} else {
@@ -61,7 +70,7 @@ public class UtilisateurDetailsController {
 	@FXML
 	private void actionOnClickAnnuler() {
 		nomUtilisateur.setText("");
-		niveau.setText("");
+		niveau.getSelectionModel().select(0);
 		nom.setText("");
 		prenom.setText("");
 		poste.setText("");
@@ -72,9 +81,6 @@ public class UtilisateurDetailsController {
 
 		if (nomUtilisateur.getText() == null || nomUtilisateur.getText().length() == 0) {
 			errorMessage += "Nom utilisateurFx invalide!\n";
-		}
-		if (niveau.getText() == null || niveau.getText().length() == 0) {
-			errorMessage += "type UtilisateurFx invalide!\n";
 		}
 		if (nom.getText() == null || nom.getText().length() == 0) {
 			errorMessage += "nom invalide!\n";
@@ -119,7 +125,7 @@ public class UtilisateurDetailsController {
 		this.utilisateurFx = utilisateurFx;
 		valider.setText("Modifier");
 		nomUtilisateur.setText(utilisateurFx.getNomUtilisateur());
-		niveau.setText(""+utilisateurFx.getNiveau());
+		niveau.getSelectionModel().select((niveau.getItems().indexOf(utilisateurFx.getNiveau())));
 		nom.setText(utilisateurFx.getNom());
 		prenom.setText(utilisateurFx.getPrenom());
 		poste.setText(utilisateurFx.getPoste());

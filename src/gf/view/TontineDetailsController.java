@@ -103,9 +103,11 @@ public class TontineDetailsController {
         if (dateDebut.getValue() == null) {
             errorMessage += "Date debut invalide : dd.mm.yyyy !\n";
         }
-//		if (dateFin.getValue() == null) {
-//			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
-//		}
+        if (dateFin.getValue() != null) {
+			if (dateDebut.getValue().isAfter(dateFin.getValue())) {
+				errorMessage += "La Date fin doit être supérieure à la date de debut !\n";
+			}
+		}
         if (anneeTxt.getText() == null || anneeTxt.getText().length() == 0) {
             errorMessage += "AnneeFx invalide!\n";
         }

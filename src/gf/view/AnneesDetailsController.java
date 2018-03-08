@@ -181,6 +181,9 @@ public class AnneesDetailsController {
 		}
 		if (dateFin.getValue() == null) {
 			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
+		}	
+		if (dateDebut.getValue().isAfter(dateFin.getValue())) {
+			errorMessage += "La Date fin doit être supérieure à la date de debut !\n";
 		}
 
 		if (errorMessage.length() == 0) {

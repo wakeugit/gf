@@ -1,6 +1,5 @@
 package gf.view;
 
-
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Cotisation;
@@ -29,11 +28,10 @@ public class EpargneDetailsController {
 	@FXML
 	private Button valider;
 
-
 	private EpargneWindowController epargneWindowController;
 	private Stage dialogStage;
 	private CotisationFx epargne;
-	private int keyInArray=0;
+	private int keyInArray = 0;
 
 	@FXML
 	private void initialize() {
@@ -48,14 +46,15 @@ public class EpargneDetailsController {
 		this.dialogStage = dialogStage;
 	}
 
-
 	@FXML
 	private void actionOnClickValider() {
 
 		if (isInputValid()) {
 
-			Cotisation cotisation = new Cotisation(nomCotisation.getText(), TypeCotisation.valueOf(type.getText().toUpperCase()), DateUtil.format(dateDebut
-					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
+			Cotisation cotisation = new Cotisation(nomCotisation.getText(),
+					TypeCotisation.valueOf(type.getText().toUpperCase()),
+					DateUtil.format(dateDebut.getValue()),
+					DateUtil.format(dateFin.getValue()), anneeTxt.getText());
 
 			Response<Cotisation> response;
 
@@ -63,7 +62,8 @@ public class EpargneDetailsController {
 
 				response = BackendInterface.createCotisation(cotisation);
 				if (response.getBody() != null) {
-					epargneWindowController.getListeCotisations().add(new CotisationFx(response.getBody()));
+					epargneWindowController.getListeCotisations().add(
+							new CotisationFx(response.getBody()));
 
 				} else {
 					// Todo Display error message
@@ -73,7 +73,9 @@ public class EpargneDetailsController {
 					cotisation.setId(epargne.getId());
 					response = BackendInterface.updateCotisation(cotisation);
 					if (response.getBody() != null) {
-						epargneWindowController.getListeCotisations().set(keyInArray, new CotisationFx(response.getBody()));
+						epargneWindowController.getListeCotisations().set(
+								keyInArray,
+								new CotisationFx(response.getBody()));
 
 					} else {
 						// Todo Display error message
@@ -97,7 +99,8 @@ public class EpargneDetailsController {
 	private boolean isInputValid() {
 		String errorMessage = "";
 
-		if (nomCotisation.getText() == null || nomCotisation.getText().length() == 0) {
+		if (nomCotisation.getText() == null
+				|| nomCotisation.getText().length() == 0) {
 			errorMessage += "nom cotisation invalide!\n";
 		}
 		if (type.getText() == null || type.getText().length() == 0) {
@@ -106,9 +109,11 @@ public class EpargneDetailsController {
 		if (dateDebut.getValue() == null) {
 			errorMessage += "Date debut invalide : dd.mm.yyyy !\n";
 		}
-//		if (dateFin.getValue() == null) {
-//			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
-//		}
+		if (dateFin.getValue() != null) {
+			if (dateDebut.getValue().isAfter(dateFin.getValue())) {
+				errorMessage += "La Date fin doit être supérieure à la date de debut !\n";
+			}
+		}
 		if (anneeTxt.getText() == null || anneeTxt.getText().length() == 0) {
 			errorMessage += "AnneeFx invalide!\n";
 		}
@@ -158,7 +163,5 @@ public class EpargneDetailsController {
 	public void setKeyInArray(int keyInArray) {
 		this.keyInArray = keyInArray;
 	}
-	
-	
 
 }

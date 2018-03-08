@@ -8,9 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0"
-            prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gf.view.UtilisateurDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.UtilisateurDetailsController">
    <center>
       <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="297.0" BorderPane.alignment="CENTER_LEFT">
         <columnConstraints>
@@ -28,16 +26,16 @@
             <Insets bottom="20.0" left="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
+            <Label text="Nom utilisateur" />
+            <TextField fx:id="nomUtilisateur" GridPane.columnIndex="1" />
+            <Label text="Niveau" GridPane.rowIndex="1" />
+            <ComboBox fx:id="niveau" prefHeight="39.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Nom" GridPane.rowIndex="2" />
+            <TextField fx:id="nom" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Prénom" GridPane.rowIndex="3" />
+            <TextField fx:id="prenom" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Poste" GridPane.rowIndex="4" />
             <TextField fx:id="poste" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Nom" GridPane.rowIndex="2" />
-            <Label text="Prénom" GridPane.rowIndex="3" />
-            <Label text="Nom utilisateur" />
-            <Label text="Niveau" GridPane.rowIndex="1" />
-            <TextField fx:id="nomUtilisateur" GridPane.columnIndex="1" />
-            <TextField fx:id="niveau" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="nom" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="prenom" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <padding>
             <Insets top="5.0" />
