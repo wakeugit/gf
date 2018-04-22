@@ -16,9 +16,9 @@ public class MembreFx{
 	private final SimpleStringProperty photo;
 	private final SimpleStringProperty nom;
 	private final SimpleStringProperty prenom;
-	private final SimpleIntegerProperty telephone;
+	private final SimpleLongProperty telephone;
 	private final SimpleStringProperty adresse;
-	private final SimpleIntegerProperty cni;
+	private final SimpleLongProperty cni;
 	private final SimpleLongProperty id;
 
 	/**
@@ -38,17 +38,17 @@ public class MembreFx{
 			this.photo = new SimpleStringProperty(membre.getPhoto());
 			this.nom = new SimpleStringProperty(membre.getNom());
 			this.prenom = new SimpleStringProperty(membre.getPrenom());
-			this.telephone = new SimpleIntegerProperty(membre.getTelephone());
+			this.telephone = new SimpleLongProperty(membre.getTelephone());
 			this.adresse = new SimpleStringProperty(membre.getAdresse());
-			this.cni = new SimpleIntegerProperty(membre.getCni());
+			this.cni = new SimpleLongProperty(membre.getCni());
 			this.id = new SimpleLongProperty(membre.getId());
 		} else {
 			this.photo = new SimpleStringProperty("");
 			this.nom = new SimpleStringProperty("");
 			this.prenom = new SimpleStringProperty("");
-			this.telephone = new SimpleIntegerProperty(-1);
+			this.telephone = new SimpleLongProperty(-1);
 			this.adresse = new SimpleStringProperty("");
-			this.cni = new SimpleIntegerProperty(-1);
+			this.cni = new SimpleLongProperty(-1);
 			this.id = new SimpleLongProperty(-1);
 		}
 
@@ -91,11 +91,11 @@ public class MembreFx{
 		this.prenom.set(prenom);
 	}
 
-	public int getTelephone() {
+	public long getTelephone() {
 		return telephone.get();
 	}
 
-	public IntegerProperty telephoneProperty() {
+	public SimpleLongProperty telephoneProperty() {
 		return telephone;
 	}
 
@@ -115,11 +115,11 @@ public class MembreFx{
 		this.adresse.set(adresse);
 	}
 
-	public int getCni() {
+	public long getCni() {
 		return cni.get();
 	}
 
-	public IntegerProperty cniProperty() {
+	public SimpleLongProperty cniProperty() {
 		return cni;
 	}
 

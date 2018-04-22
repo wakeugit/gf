@@ -41,7 +41,7 @@ public class AidesPanelController {
     @FXML
     private TableColumn<InscriptionAnnuelleFx, String> adresseCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> cniCol;
+    private TableColumn<InscriptionAnnuelleFx, Long> cniCol;
 
     @FXML
     private TableView<OperationFx> listeAideTable;
@@ -71,7 +71,7 @@ public class AidesPanelController {
     @FXML
     private TableColumn<InscriptionAnnuelleFx, String> adresseCol1;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> cniCol1;
+    private TableColumn<InscriptionAnnuelleFx, Long> cniCol1;
 
     @FXML
     private TableView<OperationFx> etatAideTable;
