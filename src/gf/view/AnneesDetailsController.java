@@ -135,6 +135,8 @@ public class AnneesDetailsController {
 			
 			Cotisation annee = new Cotisation("Cotisation Annuelle", TypeCotisation.ANNEE , DateUtil.format(dateDebut
 					.getValue()), DateUtil.format(dateFin.getValue()), anneeTxt.getText());
+
+			annee.setNombreSeance(seances);
 			
 			
 			System.out.println("nombre de seances: " + seances);
@@ -183,7 +185,7 @@ public class AnneesDetailsController {
 			errorMessage += "Date fin invalide : dd.mm.yyyy !\n";
 		}	
 		if (dateDebut.getValue().isAfter(dateFin.getValue())) {
-			errorMessage += "La Date fin doit être supérieure à la date de debut !\n";
+			errorMessage += "La Date fin doit ï¿½tre supï¿½rieure ï¿½ la date de debut !\n";
 		}
 
 		if (errorMessage.length() == 0) {

@@ -12,6 +12,7 @@ public class Cotisation {
 	private String annee="";
 	private String dateDebut;
 	private String dateFin;
+	private int nombreSeance;
 	private long id = -1;
 
 	public Cotisation(String nomCotisation, TypeCotisation typeCotisation, String dateDebut, String dateFin, String annee) {

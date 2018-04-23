@@ -10,6 +10,7 @@ public class Annee {
 	private String nom = "";
 	private String dateDebut;
 	private String dateFin;
+	private int nombreSeance;
 	private long id = -1;
 
 	private Annee() {

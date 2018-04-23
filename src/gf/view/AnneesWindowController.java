@@ -33,6 +33,8 @@ public class AnneesWindowController {
     private TableColumn<CotisationFx, LocalDate> dateDebut;
     @FXML
     private TableColumn<CotisationFx, LocalDate> dateFin;
+    @FXML
+    private TableColumn<CotisationFx, Integer> nombreSeance;
 
     public AnneesWindowController() {
 
@@ -58,6 +60,7 @@ public class AnneesWindowController {
         anneeFx.setCellValueFactory(cellData -> cellData.getValue().getAnneeProperty());
         dateDebut.setCellValueFactory(cellData -> cellData.getValue().getDateDebutProperty());
         dateFin.setCellValueFactory(cellData -> cellData.getValue().getDateFinProperty());
+        nombreSeance.setCellValueFactory(cellData -> cellData.getValue().getNombreSeanceProperty());
 
         anneeTable.setItems(listeAnnees);
     }
