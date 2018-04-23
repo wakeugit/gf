@@ -3,6 +3,7 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -258,6 +259,8 @@ public class InscriptionsPanelController {
                 if (mCotisation.getTypeCotisation() == TypeCotisation.ANNEE) {
                     listeInscritsAnnuel.clear();
                     for (InscriptionAnnuelle inscriptionCotisation : response.getBody()) {
+                    	System.out.println("Date inscription "+inscriptionCotisation.getDateInscription());
+                    	System.out.println("Date "+DateUtil.parse(inscriptionCotisation.getDateInscription()));
                         listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
                     }
                 }

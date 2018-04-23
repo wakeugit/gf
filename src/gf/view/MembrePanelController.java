@@ -34,11 +34,11 @@ public class MembrePanelController {
     @FXML
     private TableColumn<MembreFx, String> prenomCol;
     @FXML
-    private TableColumn<MembreFx, Integer> telephoneCol;
+    private TableColumn<MembreFx, Long> telephoneCol;
     @FXML
     private TableColumn<MembreFx, String> adresseCol;
     @FXML
-    private TableColumn<MembreFx, Integer> cniCol;
+    private TableColumn<MembreFx, Long> cniCol;
 
 
     public MembrePanelController() {

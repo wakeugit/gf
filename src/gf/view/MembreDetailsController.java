@@ -55,8 +55,8 @@ public class MembreDetailsController {
         if (isInputValid()) {
             membre = new Membre(nomMembre.getText(),
                     prenomMembre.getText(),
-                    Integer.parseInt(telephone.getText()),
-                    Integer.parseInt(cni.getText()),
+                    Long.parseLong(telephone.getText()),
+                    Long.parseLong(cni.getText()),
                     adresse.getText(),
                     "N/A");
 
@@ -101,12 +101,12 @@ public class MembreDetailsController {
         if (prenomMembre.getText() == null || prenomMembre.getText().length() == 0) {
             errorMessage += "Prenom invalide!\n";
         }
-        if (telephone.getText() == null || telephone.getText().length() == 0 || telephone.getText().length() > 9) {
+        if (telephone.getText() == null || telephone.getText().length() == 0) {
             errorMessage += "Numero de telephone invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(telephone.getText());
+                Long.parseLong(telephone.getText());
             } catch (NumberFormatException e) {
                 errorMessage += "Numero de telephone invalide (ne doit contenir que des chiffres)!\n";
             }
@@ -116,12 +116,12 @@ public class MembreDetailsController {
             errorMessage += "Adresse invalide!\n";
         }
 
-        if (cni.getText() == null || cni.getText().length() == 0 || cni.getText().length() > 9) {
+        if (cni.getText() == null || cni.getText().length() == 0) {
             errorMessage += "Numero de CNI invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(cni.getText());
+                Long.parseLong(cni.getText());
             } catch (NumberFormatException e) {
                 errorMessage += "Numero de CNI invalide (ne doit contenir que des chiffres)!\n";
             }

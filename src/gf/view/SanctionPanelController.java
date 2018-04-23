@@ -41,7 +41,7 @@ public class SanctionPanelController {
     @FXML
     private TableColumn<InscriptionAnnuelleFx, String> adresseCol;
     @FXML
-    private TableColumn<InscriptionAnnuelleFx, Integer> cniCol;
+    private TableColumn<InscriptionAnnuelleFx, Long> cniCol;
 
     @FXML
     private TableView<OperationFx> listeServiceTable;

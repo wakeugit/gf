@@ -40,7 +40,7 @@ public class PretsEtRembPanelController {
     @FXML
     private TableColumn<InscriptionCotisationFx, String> prenomInscription;
     @FXML
-    private TableColumn<InscriptionCotisationFx, Integer> cniInscription;
+    private TableColumn<InscriptionCotisationFx, Long> cniInscription;
     @FXML
     private TableColumn<InscriptionCotisationFx, String> nomCotisationInscription;
     @FXML

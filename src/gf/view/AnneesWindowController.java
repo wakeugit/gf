@@ -5,6 +5,7 @@ import gf.backend.Response;
 import gf.model.Cotisation;
 import gf.model.CotisationFx;
 import gf.model.TypeCotisation;
+import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -46,11 +47,13 @@ public class AnneesWindowController {
         if (response.getBody() != null) {
             listeAnnees.clear();
             for (Cotisation annee : response.getBody()) {
+            	System.out.println("date timestamp"+annee.getDateDebut());
+            	System.out.println("date"+DateUtil.parse(annee.getDateDebut()));
                 listeAnnees.add(new CotisationFx(annee));
             }
         } else {
             //Todo Display error message
-            System.out.println("An error occured - Année");
+            System.out.println("An error occured - Annee");
         }
     }
 

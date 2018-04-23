@@ -1,9 +1,7 @@
 package gf.model;
 
 import gf.util.DateUtil;
-
 import java.time.LocalDate;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
