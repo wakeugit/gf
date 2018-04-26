@@ -1,7 +1,7 @@
 package gf.view;
 
-import java.io.IOException;
-
+import gf.backend.BackendInterface;
+import gf.backend.Response;
 import gf.model.Utilisateur;
 import gf.model.UtilisateurFx;
 import javafx.collections.FXCollections;
@@ -10,12 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class UtilisateurWindowController {
 
@@ -24,7 +26,7 @@ public class UtilisateurWindowController {
     @FXML
     private TableView<UtilisateurFx> utilisateurTable;
     @FXML
-    private TableColumn<UtilisateurFx, String> nomUtilisateur;
+    private TableColumn<UtilisateurFx, String> pseudo;
     @FXML
     private TableColumn<UtilisateurFx, Integer> niveau;
     @FXML
@@ -35,17 +37,28 @@ public class UtilisateurWindowController {
     private TableColumn<UtilisateurFx, String> poste;
 
     public UtilisateurWindowController() {
-        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("toto", 1, "Tagne", "Paul", "admin")));
-        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("papa", 2, "Magne", "Marie", "Commissaire")));
-        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("maman", 3, "Pagne", "Lari", "SG")));
-        listeUtilisateurs.add(new UtilisateurFx(new Utilisateur("fou", 4, "Nagne", "Lyonnel", "President")));
+
+        loadData();
+    }
+
+    private void loadData() {
+        Response<Utilisateur[]> response = BackendInterface.getUtilisateurs();
+        if (response.getBody() != null) {
+            listeUtilisateurs.clear();
+            for (Utilisateur membre : response.getBody()) {
+                listeUtilisateurs.add(new UtilisateurFx(membre));
+            }
+        } else {
+            //Todo Display error message
+            System.out.println("An error occured - Utilisateurs");
+        }
     }
 
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
 
-        nomUtilisateur.setCellValueFactory(cellData -> cellData.getValue().getNomUtilisateurProperty());
+        pseudo.setCellValueFactory(cellData -> cellData.getValue().getNomUtilisateurProperty());
         niveau.setCellValueFactory(cellData -> cellData.getValue().getNiveauProperty().asObject());
         nom.setCellValueFactory(cellData -> cellData.getValue().getNomProperty());
         prenom.setCellValueFactory(cellData -> cellData.getValue().getPrenomProperty());
@@ -130,9 +143,9 @@ public class UtilisateurWindowController {
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             //  alert.initOwner(this.getPrimaryStage());
-            alert.setTitle("Aucune ligne selection�e");
-            alert.setHeaderText("Aucune ligne selection�e");
-            alert.setContentText("Svp selectionnez un �lement dans la liste.");
+            alert.setTitle("Aucune ligne selectionée");
+            alert.setHeaderText("Aucune ligne selectionée");
+            alert.setContentText("Svp selectionnez un élement dans la liste.");
 
             alert.showAndWait();
         }

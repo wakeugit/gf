@@ -122,6 +122,97 @@ public class BackendInterface {
     }
 
 
+    public static Response<Utilisateur[]> getUtilisateurs() {
+        initRequest();
+        Response<Utilisateur[]> response = new Response<>();
+        try {
+            HttpResponse<Utilisateur[]> bookResponse = Unirest.get(APP_URL + "/utilisateur/")
+                    .asObject(Utilisateur[].class);
+            if (bookResponse.getStatus() == 200) {
+                response.setBody(bookResponse.getBody());
+            } else {
+                response.getExceptions().add(new RuntimeException(bookResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            return response;
+        }
+    }
+
+    public static Response<Utilisateur> createUtilisateur(Utilisateur utilisateur) {
+        initRequest();
+        Response<Utilisateur> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.post(APP_URL + "/utilisateur/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(utilisateur)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Utilisateur created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Utilisateur.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static Response<Utilisateur> updateUtilisateur(Utilisateur utilisateur) {
+        initRequest();
+        Response<Utilisateur> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.put(APP_URL + "/utilisateur/")
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .body(utilisateur)
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Utilisateur created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Utilisateur.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+            return response;
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+            return response;
+        }
+    }
+
+    public static void deleteUtilisateur(long id) {
+        initRequest();
+        Response<Membre> response = new Response<>();
+        try {
+            HttpResponse<JsonNode> nodeHttpResponse = Unirest.delete(APP_URL + "/utilisateur/" + id)
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .asJson();
+            System.out.println("request = [" + nodeHttpResponse.getStatus() + "]");
+            if (nodeHttpResponse.getStatus() == 200) {
+                Gson gson = new Gson();
+                Membre created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Membre.class);
+                response.setBody(created);
+            } else {
+                response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
+            }
+        } catch (UnirestException e) {
+            response.getExceptions().add(e);
+            e.printStackTrace();
+        }
+    }
+
+
     public static Response<Annee[]> getAnnees() {
         initRequest();
         Response<Annee[]> response = new Response<>();
@@ -270,6 +361,7 @@ public class BackendInterface {
             e.printStackTrace();
         }
     }
+
     public static void deleteTransaction(long anneeId) {
         initRequest();
         try {

@@ -33,7 +33,7 @@
    <center>
       <TableView fx:id="utilisateurTable" maxHeight="-Infinity" prefHeight="315.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="nomUtilisateur" prefWidth="150.0" text="Nom utilisateur" />
+            <TableColumn fx:id="pseudo" prefWidth="150.0" text="Nom utilisateur" />
             <TableColumn fx:id="niveau" prefWidth="103.0" text="Niveau" />
             <TableColumn fx:id="nom" prefWidth="115.0" text="Nom" />
             <TableColumn fx:id="prenom" prefWidth="110.0" text="Prenom" />

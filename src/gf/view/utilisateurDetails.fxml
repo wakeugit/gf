@@ -27,7 +27,7 @@
          </BorderPane.margin>
          <children>
             <Label text="Nom utilisateur" />
-            <TextField fx:id="nomUtilisateur" GridPane.columnIndex="1" />
+            <TextField fx:id="pseudo" GridPane.columnIndex="1" />
             <Label text="Niveau" GridPane.rowIndex="1" />
             <ComboBox fx:id="niveau" prefHeight="39.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Nom" GridPane.rowIndex="2" />
