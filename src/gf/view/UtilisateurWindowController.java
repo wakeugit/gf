@@ -153,6 +153,28 @@ public class UtilisateurWindowController {
 
     }
 
+    @FXML
+    private void utilisateurSupprimer() {
+
+        int selectedIndex = utilisateurTable.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            UtilisateurFx utilisateurFx = utilisateurTable.getItems().get(selectedIndex);
+
+            //// TODO: 06/07/2017 ALERT THE USER BEFORE DELETE
+            BackendInterface.deleteUtilisateur(utilisateurFx.getId());
+            loadData();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            //  alert.initOwner(this.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionnée");
+            alert.setHeaderText("Aucune ligne selectionnée");
+            alert.setContentText("Svp selectionnez un élement dans la liste.");
+            alert.showAndWait();
+        }
+
+    }
+
 
     public ObservableList<UtilisateurFx> getListeUtilisateurs() {
         return listeUtilisateurs;
