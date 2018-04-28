@@ -8,6 +8,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import gf.model.*;
+import javafx.scene.control.Alert;
 import org.json.JSONObject;
 
 public class BackendInterface {
@@ -112,6 +113,12 @@ public class BackendInterface {
                 Gson gson = new Gson();
                 Membre created = gson.fromJson(nodeHttpResponse.getBody().getObject().toString(), Membre.class);
                 response.setBody(created);
+            } else if (nodeHttpResponse.getStatus() == 500) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Conflit !");
+                alert.setHeaderText("Impossible de supprimer");
+                alert.setContentText("Ce membre a des enregistrements dans d'autres sections.");
+                alert.showAndWait();
             } else {
                 response.getExceptions().add(new RuntimeException(nodeHttpResponse.getStatusText()));
             }
