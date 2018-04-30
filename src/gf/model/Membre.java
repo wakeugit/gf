@@ -12,6 +12,7 @@ public class Membre {
 	private String adresse="";
 	private String photo="";
 	private long id = -1;
+	private Statut statut = Statut.Actif;
 
 		
 	public Membre(String nom, String prenom, long telephone, long cni, String adresse, String photo){
