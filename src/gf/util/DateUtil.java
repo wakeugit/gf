@@ -1,5 +1,6 @@
 package gf.util;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -122,5 +123,16 @@ public class DateUtil {
     public static boolean validDate(String dateString) {
         // Try to parse the String.
         return DateUtil.parse(dateString) != null;
+    }
+    
+    /**
+     * convert timestamp from String to LocalDate
+     *
+     * @param timestamp: String
+     * @return  LocalDate
+     */
+    public static LocalDate parseTimestamp(String timestamp){
+    	Timestamp t = new Timestamp(Long.parseLong(timestamp));
+    	return t.toLocalDateTime().toLocalDate();
     }
 }

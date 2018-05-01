@@ -23,7 +23,7 @@ public class InscriptionAnnuelleFx {
 		if (inscriptionAnnuelle != null) {
 			this.anneeFx = new CotisationFx(inscriptionAnnuelle.getCotisation());
 			this.membreFx = new MembreFx(inscriptionAnnuelle.getMembre());
-			this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parse(inscriptionAnnuelle.getDateInscription()));
+			this.dateInscription = new SimpleObjectProperty<LocalDate>(DateUtil.parseTimestamp(inscriptionAnnuelle.getDateInscription()));
 			this.montant = new SimpleIntegerProperty(inscriptionAnnuelle.getMontant());
 			this.id = new SimpleLongProperty(inscriptionAnnuelle.getId());
 		} else {

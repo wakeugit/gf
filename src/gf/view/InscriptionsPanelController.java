@@ -18,7 +18,9 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class InscriptionsPanelController {
 
@@ -259,9 +261,7 @@ public class InscriptionsPanelController {
                 if (mCotisation.getTypeCotisation() == TypeCotisation.ANNEE) {
                     listeInscritsAnnuel.clear();
                     for (InscriptionAnnuelle inscriptionCotisation : response.getBody()) {
-                    	System.out.println("Date inscription "+inscriptionCotisation.getDateInscription());
-                    	System.out.println("Date "+DateUtil.parse(inscriptionCotisation.getDateInscription()));
-                        listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
+                    	listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
                     }
                 }
 
