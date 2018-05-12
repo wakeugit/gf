@@ -277,38 +277,48 @@ public class InscriptionsPanelController {
 
     @FXML
     private void actionOnclickNouvelleInscptionAnnuelle() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
+    	
+    	if(mCotisation != null){
+    		InscriptionAnnuelleController.tmpCotisation = mCotisation;
+	    	try {
+	            // Load the fxml file and create a new stage for the popup dialog.
+	
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
+	            BorderPane page = (BorderPane) loader.load();
+	
+	            // Create the dialog Stage.
+	            Stage dialogStage = new Stage();
+	            dialogStage.setTitle("Nouvelle Inscription");
+	            dialogStage.initModality(Modality.APPLICATION_MODAL);
+	            dialogStage.initOwner(mainAppGF.getPrimaryStage());
+	            Scene scene = new Scene(page);
+	            dialogStage.setScene(scene);
+	
+	            // Set the Member into the controller.
+	            InscriptionAnnuelleController controller = loader.getController();
+	            controller.setDialogStage(dialogStage);
+	            controller.setInscriptionsPanelController(this);
+	
+	            // Show the dialog and wait until the user closes it
+	
+	            dialogStage.showAndWait();
+	
+	            // return controller.isOkClicked();
+	
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	
+	        }
+    	} else {
+    		// Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Champs invalides");
+            alert.setHeaderText("SVP veuillez choisir une cotisation et cliquez sur Valider");
 
-            InscriptionAnnuelleController.tmpCotisation = mCotisation;
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
-            BorderPane page = (BorderPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the Member into the controller.
-            InscriptionAnnuelleController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setInscriptionsPanelController(this);
-
-            // Show the dialog and wait until the user closes it
-
-            dialogStage.showAndWait();
-
-            // return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
+            alert.showAndWait();
+    	}
     }
 
     @FXML
@@ -319,6 +329,7 @@ public class InscriptionsPanelController {
             InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
             int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
             try {
+            	InscriptionAnnuelleController.tmpCotisation = mCotisation;
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
@@ -386,38 +397,46 @@ public class InscriptionsPanelController {
 
     @FXML
     private void actionOnclickNouvelleInscptionCotisation() {
-        try {
+    	if(mCotisation != null){
+    		InscriptionCotisationController.tmpCotisation = mCotisation;
+	    	try {
+	            // Load the fxml file and create a new stage for the popup dialog.
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+	            BorderPane page = (BorderPane) loader.load();
+	
+	            // Create the dialog Stage.
+	            Stage dialogStage = new Stage();
+	            dialogStage.setTitle("Nouvelle Inscription");
+	            dialogStage.initModality(Modality.APPLICATION_MODAL);
+	            dialogStage.initOwner(mainAppGF.getPrimaryStage());
+	            Scene scene = new Scene(page);
+	            dialogStage.setScene(scene);
+	
+	            // Set the Member into the controller.
+	            InscriptionCotisationController controller = loader.getController();
+	            controller.setDialogStage(dialogStage);
+	            controller.setInscriptionsPanelController(this);
+	
+	            // Show the dialog and wait until the user closes it
+	
+	            dialogStage.showAndWait();
+	
+	            // return controller.isOkClicked();
+	
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	
+	        }
+    	} else {
+    		// Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Champs invalides");
+            alert.setHeaderText("SVP veuillez choisir une cotisation et cliquez sur Valider");
 
-            InscriptionCotisationController.tmpCotisation = mCotisation;
-
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
-            BorderPane page = (BorderPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Nouvelle Inscription");
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the Member into the controller.
-            InscriptionCotisationController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setInscriptionsPanelController(this);
-
-            // Show the dialog and wait until the user closes it
-
-            dialogStage.showAndWait();
-
-            // return controller.isOkClicked();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
+            alert.showAndWait();
+    	}
     }
 
     @FXML
@@ -428,6 +447,7 @@ public class InscriptionsPanelController {
         	InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
         	 int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
             try {
+            	InscriptionCotisationController.tmpCotisation = mCotisation;
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));

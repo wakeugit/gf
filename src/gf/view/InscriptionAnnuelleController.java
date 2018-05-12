@@ -233,12 +233,14 @@ public class InscriptionAnnuelleController {
             errorMessage += "Date Inscription invalide!\n";
         } 
 
-        if (montant.getText() == null || montant.getText().length() == 0 || montant.getText().length() > 9) {
+        if (montant.getText() == null || montant.getText().length() == 0) {
             errorMessage += "Montant invalide!\n";
         } else {
             // try to parse the telephone number into an int.
             try {
-                Integer.parseInt(montant.getText());
+                if(Integer.parseInt(montant.getText())<0){
+                	errorMessage += "Montant doit etre une valeur positive!\n";
+                }
             } catch (NumberFormatException e) {
                 errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
