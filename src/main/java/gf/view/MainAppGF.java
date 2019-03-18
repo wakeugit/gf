@@ -37,7 +37,7 @@ public class MainAppGF extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("MainWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/MainWindow.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -56,7 +56,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("aidesWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/aidesWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -86,7 +86,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("anneesWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/anneesWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -115,7 +115,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("epargneWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/epargneWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -144,7 +144,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("tontineWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/tontineWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -173,7 +173,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("sanctionWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/sanctionWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -202,7 +202,7 @@ public class MainAppGF extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("utilisateurWindow.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/utilisateurWindow.fxml"));
             BorderPane page = (BorderPane) loader.load();
 
             // Create the dialog Stage.
@@ -231,7 +231,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("membresPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/membresPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             MembrePanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -250,7 +250,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("inscriptionsPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionsPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             InscriptionsPanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -264,7 +264,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("epargnePanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/epargnePanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             EpargnePanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -278,7 +278,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("tontinesPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/tontinesPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             TontinePanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -292,7 +292,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("pretsEtRembPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/pretsEtRembPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             PretsEtRembPanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -306,7 +306,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("aidesPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/aidesPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             AidesPanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -320,7 +320,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("sanctionsPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/sanctionsPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
             SanctionPanelController controller = loader.getController();
             controller.setMainAppGF(this);
@@ -334,7 +334,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("profilMembrePanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/profilMembrePanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
 //            MembrePanelController controller = loader.getController();
 //            controller.setMainAppGF(this);
@@ -348,7 +348,7 @@ public class MainAppGF extends Application {
         try {
             // Load member pane.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("caissesPanel.fxml"));
+            loader.setLocation(MainAppGF.class.getResource("/gf/view/caissesPanel.fxml"));
             BorderPane panel = (BorderPane) loader.load();
 //            MembrePanelController controller = loader.getController();
 //            controller.setMainAppGF(this);

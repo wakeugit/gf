@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EpargneWindowController">
+   <right>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="200.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="nouveau" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetails" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+            <Button fx:id="modifierAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showCotisationDetailsModifier" prefHeight="30.0" prefWidth="87.0" text="Modifier" GridPane.rowIndex="1" />
+            <Button fx:id="supprimerAnnee" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" onAction="#epargneSupprimer" text="Supprimer" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </right>
+   <center>
+      <TableView fx:id="epargneTable" maxHeight="-Infinity" prefHeight="315.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="nomCotisation" prefWidth="150.0" text="Nom cotisation" />
+            <TableColumn fx:id="type" prefWidth="103.0" text="type" />
+            <TableColumn fx:id="dateDebut" prefWidth="115.0" text="Date début" />
+            <TableColumn fx:id="dateFin" prefWidth="110.0" text="Date fin" />
+            <TableColumn fx:id="annee" prefWidth="107.0" text="Année" />
+        </columns>
+         <opaqueInsets>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <top>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="720.0" BorderPane.alignment="CENTER">
+         <children>
+             <Label styleClass="label-header" stylesheets="@theme.css" text="Gestion des épargnes">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="13.0" prefWidth="830.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+         </children>
+         <opaqueInsets>
+            <Insets left="20.0" />
+         </opaqueInsets>
+      </VBox>
+   </top>
+</BorderPane>

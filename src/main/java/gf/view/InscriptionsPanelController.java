@@ -3,7 +3,6 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
-import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,9 +17,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class InscriptionsPanelController {
 

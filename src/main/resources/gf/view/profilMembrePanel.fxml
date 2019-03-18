@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.MembrePanelController">
+   <right>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="250.0" left="20.0" top="50.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="nouveauMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showMemberDetailsDialog" prefHeight="30.0" prefWidth="87.0" text="Profil" />
+         </children>
+      </GridPane>
+   </right>
+   <top>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="830.0" BorderPane.alignment="CENTER">
+         <children>
+             <Label styleClass="label-header" stylesheets="@theme.css" text="Profil membre">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="13.0" prefWidth="830.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+         </children>
+         <opaqueInsets>
+            <Insets left="20.0" />
+         </opaqueInsets>
+      </VBox>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <TableView fx:id="membreTable" prefHeight="215.0" prefWidth="479.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="photoCol" minWidth="0.0" prefWidth="95.0" text="Photo" />
+                <TableColumn fx:id="nomCol" prefWidth="151.0" text="Nom du membre" />
+                  <TableColumn fx:id="prenomCol" prefWidth="148.0" text="Prenom du membre" />
+                  <TableColumn fx:id="telephoneCol" maxWidth="127.0" minWidth="105.0" prefWidth="109.0" text="Telephone" />
+                  <TableColumn fx:id="adresseCol" minWidth="0.0" prefWidth="105.0" text="Adresse" />
+                  <TableColumn fx:id="cniCol" prefWidth="104.0" text="N° de CNI" />
+              </columns>
+               <opaqueInsets>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets left="20.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
+         <top>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="33.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.0" minWidth="10.0" prefWidth="238.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="22.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="184.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="120.0" right="150.0" top="5.0" />
+               </BorderPane.margin>
+               <children>
+                  <Label text="De :" />
+                  <Label prefHeight="27.0" prefWidth="38.0" text="À :" GridPane.columnIndex="2" />
+                  <DatePicker prefHeight="39.0" prefWidth="214.0" GridPane.columnIndex="1" />
+                  <DatePicker GridPane.columnIndex="3" />
+               </children>
+            </GridPane>
+         </top>
+      </BorderPane>
+   </center>
+</BorderPane>

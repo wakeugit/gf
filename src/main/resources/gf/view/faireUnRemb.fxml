@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.FaireRemboursementController">
+   <center>
+      <GridPane maxWidth="-Infinity" prefHeight="108.0" prefWidth="440.0" BorderPane.alignment="CENTER_LEFT">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="207.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="233.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Label text="Nom membre" />
+            <ComboBox fx:id="nomMembre" prefHeight="39.0" prefWidth="244.0" GridPane.columnIndex="1" />
+            <Label text="Cotisation" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cotisation" prefHeight="39.0" prefWidth="247.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Date de remboursement" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dateOperation" prefHeight="39.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Montant attendu" GridPane.rowIndex="3" />
+            <TextField fx:id="montantAttendu" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Montant avancé" GridPane.rowIndex="4" />
+            <TextField fx:id="montantAvance" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Reste" GridPane.rowIndex="5" />
+            <TextField fx:id="reste" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Total des penalités" GridPane.rowIndex="6" />
+            <TextField fx:id="penalites" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <bottom>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" BorderPane.alignment="CENTER_RIGHT">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="valider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickValider" prefHeight="30.0" prefWidth="80.0" text="Valider" GridPane.columnIndex="1" />
+            <Button fx:id="annuler" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnClickAnnuler" prefHeight="30.0" prefWidth="80.0" text="Annuler" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </bottom>
+   <top>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="35.0" prefWidth="381.0" styleClass="label-header" text="Faire un remboursement">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="9.0" prefWidth="600.0">
+               <opaqueInsets>
+                  <Insets top="40.0" />
+               </opaqueInsets>
+            </Separator>
+         </children>
+         <opaqueInsets>
+            <Insets left="20.0" top="20.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+</BorderPane>

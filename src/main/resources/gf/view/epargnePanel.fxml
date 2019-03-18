@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gf.view.EpargnePanelController">
+   <top>
+      <Label text="Epargnes" BorderPane.alignment="CENTER_LEFT">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Epargner">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="inscritsCotisationTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="idCol1" prefWidth="75.0" text="Id" visible="false" />
+                              <TableColumn fx:id="nomCol1" prefWidth="176.0" text="Nom du membre" />
+                              <TableColumn fx:id="prenomCol1" prefWidth="205.0" text="Prenom du membre" />
+                              <TableColumn fx:id="cotisationCol1" prefWidth="155.0" text="Nom cotisation" />
+                              <TableColumn fx:id="anneeCol1" prefWidth="112.0" text="Année" />
+                           </columns>
+                           <opaqueInsets>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </opaqueInsets>
+                           <BorderPane.margin>
+                              <Insets left="20.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                     <right>
+                        <GridPane BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="150.0" left="20.0" top="20.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Button fx:id="nouveauMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionOnclickNouvelleEpargne" prefHeight="30.0" prefWidth="87.0" text="Nouveau" />
+                              <Button fx:id="imprimerListMembre1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </right>
+                     <top>
+                        <GridPane BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="172.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="167.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="54.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="81.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="140.0" right="200.0" top="10.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Label text="Choisir une épargne" />
+                              <Button fx:id="validerEpargne" mnemonicParsing="false" onAction="#actionOnClickValiderEpargner" text="Valider" GridPane.columnIndex="3" />
+                              <ComboBox fx:id="comboCotisationEpargner" prefHeight="39.0" prefWidth="161.0" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </GridPane>
+                     </top>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab text="Etat épargne individuelle">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="etatEpargneIndividuelle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                          <columns>
+                              <TableColumn fx:id="idCol" editable="false" prefWidth="75.0" sortable="false" text="Id" visible="false" />
+                            <TableColumn fx:id="nomCol" prefWidth="79.0" text="Nom " />
+                              <TableColumn fx:id="prenomCol" prefWidth="95.0" text="Prenom " />
+                              <TableColumn fx:id="cotisationCol" prefWidth="92.0" text="Cotisation" />
+                              <TableColumn fx:id="anneeCotisationEtatIndividuel" prefWidth="75.0" text="Annee" />
+                              <TableColumn fx:id="dateCol" maxWidth="253.0" minWidth="12.0" prefWidth="63.0" text="Date " />
+                              <TableColumn fx:id="montantCol" prefWidth="85.0" text="Montant" />
+
+                              <TableColumn fx:id="dureeCol" minWidth="0.0" prefWidth="63.0" text="Duree" />
+                              <TableColumn fx:id="nombreCol" prefWidth="105.0" text="Nombre" />
+
+                          </columns>
+                           <opaqueInsets>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </opaqueInsets>
+                           <BorderPane.margin>
+                              <Insets left="20.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                     <right>
+                        <GridPane BorderPane.alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Button fx:id="modifMembre" onAction="#actionOnclickModifierEpargne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Modifier" />
+                              <Button fx:id="supprimerMembre" onAction="#actionOnclickSupprimerEpargne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Supprimer" GridPane.rowIndex="1" />
+                              <Button fx:id="imprimerListMembre" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </right>
+                     <top>
+                        <GridPane BorderPane.alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="141.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="165.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="0.0" prefWidth="138.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="157.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="42.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="80.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="20.0" right="40.0" top="10.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="208.0" text="Choisir un membre" GridPane.columnIndex="3">
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu></Label>
+                              <Button fx:id="validerEtatIndividuel" mnemonicParsing="false" onAction="#actionOnClickValiderEtatIndividuel" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="6">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Button>
+
+                              <ComboBox fx:id="comboMembreEtatIndividuel" prefWidth="150.0" GridPane.columnIndex="4" />
+                              <ComboBox fx:id="comboCotisationEtatIndividuel" onAction="#actionOnDragDroppedEtatIndividuel" prefWidth="163.0" GridPane.columnIndex="1" />
+                              <Label text="Choisir une épargne" />
+                              <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
+
+
+                           </children>
+                        </GridPane>
+                     </top>
+                  </BorderPane>
+               </content>
+          </Tab>
+            <Tab text="Etat général des épargnes">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="etatEpargneGenerale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="nomMembre" prefWidth="144.0" text="Nom du membre" />
+                              <TableColumn fx:id="prenomMembre" prefWidth="118.0" text="Prenom du membre" />
+                              <TableColumn fx:id="nomCotisation" prefWidth="122.0" text="Nom cotisation" />
+                              <TableColumn fx:id="anneeEtat" prefWidth="71.0" text="Année" />
+                              <TableColumn fx:id="totalEpargne" prefWidth="101.0" text="Total épargné" />
+                              <TableColumn fx:id="totalNombre" prefWidth="93.0" text="Total Nbre" />
+                           </columns>
+                           <opaqueInsets>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </opaqueInsets>
+                           <BorderPane.margin>
+                              <Insets left="20.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                     <right>
+                        <GridPane BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Button fx:id="imprimerListMembre2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" />
+                           </children>
+                        </GridPane>
+                     </right>
+                     <top>
+                        <GridPane prefHeight="30.0" prefWidth="363.0" BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.0" minWidth="10.0" prefWidth="128.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="158.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="90.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="180.0" right="220.0" top="10.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="105.0" text="Choisir une épargne" />
+                              <Button fx:id="validerEtatGeneral" mnemonicParsing="false" onAction="#actionOnClickValiderEtatGeneral" prefHeight="39.0" prefWidth="81.0" text="Valider" GridPane.columnIndex="3" />
+                              <ComboBox fx:id="comboCotisationEtatGeneral" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="35.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </GridPane>
+                     </top>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Suivi des épargnes">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="suiviEpargne" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="662.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn fx:id="dateSuivi" maxWidth="157.0" minWidth="49.0" prefWidth="113.0" text="Date" />
+                              <TableColumn fx:id="cotisationSuivi" minWidth="0.0" prefWidth="238.0" text="Nom cotisation" />
+                              <TableColumn fx:id="anneeSuivi" prefWidth="163.0" text="Année" />
+                              <TableColumn fx:id="EpargneJour" prefWidth="133.0" text="Epargne du jour" />
+                           </columns>
+                           <opaqueInsets>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </opaqueInsets>
+                           <BorderPane.margin>
+                              <Insets left="20.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
+                     <right>
+                        <GridPane BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <BorderPane.margin>
+                              <Insets bottom="90.0" left="20.0" top="20.0" />
+                           </BorderPane.margin>
+                           <children>
+                              <Button fx:id="imprimerListMembre21" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Imprimer" />
+                           </children>
+                        </GridPane>
+                     </right>
+                     <top>
+                        <GridPane prefHeight="30.0" prefWidth="415.0" BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="144.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="75.0" prefWidth="140.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="42.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="96.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Choisir une épargne" />
+                              <Button fx:id="validerSuivi" mnemonicParsing="false" onAction="#actionOnClickValiderSuivi" prefHeight="25.0" prefWidth="82.0" text="Valider" GridPane.columnIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <ComboBox fx:id="comboCotisationSuivi" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="36.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                 <image>
+                                    <Image url="@default.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets left="190.0" right="210.0" top="10.0" />
+                           </BorderPane.margin>
+                        </GridPane>
+                     </top>
+                  </BorderPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
