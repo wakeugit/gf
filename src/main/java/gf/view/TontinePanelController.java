@@ -3,6 +3,7 @@ package gf.view;
 import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.*;
+import gf.util.AlertUtil;
 import gf.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class TontinePanelController {
 
@@ -617,8 +619,15 @@ public class TontinePanelController {
         int selectedIndex = tontineurs.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             // TODO: 10/07/2017 Alert user before delete
-            BackendInterface.deleteTransaction(tontineurs.getItems().get(selectedIndex).getId());
-            actionOnClickValiderTontineur();
+            AlertUtil alertUtil = new AlertUtil(AlertType.CONFIRMATION,"Etes vous sûr de vouloir supprimer la tontine de: "+tontineurs.getSelectionModel().getSelectedItem().getMembreFx().getNom()+"?", mainAppGF.getPrimaryStage(), "Supprimer", "Veuillezs confirmer la suppression" );
+            Optional<ButtonType> result = alertUtil.showAndWait();
+            if (result.get() == ButtonType.OK){
+                BackendInterface.deleteTransaction(tontineurs.getItems().get(selectedIndex).getId());
+                actionOnClickValiderTontineur();
+            } else {
+                // ... user chose CANCEL or closed the dialog
+            }
+
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
