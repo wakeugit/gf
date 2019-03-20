@@ -88,7 +88,7 @@ public class InscriptionsPanelController {
 
         Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
-        if (response1.getBody() != null || response2.getBody() != null ) {
+        if (response1.getBody() != null || response2.getBody() != null) {
 
             for (Cotisation cotisation : response2.getBody()) {
                 listeCotisations.add(new CotisationFx(cotisation));
@@ -106,8 +106,8 @@ public class InscriptionsPanelController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-    	if(annee != null){
-        	annee.setButtonCell( new ListCell<CotisationFx>() {
+        if (annee != null) {
+            annee.setButtonCell(new ListCell<CotisationFx>() {
                 @Override
                 protected void updateItem(CotisationFx item, boolean empty) {
                     super.updateItem(item, empty);
@@ -120,83 +120,83 @@ public class InscriptionsPanelController {
                 }
             });
 
-        	annee.setCellFactory(
-        			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
+            annee.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
 
-    			@Override
-    			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-    	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-    	                    @Override
-    	                    protected void updateItem(CotisationFx item, boolean empty) {
-    	                        super.updateItem(item, empty);
-    	                        if (empty) {
-    	                            setText("");
-    	                        } else {
-    	                            setText(item.getAnnee());
-    	                        }
-    	                    }
-    	                };
-    	                return cell;
-    			}
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
 
 
-            });
-        	annee.setItems(listeAnnees);
-        	}
-    	if(cotisation != null){
-    	cotisation.setButtonCell( new ListCell<CotisationFx>() {
-            @Override
-            protected void updateItem(CotisationFx item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(item.getnomCotisation() + " " + item.getAnnee());
-                    mCotisation = new Cotisation(item);
+                    });
+            annee.setItems(listeAnnees);
+        }
+        if (cotisation != null) {
+            cotisation.setButtonCell(new ListCell<CotisationFx>() {
+                @Override
+                protected void updateItem(CotisationFx item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText("");
+                    } else {
+                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                        mCotisation = new Cotisation(item);
+                    }
                 }
-            }
-        });
+            });
 
-    	cotisation.setCellFactory(
-    			new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
-
-
-			@Override
-			public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
-	                ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
-	                    @Override
-	                    protected void updateItem(CotisationFx item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (empty) {
-	                            setText("");
-	                        } else {
-	                            setText(item.getnomCotisation() + " " + item.getAnnee());
-	                        }
-	                    }
-	                };
-	                return cell;
-			}
+            cotisation.setCellFactory(
+                    new Callback<ListView<CotisationFx>, ListCell<CotisationFx>>() {
 
 
-        });
+                        @Override
+                        public ListCell<CotisationFx> call(ListView<CotisationFx> arg0) {
+                            ListCell<CotisationFx> cell = new ListCell<CotisationFx>() {
+                                @Override
+                                protected void updateItem(CotisationFx item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setText("");
+                                    } else {
+                                        setText(item.getnomCotisation() + " " + item.getAnnee());
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
 
-    	cotisation.setConverter(new StringConverter<CotisationFx>() {
-            @Override
-            public String toString(CotisationFx item) {
-              if (item == null){
-                return null;
-              } else {
-                return item.getnomCotisation() + " " + item.getAnnee();
-              }
-            }
 
-            @Override
-            public CotisationFx fromString(String item) {
-              return null;
-          }
-        });
+                    });
+
+            cotisation.setConverter(new StringConverter<CotisationFx>() {
+                @Override
+                public String toString(CotisationFx item) {
+                    if (item == null) {
+                        return null;
+                    } else {
+                        return item.getnomCotisation() + " " + item.getAnnee();
+                    }
+                }
+
+                @Override
+                public CotisationFx fromString(String item) {
+                    return null;
+                }
+            });
             cotisation.setItems(listeCotisations);
-    	}
+        }
 
         idCol.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         nomCol.setCellValueFactory(cellData -> cellData.getValue().getMembreFx().nomProperty());
@@ -231,7 +231,7 @@ public class InscriptionsPanelController {
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
                     }
-                }else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
+                } else if (mCotisation.getTypeCotisation() == TypeCotisation.EPARGNE) {
                     listeInscritsCotisation.clear();
                     for (InscriptionCotisation inscriptionCotisation : response.getBody()) {
                         listeInscritsCotisation.add(new InscriptionCotisationFx(inscriptionCotisation));
@@ -258,7 +258,7 @@ public class InscriptionsPanelController {
                 if (mCotisation.getTypeCotisation() == TypeCotisation.ANNEE) {
                     listeInscritsAnnuel.clear();
                     for (InscriptionAnnuelle inscriptionCotisation : response.getBody()) {
-                    	listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
+                        listeInscritsAnnuel.add(new InscriptionAnnuelleFx(inscriptionCotisation));
                     }
                 }
 
@@ -274,48 +274,48 @@ public class InscriptionsPanelController {
 
     @FXML
     private void actionOnclickNouvelleInscptionAnnuelle() {
-    	
-    	if(mCotisation != null){
-    		InscriptionAnnuelleController.tmpCotisation = mCotisation;
-	    	try {
-	            // Load the fxml file and create a new stage for the popup dialog.
-	
-	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
-	            BorderPane page = (BorderPane) loader.load();
-	
-	            // Create the dialog Stage.
-	            Stage dialogStage = new Stage();
-	            dialogStage.setTitle("Nouvelle Inscription");
-	            dialogStage.initModality(Modality.APPLICATION_MODAL);
-	            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-	            Scene scene = new Scene(page);
-	            dialogStage.setScene(scene);
-	
-	            // Set the Member into the controller.
-	            InscriptionAnnuelleController controller = loader.getController();
-	            controller.setDialogStage(dialogStage);
-	            controller.setInscriptionsPanelController(this);
-	
-	            // Show the dialog and wait until the user closes it
-	
-	            dialogStage.showAndWait();
-	
-	            // return controller.isOkClicked();
-	
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	
-	        }
-    	} else {
-    		// Show the error message.
+
+        if (!this.listeAnnees.isEmpty()) {
+            InscriptionAnnuelleController.tmpCotisation = mCotisation;
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
+                BorderPane page = loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Nouvelle Inscription");
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                InscriptionAnnuelleController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setInscriptionsPanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(mainAppGF.getPrimaryStage());
-            alert.setTitle("Champs invalides");
-            alert.setHeaderText("SVP veuillez choisir une cotisation et cliquez sur Valider");
+            alert.setTitle("Aucune Annee");
+            alert.setHeaderText("SVP veuillez ajouter au moins une annee");
 
             alert.showAndWait();
-    	}
+        }
     }
 
     @FXML
@@ -326,11 +326,11 @@ public class InscriptionsPanelController {
             InscriptionAnnuelleFx mbreInscritFx = inscritsAnnuelTable.getItems().get(selectedIndex);
             int keyInArrayList = listeInscritsAnnuel.indexOf(mbreInscritFx);
             try {
-            	InscriptionAnnuelleController.tmpCotisation = mCotisation;
+                InscriptionAnnuelleController.tmpCotisation = mCotisation;
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionAnnuelle.fxml"));
-                BorderPane page = (BorderPane) loader.load();
+                BorderPane page = loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
@@ -394,46 +394,47 @@ public class InscriptionsPanelController {
 
     @FXML
     private void actionOnclickNouvelleInscptionCotisation() {
-    	if(mCotisation != null){
-    		InscriptionCotisationController.tmpCotisation = mCotisation;
-	    	try {
-	            // Load the fxml file and create a new stage for the popup dialog.
-	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
-	            BorderPane page = (BorderPane) loader.load();
-	
-	            // Create the dialog Stage.
-	            Stage dialogStage = new Stage();
-	            dialogStage.setTitle("Nouvelle Inscription");
-	            dialogStage.initModality(Modality.APPLICATION_MODAL);
-	            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-	            Scene scene = new Scene(page);
-	            dialogStage.setScene(scene);
-	
-	            // Set the Member into the controller.
-	            InscriptionCotisationController controller = loader.getController();
-	            controller.setDialogStage(dialogStage);
-	            controller.setInscriptionsPanelController(this);
-	
-	            // Show the dialog and wait until the user closes it
-	
-	            dialogStage.showAndWait();
-	
-	            // return controller.isOkClicked();
-	
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	
-	        }
-    	} else {
-    		// Show the error message.
+        if (!this.listeCotisations.isEmpty()) {
+            InscriptionCotisationController.tmpCotisation = mCotisation;
+
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
+                BorderPane page = loader.load();
+
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Nouvelle Inscription");
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
+
+                // Set the Member into the controller.
+                InscriptionCotisationController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setInscriptionsPanelController(this);
+
+                // Show the dialog and wait until the user closes it
+
+                dialogStage.showAndWait();
+
+                // return controller.isOkClicked();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(mainAppGF.getPrimaryStage());
-            alert.setTitle("Champs invalides");
-            alert.setHeaderText("SVP veuillez choisir une cotisation et cliquez sur Valider");
+            alert.setTitle("Aucune Cotisation existante");
+            alert.setHeaderText("SVP veuillez ajouter au moins une cotisation");
 
             alert.showAndWait();
-    	}
+        }
     }
 
     @FXML
@@ -441,14 +442,14 @@ public class InscriptionsPanelController {
 
         int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-        	InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
-        	 int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
+            InscriptionCotisationFx mbreInscritFx = inscritsCotisationTable.getItems().get(selectedIndex);
+            int keyInArrayList = listeInscritsCotisation.indexOf(mbreInscritFx);
             try {
-            	InscriptionCotisationController.tmpCotisation = mCotisation;
+                InscriptionCotisationController.tmpCotisation = mCotisation;
                 // Load the fxml file and create a new stage for the popup dialog.
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainAppGF.class.getResource("/gf/view/inscriptionCotisation.fxml"));
-                BorderPane page = (BorderPane) loader.load();
+                BorderPane page = loader.load();
 
                 // Create the dialog Stage.
                 Stage dialogStage = new Stage();
