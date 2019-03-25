@@ -137,8 +137,7 @@ public class PretsEtRembPanelController {
     private TableColumn<TransactionFx, Double> montantSuiviRemb;
     @FXML
     private TableColumn<TransactionFx, Double> penalitesSuiviRemb;
-    
-    
+
     @FXML
     private ComboBox<CotisationFx> comboCotisationPret;
     @FXML
@@ -178,8 +177,6 @@ public class PretsEtRembPanelController {
     private Cotisation mCotisation;
 
     public PretsEtRembPanelController() {
-
-
         Response<Cotisation[]> response1 = BackendInterface.getCotisationsByType(TypeCotisation.TONTINE);
         Response<Cotisation[]> response2 = BackendInterface.getCotisationsByType(TypeCotisation.EPARGNE);
         if (response1.getBody() != null || response2.getBody() != null) {
@@ -322,8 +319,6 @@ public class PretsEtRembPanelController {
                 });
 
                 comboCotisationListeRemb.setItems(listeCotisations);
-
-
             }
 
             if (comboCotisationSuiviRemb != null) {
@@ -416,7 +411,7 @@ public class PretsEtRembPanelController {
     private void actionOnClickValiderPreter() {
         if (mCotisation != null) {
 
-//            FaireEmpruntController.tmpCotisation = mCotisation;
+            FaireEmpruntController.tmpCotisation = mCotisation;
 
             Response<InscriptionCotisation[]> response;
 
@@ -465,36 +460,51 @@ public class PretsEtRembPanelController {
 
     @FXML
     private void actionOnclickPreter() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FaireEmpruntController.tmpCotisation = mCotisation;
+        int selectedIndex = inscritsCotisationTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            InscriptionCotisationFx mMembre = inscritsCotisationTable.getItems().get(selectedIndex);
+            try {
+                // Load the fxml file and create a new stage for the popup dialog.
+                FaireEmpruntController.tmpCotisation = mCotisation;
+                FaireEmpruntController.tmpMembre = mMembre;
 
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnEmprunt.fxml"));
-            BorderPane page = (BorderPane) loader.load();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainAppGF.class.getResource("/gf/view/faireUnEmprunt.fxml"));
+                BorderPane page = (BorderPane) loader.load();
 
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Faire un emprunt");
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.initOwner(mainAppGF.getPrimaryStage());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+                // Create the dialog Stage.
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Faire un emprunt");
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.initOwner(mainAppGF.getPrimaryStage());
+                Scene scene = new Scene(page);
+                dialogStage.setScene(scene);
 
-            // Set the Member into the controller.
-            FaireEmpruntController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setPretsEtRembPanelController(this);
+                // Set the Member into the controller.
+                FaireEmpruntController controller = loader.getController();
+                controller.setDialogStage(dialogStage);
+                controller.setPretsEtRembPanelController(this);
 
-            // Show the dialog and wait until the user closes it
+                // Show the dialog and wait until the user closes it
 
-            dialogStage.showAndWait();
+                dialogStage.showAndWait();
 
-            // return controller.isOkClicked();
+                // return controller.isOkClicked();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
 
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainAppGF.getPrimaryStage());
+            alert.setTitle("Aucune ligne selectionnee");
+            alert.setHeaderText("Aucune ligne selectionnee");
+            alert.setContentText("Svp selectionnez un element dans la liste.");
+
+            alert.showAndWait();
         }
     }
 
@@ -551,7 +561,7 @@ public class PretsEtRembPanelController {
 
     @FXML
     private void actionOnclickSupprimerInscptionAnnuelle() {
-/*
+        /*
         int selectedIndex = inscritsAnnuelTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             //// TODO: 20/04/2017 Add alert before delete element

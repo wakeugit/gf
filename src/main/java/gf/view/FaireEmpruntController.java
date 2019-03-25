@@ -24,7 +24,6 @@ import java.util.Date;
 
 public class FaireEmpruntController {
 
-
     public static Cotisation tmpCotisation;
     public static InscriptionCotisationFx tmpMembre;
     private  NumberFormat numberFormat;
@@ -80,7 +79,6 @@ public class FaireEmpruntController {
                         listeMembresInscrits.add(new InscriptionCotisationFx(inscriptionCotisation));
                     }
                 }
-
             } else {
                 // Todo Display error message
                 System.out.println("An error occured - ValiderCotisation");
@@ -404,6 +402,10 @@ public class FaireEmpruntController {
             } catch (NumberFormatException e) {
                 errorMessage += "Montant invalide (ne doit contenir que des chiffres)!\n";
             }
+        }
+
+        if (nomMembre.getSelectionModel().getSelectedItem().getMembreFx().getId() == avalyseur1.getSelectionModel().getSelectedItem().getMembreFx().getId()) {
+            errorMessage += "Le Beneficiaire ne peut pas etre avaliseur\n";
         }
 
         if (errorMessage.length() == 0) {
