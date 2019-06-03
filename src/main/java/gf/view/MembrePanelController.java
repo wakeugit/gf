@@ -5,6 +5,7 @@ import gf.backend.Response;
 import gf.model.Membre;
 import gf.model.MembreFx;
 import gf.util.PrinterUtil;
+import gf.util.TablePrinter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -183,7 +184,9 @@ public class MembrePanelController {
 
     @FXML
     public void actionClickImprimer(){
-        PrinterUtil.printSetup(membreTable, mainAppGF.getPrimaryStage());
+        //PrinterUtil.printSetup(membreTable, mainAppGF.getPrimaryStage());
+        TablePrinter.print(membreTable, null, mainAppGF.getPrimaryStage());
+
     }
 
     public MainAppGF getMainAppGF() {

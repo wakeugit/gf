@@ -1,43 +1,44 @@
 package gf.util;
 
-import javafx.print.PrinterJob;
+import javafx.print.*;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 public class PrinterUtil {
     // Create the JobStatus Label
-    public static String jobStatus = "";
-    public static void printSetup(Node node, Stage owner)
+    public String jobStatus = "";
+
+    public static <T> void printSetup(TableView<T> tableView, Stage owner)
     {
+        TableView<T> copyTableView = tableView;
         // Create the PrinterJob
         PrinterJob job = PrinterJob.createPrinterJob();
+        PageLayout pageLayout = Printer.getDefaultPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.DEFAULT);
+        Group pane = new Group();
+        //double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
+        //double scaleY = pageLayout.getPrintableHeight() / node.getBoundsInParent().getHeight();
 
-        if (job == null)
+        HBox hBox = new HBox(tableView);
+
+        //node.getTransforms().add(new Scale(scaleX, scaleY));
+
+        hBox.setPrefSize(pageLayout.getPrintableWidth(), pageLayout.getPrintableHeight());
+        tableView.setPrefSize(pageLayout.getPrintableWidth(), pageLayout.getPrintableHeight());
+        pane.getChildren().addAll(hBox);
+        pane.getStylesheets().add("main.css");
+
+        if (job != null && job.showPrintDialog(owner))
         {
-            return;
-        }
-
-        // Show the print setup dialog
-        boolean proceed = job.showPrintDialog(owner);
-
-        if (proceed)
-        {
-            print(job, node);
-        }
-    }
-
-    public static void print(PrinterJob job, Node node)
-    {
-        // Set the Job Status Message
-        //jobStatus.textProperty().bind(job.jobStatusProperty().asString());
-
-        // Print the node
-        boolean printed = job.printPage(node);
-
-        if (printed)
-        {
-            job.endJob();
+            boolean success = job.printPage(pageLayout, pane);
+            if (success){
+                job.endJob();
+            }
         }
     }
+
 
 }
