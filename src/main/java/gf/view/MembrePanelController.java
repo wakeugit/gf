@@ -4,7 +4,10 @@ import gf.backend.BackendInterface;
 import gf.backend.Response;
 import gf.model.Membre;
 import gf.model.MembreFx;
+import gf.util.MemberListPrintObject;
+import gf.util.PrintUtils;
 import gf.util.PrinterUtil;
+import java.io.File;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +25,12 @@ import javafx.stage.Stage;
 
 import javax.print.PrintException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import org.apache.commons.io.FileUtils;
 
 public class MembrePanelController {
 
@@ -43,7 +52,9 @@ public class MembrePanelController {
     private TableColumn<MembreFx, String> adresseCol;
     @FXML
     private TableColumn<MembreFx, Long> cniCol;
-
+    
+    
+    private List<Membre> membres ;
 
     public MembrePanelController() {
 
@@ -54,8 +65,10 @@ public class MembrePanelController {
         Response<Membre[]> response = BackendInterface.getMembres();
         if (response.getBody() != null) {
             listeMembres.clear();
+            membres = new ArrayList<>();
             for (Membre membre : response.getBody()) {
                 listeMembres.add(new MembreFx(membre));
+                membres.add(membre);
             }
         } else {
             //Todo Display error message
@@ -183,7 +196,22 @@ public class MembrePanelController {
 
     @FXML
     public void actionClickImprimer(){
-        PrinterUtil.printSetup(membreTable, mainAppGF.getPrimaryStage());
+        try {
+            //        PrinterUtil.printSetup(membreTable, mainAppGF.getPrimaryStage());
+            
+            MemberListPrintObject  printObject = new MemberListPrintObject();
+            printObject.setMembers(membres);
+            
+            String pathReport1 = "src/main/resources/jasperReports/sources/memberList.jasper";
+            byte[] data1 = PrintUtils.print(printObject, pathReport1);
+            String user = System.getProperty("user.home");
+            File f1 = new File(user+"/Desktop", "memberList.pdf");
+            FileUtils.writeByteArrayToFile(f1, data1);
+        } catch (JRException ex) {
+            Logger.getLogger(MembrePanelController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MembrePanelController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public MainAppGF getMainAppGF() {

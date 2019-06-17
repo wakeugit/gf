@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Wilfried/Documents/MyProjects/Java/JavaFx/gf/libs/lombok-1.16.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Wilfried/Documents/MyProjects/Java/JavaFx/gf/libs/gson-2.3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Wilfried/Documents/MyProjects/Java/JavaFx/gf/libs/unirest-java-1.4.10.jar"/>
-	<classpathentry kind="output" path="out/production/GF"/>
-</classpath>
